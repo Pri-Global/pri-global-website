@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Partner logo marquee ───────────────────────────────────────── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+
+/* ── Dot-grid background (PrismAI section) ─────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(65, 105, 225, 0.18) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* ── Hero animated gradient mesh ───────────────────────────────── */
+@keyframes meshShift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+.hero-mesh {
+  background: linear-gradient(
+    -45deg,
+    rgba(26, 86, 219, 0.07),
+    rgba(13, 27, 62, 0.10),
+    rgba(65, 105, 225, 0.06),
+    rgba(26, 86, 219, 0.04)
+  );
+  background-size: 400% 400%;
+  animation: meshShift 14s ease infinite;
+}
+
+/* ── Pulse glow for "Get in touch" CTA ─────────────────────────── */
+@keyframes softPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 86, 219, 0.45); }
+  50%      { box-shadow: 0 0 0 8px rgba(26, 86, 219, 0); }
+}
+.pulse-cta {
+  animation: softPulse 4s ease-in-out infinite;
+}
+
+/* ── Animation keyframes ───────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Utility animation classes ─────────────────────────────────── */
+/* "both" = backwards fill hides element during delay, forwards fill persists final state */
+.anim-fade-up    { animation: fadeInUp    0.55s ease both; }
+.anim-fade-left  { animation: fadeInLeft  0.60s ease both; }
+.anim-fade-right { animation: fadeInRight 0.60s ease both; }
+.anim-fade-in    { animation: fadeIn      0.55s ease both; }
+
+/* ── Respect user motion preference ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer base {
+  :root {
+    --bg-primary: #F2F0EB;
+    --bg-secondary: #F2F0EB;
+    --bg-card: #FFFFFF;
+    --text-primary: #0D1B3E;
+    --text-secondary: #6a6050;
+    --text-muted: #9a9080;
+    --accent: #1A56DB;
+    --accent-hover: #1444b8;
+    --border: #ddd9d2;
+    --border-subtle: #ece9e3;
+  }
+
+  .dark {
+    --bg-primary: #111318;
+    --bg-secondary: #0d0f12;
+    --bg-card: #16181e;
+    --text-primary: #F2F0EB;
+    --text-secondary: #8890a0;
+    --text-muted: #4a5060;
+    --accent: #4169E1;
+    --accent-hover: #3358cc;
+    --border: #1e2028;
+    --border-subtle: #16181e;
+  }
+
+  body {
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-body transition-colors duration-300;
+  }
+
+  /* ── Custom scrollbar ───────────────────────────────────────── */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1A56DB;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1444b8;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #1A56DB transparent;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}

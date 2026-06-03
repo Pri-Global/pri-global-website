@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Moon, Sun, ExternalLink, ChevronDown } from "lucide-react";
+import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "../../context/ThemeContext";
 import Button from "../ui/Button";
+import ThemeToggle from "../ui/ThemeToggle";
 
 const navLinks = [
   { label: "Services", to: "/services" },
@@ -20,7 +20,6 @@ const aiDropdown = [
 ];
 
 export default function Navbar() {
-  const { isDark, toggleTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -183,15 +182,7 @@ export default function Navbar() {
 
           {/* Desktop actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <motion.button
-              onClick={toggleTheme}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)] transition-colors"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun size={17} /> : <Moon size={17} />}
-            </motion.button>
+            <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
             <Button to="/careers" variant="secondary" size="sm" className="border-[var(--text-muted)]">
               Careers
             </Button>
@@ -202,13 +193,7 @@ export default function Navbar() {
 
           {/* Mobile: theme + burger */}
           <div className="flex lg:hidden items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:bg-[var(--border-subtle)] transition-colors"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun size={17} /> : <Moon size={17} />}
-            </button>
+            <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
             <button
               onClick={() => setOpen(!open)}
               className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:bg-[var(--border-subtle)] transition-colors"

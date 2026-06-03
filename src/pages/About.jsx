@@ -2,7 +2,8 @@ import { MapPin, Phone, ExternalLink, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
-import WorldMap from "../components/ui/WorldMap";
+import WorldMap from "../components/sections/WorldMap";
+import Timeline from "../components/sections/Timeline";
 import { useInView } from "../hooks/useInView";
 
 import ajayPhoto    from "../assets/ajay-patel.jpg";
@@ -118,7 +119,12 @@ export default function About() {
       {/* Values */}
       <section className="py-20 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading label="Our Values" heading="What drives us" className="mb-12" />
+          <SectionHeading label="Our Values" heading="What drives us" className="mb-8" />
+          <p className="text-sm text-[var(--text-secondary)] max-w-2xl mb-10 leading-relaxed border-l-2 border-royal pl-4">
+            We built dark mode not as an afterthought — but as the primary experience for executives
+            and decision-makers who do their best thinking after hours. PRI Global's interface was
+            designed to be as comfortable at midnight as it is at noon.
+          </p>
           <div ref={valuesRef} className="grid md:grid-cols-2 gap-6">
             {values.map((v, i) => (
               <div
@@ -139,6 +145,9 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* Timeline */}
+      <Timeline />
 
       {/* Leadership */}
       <section className="py-24 bg-[var(--bg-secondary)]">

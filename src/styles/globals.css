@@ -86,6 +86,71 @@ img.logo-wipe-lr:hover {
   animation: logoWipeLR 0.55s ease-out forwards;
 }
 
+/* ── ROI calculator sliders ────────────────────────────────────── */
+.roi-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4169e1;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(65, 105, 225, 0.25);
+}
+.roi-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: #4169e1;
+  cursor: pointer;
+}
+
+/* ── Timeline horizontal scroll (hidden scrollbar) ─────────────── */
+.timeline-scroll {
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.timeline-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Theme toggle burst (stars on dark mode) ───────────────────── */
+.theme-toggle-burst::before,
+.theme-toggle-burst::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #4169e1;
+  animation: themeStarBurst 0.55s ease-out forwards;
+}
+.theme-toggle-burst::before {
+  top: 2px;
+  right: 4px;
+  animation-delay: 0s;
+}
+.theme-toggle-burst::after {
+  bottom: 4px;
+  left: 2px;
+  animation-delay: 0.08s;
+}
+@keyframes themeStarBurst {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(6px, -8px) scale(0); }
+}
+.theme-toggle-btn {
+  transition: background-color 0.3s ease;
+}
+
 /* ── Respect user motion preference ────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -22,6 +22,8 @@ import awsLogo          from "../assets/Amazon_Web_Services_Logo.svg.png";
 import azureLogo        from "../assets/Microsoft_Azure.svg.png";
 import databricksLogo   from "../assets/azure-databricks.svg";
 import CallToAction from "../components/sections/CallToAction";
+import PrismDemo from "../components/sections/PrismDemo";
+import ROICalculator from "../components/sections/ROICalculator";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import AnimatedLogo from "../components/ui/AnimatedLogo";
 import { useInView } from "../hooks/useInView";
@@ -142,7 +144,8 @@ export default function AiInnovation() {
         </div>
       </section>
 
-      {/* ── SECTION 2: PR1SM.AI Feature ──────────────────────────────────────── */}
+      <PrismDemo />
+
       {/* ── SECTION 2: PR1SM.AI Platform ─────────────────────────────────────── */}
       <section className="py-20 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -334,6 +337,8 @@ export default function AiInnovation() {
           </div>
         </div>
       </section>
+
+      <ROICalculator />
 
       {/* ── SECTION 3: AI Services Grid ──────────────────────────────────────── */}
       <section className="py-20">

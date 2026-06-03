@@ -18,6 +18,8 @@ import Careers from "./pages/Careers";
 import Legal from "./pages/Legal";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookieSettings from "./pages/CookieSettings";
+import Quiz from "./pages/Quiz";
+import DarkModeToast from "./components/ui/DarkModeToast";
 
 /* ── Scroll progress bar ─────────────────────────────────────── */
 function ScrollProgress() {
@@ -130,6 +132,7 @@ function AnimatedRoutes() {
         <Route path="/legal"           element={<PW><Legal /></PW>} />
         <Route path="/privacy-policy"  element={<PW><PrivacyPolicy /></PW>} />
         <Route path="/cookie-settings" element={<PW><CookieSettings /></PW>} />
+        <Route path="/quiz" element={<PW><Quiz /></PW>} />
       </Routes>
     </AnimatePresence>
   );
@@ -148,6 +151,7 @@ export default function App() {
       </main>
       <Footer />
       <CookieBanner />
+      <DarkModeToast />
       <PriVaWidget />
       <BackToTop />
     </div>

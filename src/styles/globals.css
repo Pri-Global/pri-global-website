@@ -70,6 +70,22 @@
 .anim-fade-right { animation: fadeInRight 0.60s ease both; }
 .anim-fade-in    { animation: fadeIn      0.55s ease both; }
 
+/* ── Partner logos: left → right wipe on hover only ────────────── */
+@keyframes logoWipeLR {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+img.logo-wipe-lr {
+  clip-path: inset(0 0 0 0);
+}
+
+.group:hover img.logo-wipe-lr,
+a:hover img.logo-wipe-lr,
+img.logo-wipe-lr:hover {
+  animation: logoWipeLR 0.55s ease-out forwards;
+}
+
 /* ── Respect user motion preference ────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

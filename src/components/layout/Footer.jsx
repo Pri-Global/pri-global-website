@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ExternalLink, Globe, Code2, MapPin, Phone } from "lucide-react";
+import AnimatedIcon from "../ui/AnimatedIcon";
 
 const footerLinks = {
   Services: [
@@ -57,9 +58,9 @@ export default function Footer() {
                   aria-label={label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-royal transition-colors"
+                  className="group w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-royal transition-colors"
                 >
-                  <Icon size={16} />
+                  <AnimatedIcon Icon={Icon} size={16} className="text-white" />
                 </a>
               ))}
             </div>
@@ -88,9 +89,15 @@ export default function Footer() {
         </div>
 
         {/* Contact strip */}
-        <div className="flex flex-col md:flex-row gap-4 py-8 border-b border-white/10 text-sm text-white/50">
-          <a href="tel:6362567172" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone size={14} /> 636.256.7172
+        <div className="flex flex-col md:flex-row flex-wrap gap-4 py-8 border-b border-white/10 text-sm text-white/50">
+          <a href="tel:6367791651" className="flex items-center gap-2 hover:text-white transition-colors">
+            <Phone size={14} /> 636-779-1651 (Ajay Patel)
+          </a>
+          <a href="tel:3147845854" className="flex items-center gap-2 hover:text-white transition-colors">
+            <Phone size={14} /> 314-784-5854 (Liezl Moss)
+          </a>
+          <a href="mailto:ajay@pr1sm.ai" className="flex items-center gap-2 hover:text-white transition-colors">
+            ajay@pr1sm.ai
           </a>
           <span className="flex items-start gap-2 flex-wrap">
             <MapPin size={14} className="shrink-0 mt-0.5" /> Ellisville, MO · Hyderabad · Pune · Manila · Ottawa

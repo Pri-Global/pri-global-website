@@ -1,4 +1,5 @@
 import { BookOpen, FileText, Newspaper, ArrowRight } from "lucide-react";
+import AnimatedIcon from "../components/ui/AnimatedIcon";
 import CallToAction from "../components/sections/CallToAction";
 
 const categories = [
@@ -49,13 +50,13 @@ export default function Resources() {
       <section className="py-20 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-6">
-            {categories.map(({ icon: Icon, label, description }) => (
+            {categories.map(({ icon: Icon, label, description }, i) => (
               <div
                 key={label}
-                className="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-7 flex flex-col gap-4"
+                className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-7 flex flex-col gap-4"
               >
                 <div className="w-11 h-11 rounded-xl bg-royal/10 dark:bg-royaldark/15 flex items-center justify-center">
-                  <Icon size={20} className="text-royal dark:text-royaldark" />
+                  <AnimatedIcon Icon={Icon} size={20} className="text-royal dark:text-royaldark" />
                 </div>
                 <div>
                   <h3 className="font-heading text-xl font-bold text-[var(--text-primary)] mb-2">

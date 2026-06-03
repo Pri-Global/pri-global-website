@@ -5,6 +5,7 @@ import Button from "../components/ui/Button";
 import CallToAction from "../components/sections/CallToAction";
 import IllustrationPlaceholder from "../components/ui/IllustrationPlaceholder";
 import { useInView } from "../hooks/useInView";
+import AnimatedIcon from "../components/ui/AnimatedIcon";
 
 const offerings = [
   {
@@ -100,7 +101,7 @@ export default function TalentSolutions() {
                 >
                   <Card hover className="h-full">
                     <div className="w-11 h-11 rounded-xl bg-royal/10 dark:bg-royaldark/15 flex items-center justify-center mb-4">
-                      <Icon size={22} className="text-royal dark:text-royaldark" />
+                      <AnimatedIcon Icon={Icon} size={22} className="text-royal dark:text-royaldark" />
                     </div>
                     <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-2">
                       {o.title}

@@ -1,83 +1,106 @@
 /**
- * AnimatedIcon — draws a Lucide SVG icon via stroke-dashoffset animation.
- *
- * Strategy (avoids getTotalLength-returns-0 bug):
- *  1. Render with opacity:0 so there's never a flash of the pre-animation state.
- *  2. On trigger, use a double-rAF to guarantee the browser has committed layout
- *     before reading getTotalLength() — opacity:0 keeps it in the layout tree
- *     so the measurement is always accurate.
- *  3. Set stroke-dasharray = dashoffset = actualLength (icon still hidden).
- *  4. Make visible (opacity:1) — icon hidden via dashoffset, not opacity.
- *  5. Use a plain CSS transition to animate dashoffset → 0 (draw in).
- *     Pure CSS is chosen over Framer Motion's animate() because FM v12's
- *     imperative animate has known quirks with SVG presentation attributes.
+ * AnimatedIcon — semantic per-icon stroke sequences on hover.
  */
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
+import { buildDrawPlan, getIconName } from "../../utils/iconDrawSequences";
 
 const SELECTORS = "path, circle, line, polyline, rect, ellipse";
+const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-export default function AnimatedIcon({
-  Icon,
-  size = 24,
-  className = "",
-  trigger = false,
-  delay = 0,
-  duration = 0.7,
-}) {
-  const wrapRef  = useRef(null);
-  const hasRun   = useRef(false);
-  const [show, setShow] = useState(false);
+function prepHidden(el) {
+  const len = el.getTotalLength?.() ?? 0;
+  if (len <= 0) return false;
+  el.style.transition = "none";
+  el.style.strokeDasharray = `${len}`;
+  el.style.strokeDashoffset = `${len}`;
+  return true;
+}
 
-  useEffect(() => {
-    if (!trigger || hasRun.current) return;
-    hasRun.current = true;
+function drawTo(el, offset, duration, delay = 0) {
+  const len = parseFloat(el.style.strokeDasharray);
+  if (!len) return;
+  el.style.transition = `stroke-dashoffset ${duration}s ${EASE} ${delay}s`;
+  el.style.strokeDashoffset = `${offset}`;
+}
 
-    // Double-rAF: first frame → layout committed, second → paint committed.
-    // This guarantees getTotalLength() returns the real value even when the
-    // parent motion.div started at opacity:0.
-    const id1 = requestAnimationFrame(() => {
-      const id2 = requestAnimationFrame(() => {
-        const wrap = wrapRef.current;
-        if (!wrap) return;
+export default function AnimatedIcon({ Icon, size = 24, className = "" }) {
+  const wrapRef = useRef(null);
 
-        const els = Array.from(wrap.querySelectorAll(SELECTORS));
+  const resetAll = useCallback(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    wrap.querySelectorAll(SELECTORS).forEach((el) => {
+      el.style.transition = "none";
+      el.style.strokeDashoffset = "0";
+      el.style.strokeDasharray = "";
+    });
+  }, []);
 
-        // Measure and hide via dash — transition is disabled during setup
-        els.forEach((el) => {
-          const len = el.getTotalLength?.() ?? 0;
-          if (len <= 0) return;
-          el.style.transition     = "none";
-          el.style.strokeDasharray  = `${len}`;
-          el.style.strokeDashoffset = `${len}`;
-        });
+  const playDraw = useCallback(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
 
-        // Make the span visible — paths still hidden via dashoffset
-        setShow(true);
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
 
-        // One more rAF so the browser registers the dashoffset before
-        // we start transitioning it (otherwise the transition is skipped)
-        requestAnimationFrame(() => {
-          els.forEach((el, i) => {
-            const len = parseFloat(el.style.strokeDasharray);
-            if (!len) return;
-            const d = delay + i * 0.1;
-            el.style.transition     =
-              `stroke-dashoffset ${duration}s cubic-bezier(0.22,1,0.36,1) ${d}s`;
-            el.style.strokeDashoffset = "0";
-          });
-        });
-      });
-      return () => cancelAnimationFrame(id2);
+    const elements = Array.from(wrap.querySelectorAll(SELECTORS)).filter((el) => {
+      const len = el.getTotalLength?.() ?? 0;
+      return len > 0;
     });
 
-    return () => cancelAnimationFrame(id1);
-  }, [trigger, delay, duration]);
+    if (!elements.length) return;
+
+    const plan = buildDrawPlan(getIconName(Icon), elements);
+
+    /* Blitz: zwei Phasen auf einem Pfad (Schaft → Spitze) */
+    if (plan.twoPhase) {
+      const { el, phases, stagger } = plan;
+      if (!prepHidden(el)) return;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const len = parseFloat(el.style.strokeDasharray);
+          const [p1] = phases;
+          const phaseDur = stagger || 0.22;
+          drawTo(el, len * (1 - p1), phaseDur, 0);
+          setTimeout(() => drawTo(el, 0, phaseDur, 0), phaseDur * 1000 + 40);
+        });
+      });
+      return;
+    }
+
+    plan.forEach((step) => prepHidden(step.el));
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        plan.forEach((step) => drawTo(step.el, 0, step.duration, step.delay));
+      });
+    });
+  }, [Icon]);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+
+    const target = el.closest(".group") || el.parentElement || el;
+
+    const onEnter = () => playDraw();
+    const onLeave = () => resetAll();
+
+    target.addEventListener("mouseenter", onEnter);
+    target.addEventListener("mouseleave", onLeave);
+
+    return () => {
+      target.removeEventListener("mouseenter", onEnter);
+      target.removeEventListener("mouseleave", onLeave);
+    };
+  }, [playDraw, resetAll]);
 
   return (
     <span
       ref={wrapRef}
-      className="inline-flex items-center justify-center leading-none"
-      style={{ opacity: show ? 1 : 0, transition: "opacity 0.1s" }}
+      className="inline-flex items-center justify-center leading-none pointer-events-none"
     >
       <Icon size={size} className={className} />
     </span>

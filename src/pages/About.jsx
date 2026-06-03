@@ -1,4 +1,4 @@
-import { MapPin, Phone, ExternalLink } from "lucide-react";
+import { MapPin, Phone, ExternalLink, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
@@ -221,6 +221,53 @@ export default function About() {
             >
               Full leadership profiles at priglobal.com <ExternalLink size={13} />
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Talk to Our Leaders */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">Direct Contact</span>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Talk to Our Leaders</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {[
+              { initials: "AP", name: "Ajay Patel", title: "CEO & Chairman, PRI Global / PR1SM.AI", phone: "636-779-1651", email: "ajay@pr1sm.ai", address: "174 Clarkson Road, Ellisville, MO 63011" },
+              { initials: "LM", name: "Liezl Moss", title: "Managing Director & Growth Strategy", phone: "314-784-5854", email: "liezl.moss@pr1sm.ai", address: "174 Clarkson Road, Ellisville, MO 63011" },
+            ].map((person) => (
+              <motion.div
+                key={person.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -4, transition: { type: "spring", stiffness: 280, damping: 18 } }}
+                className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-7"
+              >
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 rounded-full bg-royal flex items-center justify-center shrink-0">
+                    <span className="text-white font-heading font-bold text-sm">{person.initials}</span>
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-extrabold text-lg text-[var(--text-primary)] leading-tight">{person.name}</h3>
+                    <p className="text-xs text-[var(--text-secondary)] leading-snug mt-0.5">{person.title}</p>
+                  </div>
+                </div>
+                <div className="space-y-2.5 text-sm">
+                  <a href={`tel:${person.phone.replace(/-/g, "")}`} className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
+                    <Phone size={14} className="text-royal shrink-0" /> {person.phone}
+                  </a>
+                  <a href={`mailto:${person.email}`} className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
+                    <Mail size={14} className="text-royal shrink-0" /> {person.email}
+                  </a>
+                  <div className="flex items-start gap-3 text-[var(--text-secondary)]">
+                    <MapPin size={14} className="text-royal shrink-0 mt-0.5" /> {person.address}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

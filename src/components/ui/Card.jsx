@@ -13,7 +13,7 @@ export default function Card({ children, className = "", hover = false, ...props
 
   return (
     <motion.div
-      className={`bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-6 ${className}`}
+      className={`group bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-6 ${className}`}
       {...hoverProps}
       {...props}
     >

@@ -15,7 +15,7 @@ function ServiceDetail({ svc, index }) {
   return (
     <div
       ref={ref}
-      className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-10 lg:gap-16 items-center py-14 border-b border-[var(--border)] last:border-0 ${
+      className={`group flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-10 lg:gap-16 items-center py-14 border-b border-[var(--border)] last:border-0 ${
         inView ? "anim-fade-up" : "opacity-0"
       }`}
     >
@@ -23,14 +23,7 @@ function ServiceDetail({ svc, index }) {
       <div className="shrink-0 w-full lg:w-64 flex flex-col items-center text-center">
         <div className="w-20 h-20 rounded-2xl bg-royal/10 dark:bg-royaldark/15 flex items-center justify-center mb-4">
           {Icon && (
-            <AnimatedIcon
-              Icon={Icon}
-              size={36}
-              className="text-royal dark:text-royaldark"
-              trigger={inView}
-              delay={0.08}
-              duration={0.9}
-            />
+            <AnimatedIcon Icon={Icon} size={36} className="text-royal dark:text-royaldark" />
           )}
         </div>
         <span className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold text-[var(--border)] leading-none">

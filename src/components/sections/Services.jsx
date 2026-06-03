@@ -1,7 +1,6 @@
-import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { services, iconMap } from "../../data/services";
 import SectionHeading from "../ui/SectionHeading";
 import AnimatedIcon from "../ui/AnimatedIcon";
@@ -14,13 +13,10 @@ const cardVariants = {
 /* Each card manages its own viewport detection so the icon
    draws exactly when that card becomes visible. */
 function ServiceCard({ svc }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
   const Icon = iconMap[svc.icon];
 
   return (
     <motion.div
-      ref={ref}
       variants={cardVariants}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8, transition: { type: "spring", stiffness: 280, damping: 18 } }}
@@ -43,14 +39,7 @@ function ServiceCard({ svc }) {
                    flex items-center justify-center mb-4 shrink-0"
       >
         {Icon && (
-          <AnimatedIcon
-            Icon={Icon}
-            size={22}
-            className="text-royal dark:text-royaldark"
-            trigger={inView}
-            delay={0.1}
-            duration={0.75}
-          />
+          <AnimatedIcon Icon={Icon} size={22} className="text-royal dark:text-royaldark" />
         )}
       </motion.div>
 

@@ -5,46 +5,12 @@ import CallToAction from "../components/sections/CallToAction";
 import WorldMap from "../components/sections/WorldMap";
 import Timeline from "../components/sections/Timeline";
 import { useInView } from "../hooks/useInView";
-
-import ajayPhoto    from "../assets/ajay-patel.jpg";
-import keenanPhoto  from "../assets/keenan-patel.png";
-import marlaPhoto   from "../assets/marla-dicandia.jpg";
-import sureshPhoto  from "../assets/suresh-karampudi.jpg";
-
-const leaders = [
-  {
-    photo: ajayPhoto,
-    name:  "Ajay Patel",
-    title: "Chairman",
-    location: "Ellisville, MO",
-    bio: "Visionary thought leader with 30+ years of hands-on IT experience. During his 24 years as CEO of PRI Global, Ajay built long-lasting partnerships with Fortune 500 companies worldwide, leveraging technology and best practices to develop innovative business solutions for C-level executives.",
-    edu: "B.S. Computer Science · Northwestern Kellogg School of Management",
-  },
-  {
-    photo: keenanPhoto,
-    name:  "Keenan Patel",
-    title: "Chief Executive Officer",
-    location: "Ellisville, MO",
-    bio: "Keenan leads PRI Global's global strategic planning and operations, bringing both entrepreneurial and intrapreneurial insight. Since joining in 2014, he has driven profitable revenue growth and integrated business units into a cohesive, matrixed organisation focused on long-term success.",
-    edu: "B.S. Finance, University of Missouri-Columbia · Lean Six Sigma Green Belt (in progress)",
-  },
-  {
-    photo: marlaPhoto,
-    name:  "Marla Dicandia",
-    title: "Chief Financial Officer",
-    location: "Ellisville, MO",
-    bio: "Marla oversees PRI Global's Finance, Accounting, and People Operations. With over two decades of leadership, she brings deep expertise in financial stewardship, risk management, and organisational transformation — empowering PRI Global to invest boldly in innovation while maintaining rigorous fiscal discipline.",
-    edu: "B.S. Accounting, SIU · MBA, Creighton University · CPA",
-  },
-  {
-    photo: sureshPhoto,
-    name:  "Suresh Karampudi",
-    title: "Managing Director, PRI Global India",
-    location: "Hyderabad, India",
-    bio: "Suresh leads PRI Global's India operations, driving delivery excellence and talent strategy across the region. With 20+ years in technology consulting, he builds high-performing teams and aligns regional execution with global strategic goals to deliver transformative client outcomes.",
-    edu: "M.S. Computer Science",
-  },
-];
+import { priGlobalLeadership, prismLeadership } from "../data/team";
+import PriGlobalLeaderRow from "../components/team/PriGlobalLeaderRow";
+import PrismTeamSection from "../components/team/PrismTeamSection";
+import PrismLeadershipDivider from "../components/team/PrismLeadershipDivider";
+import VideoSection from "../components/sections/VideoSection";
+import { VIDEOS } from "../data/videos";
 
 const values = [
   {
@@ -71,8 +37,7 @@ const values = [
 
 
 export default function About() {
-  const [valuesRef, valuesInView]       = useInView({ threshold: 0.05 });
-  const [leadershipRef, leadershipInView] = useInView({ threshold: 0.05 });
+  const [valuesRef, valuesInView] = useInView({ threshold: 0.05 });
 
   return (
     <>
@@ -93,9 +58,9 @@ export default function About() {
                 <span className="text-royal dark:text-royaldark">work for people.</span>
               </h1>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                Founded in 1996, PRI Global (PRI India Private Services Limited) is a technology
+                Founded in 1997, PRI Global (PRI India Private Services Limited) is a technology
                 consulting and talent business with operations across the USA, India, and globally.
-                Over 29 years we have built a reputation for genuine expertise, transparent advice,
+                Over 28 years of trusted services, we have built a reputation for genuine expertise, transparent advice,
                 and relentless focus on outcomes—placing 12,700+ IT resources and delivering 300+
                 projects for clients worldwide.
               </p>
@@ -115,6 +80,15 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      <VideoSection
+        label="Our Growth Story"
+        heading="From Missouri to the world"
+        subheading="From Ellisville, Missouri to a global presence across 4 countries — watch our expansion story."
+        src={VIDEOS.officeExpansion}
+        title="PRI Global Office Expansion"
+        sectionClassName="py-20"
+      />
 
       {/* Values */}
       <section className="py-20 bg-[var(--bg-secondary)]">
@@ -149,90 +123,72 @@ export default function About() {
       {/* Timeline */}
       <Timeline />
 
-      {/* Leadership */}
+      {/* PRI Global Leadership */}
       <section className="py-24 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Heading */}
-          <div
-            ref={leadershipRef}
-            className={`text-center mb-16 ${leadershipInView ? "anim-fade-up" : "opacity-0"}`}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="text-center mb-14 max-w-3xl mx-auto"
           >
             <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-4">
               Our Leadership
             </span>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4">
-              The people behind PRI Global
+              The Team Behind PRI Global
             </h2>
-            <p className="text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed">
-              29 years of technology excellence — powered by a leadership team that combines
-              vision, operational depth, and a people-first approach.
+            <p className="text-[var(--text-secondary)] leading-relaxed">
+              A cohesive, experienced, diverse team managing operations across six offices in the
+              U.S., India, and the Philippines.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Leaders — editorial rows */}
-          <div className="space-y-8">
-            {leaders.map((leader, i) => {
-              const flip = i % 2 === 1;
-              return (
-                <motion.div
-                  key={leader.name}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className={`flex flex-col md:flex-row ${flip ? "md:flex-row-reverse" : ""} gap-8 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow`}
-                >
-                  {/* Photo */}
-                  <div className="md:w-64 lg:w-72 shrink-0">
-                    <img
-                      src={leader.photo}
-                      alt={leader.name}
-                      className="w-full h-64 md:h-full object-cover object-top"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex flex-col justify-center px-6 py-8 md:py-10 flex-1">
-                    <p className="text-xs font-semibold text-royal uppercase tracking-widest mb-2">
-                      {leader.title}
-                    </p>
-                    <h3 className="font-heading text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
-                      {leader.name}
-                    </h3>
-                    <p className="text-xs text-[var(--text-muted)] flex items-center gap-1 mb-5">
-                      <MapPin size={11} className="shrink-0" />
-                      {leader.location}
-                    </p>
-
-                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
-                      {leader.bio}
-                    </p>
-
-                    <div className="flex items-start gap-2 text-xs text-[var(--text-muted)] border-t border-[var(--border-subtle)] pt-4">
-                      <span className="font-medium shrink-0">🎓</span>
-                      <span className="break-words">{leader.edu}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Subtle CTA */}
-          <div className="text-center mt-12">
-            <a
-              href="https://priglobal.com/leadership-team"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-royal hover:underline font-medium"
-            >
-              Full leadership profiles at priglobal.com <ExternalLink size={13} />
-            </a>
+          <div className="space-y-8 max-w-5xl mx-auto">
+            {priGlobalLeadership.map((member, i) => (
+              <PriGlobalLeaderRow key={member.id} member={member} index={i} />
+            ))}
           </div>
         </div>
       </section>
+
+      <PrismLeadershipDivider />
+
+      {/* PR1SM.AI Team — always dark brand section */}
+      <section className="py-24 bg-[#0d1628]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="text-center mb-14 max-w-3xl mx-auto"
+          >
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0D1B3E] border border-[#1A56DB] text-xs font-bold tracking-widest uppercase text-[#93c5fd] mb-4">
+              PR1SM.AI
+            </span>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
+              The PR1SM.AI Team
+            </h2>
+            <p className="text-[#6a8aaa] leading-relaxed">
+              Experienced leaders. Proven track record.
+            </p>
+          </motion.div>
+
+          <PrismTeamSection members={prismLeadership} />
+        </div>
+      </section>
+
+      <VideoSection
+        label="Take a Tour"
+        heading="Our Offices Around the World"
+        subheading="Get a feel for the PRI Global environment — where talent meets technology."
+        src={VIDEOS.officeTour}
+        title="PRI Global Office Tour"
+        sectionClassName="py-20"
+        bgClassName="bg-[var(--bg-secondary)]"
+      />
 
       {/* Talk to Our Leaders */}
       <section className="py-16">
@@ -241,10 +197,33 @@ export default function About() {
             <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">Direct Contact</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Talk to Our Leaders</h2>
           </div>
-          <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              { initials: "AP", name: "Ajay Patel", title: "CEO & Chairman, PRI Global / PR1SM.AI", phone: "636-779-1651", email: "ajay@pr1sm.ai", address: "174 Clarkson Road, Ellisville, MO 63011" },
-              { initials: "LM", name: "Liezl Moss", title: "Managing Director & Growth Strategy", phone: "314-784-5854", email: "liezl.moss@pr1sm.ai", address: "174 Clarkson Road, Ellisville, MO 63011" },
+              {
+                initials: "KP",
+                name: "Keenan Patel",
+                title: "CEO, PRI Global",
+                phone: "636.256.7172",
+                email: "info@priglobal.com",
+                address: "174 Clarkson Road, Ellisville, MO 63011",
+                note: "PRI Global HQ",
+              },
+              {
+                initials: "AP",
+                name: "Ajay Patel",
+                title: "Chairman, PRI Global & Chairman & Founder, PR1SM.AI",
+                phone: "636-779-1651",
+                email: "ajay@pr1sm.ai",
+                address: "174 Clarkson Road, Ellisville, MO 63011",
+              },
+              {
+                initials: "LM",
+                name: "Liezl Moss",
+                title: "Managing Director & Growth Strategy, PR1SM.AI",
+                phone: "314-784-5854",
+                email: "liezl.moss@PR1SM.AI",
+                address: "174 Clarkson Road, Ellisville, MO 63011",
+              },
             ].map((person) => (
               <motion.div
                 key={person.name}
@@ -262,6 +241,9 @@ export default function About() {
                   <div>
                     <h3 className="font-heading font-extrabold text-lg text-[var(--text-primary)] leading-tight">{person.name}</h3>
                     <p className="text-xs text-[var(--text-secondary)] leading-snug mt-0.5">{person.title}</p>
+                    {person.note && (
+                      <p className="text-[10px] text-[var(--text-muted)] mt-0.5">{person.note}</p>
+                    )}
                   </div>
                 </div>
                 <div className="space-y-2.5 text-sm">
@@ -297,7 +279,7 @@ export default function About() {
       </section>
 
       {/* Contact */}
-      <section className="py-20">
+      <section id="contact" className="py-20 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { scrollToPageTop } from "../../utils/scrollToPageTop";
 import { ExternalLink, Globe, Code2, MapPin, Phone } from "lucide-react";
 import AnimatedIcon from "../ui/AnimatedIcon";
 
@@ -33,6 +34,18 @@ const socials = [
 ];
 
 export default function Footer() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const onLogoClick = (e) => {
+    e.preventDefault();
+    window.history.replaceState(null, "", "/");
+    if (pathname !== "/") {
+      navigate("/", { replace: true });
+    }
+    scrollToPageTop();
+  };
+
   return (
     <footer className="bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
@@ -40,14 +53,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-2 mb-4">
+            <Link to="/" className="inline-flex items-center gap-2 mb-4" onClick={onLogoClick}>
               <div className="w-8 h-8 rounded-lg bg-royal flex items-center justify-center">
                 <span className="text-white font-heading font-bold text-sm">P</span>
               </div>
               <span className="font-heading font-bold text-lg">PRI Global</span>
             </Link>
             <p className="text-white/60 text-sm leading-relaxed max-w-sm mb-6">
-              Technology that moves business forward. Since 1996, we combine deep expertise,
+              Technology that moves business forward. In business since 1997 — over 28 years of trusted services. We combine deep expertise,
               proven delivery, and genuine partnership to help organisations thrive in a digital world.
             </p>
             <div className="flex gap-3">
@@ -77,6 +90,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       to={link.to}
+                      onClick={scrollToPageTop}
                       className="text-sm text-white/60 hover:text-white transition-colors"
                     >
                       {link.label}
@@ -90,14 +104,17 @@ export default function Footer() {
 
         {/* Contact strip */}
         <div className="flex flex-col md:flex-row flex-wrap gap-4 py-8 border-b border-white/10 text-sm text-white/50">
+          <a href="tel:6362567172" className="flex items-center gap-2 hover:text-white transition-colors">
+            <Phone size={14} /> 636.256.7172 (PRI Global HQ)
+          </a>
           <a href="tel:6367791651" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone size={14} /> 636-779-1651 (Ajay Patel)
+            <Phone size={14} /> 636-779-1651 (Ajay Patel · PR1SM.AI)
           </a>
           <a href="tel:3147845854" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone size={14} /> 314-784-5854 (Liezl Moss)
+            <Phone size={14} /> 314-784-5854 (Liezl Moss · Growth)
           </a>
-          <a href="mailto:ajay@pr1sm.ai" className="flex items-center gap-2 hover:text-white transition-colors">
-            ajay@pr1sm.ai
+          <a href="mailto:info@priglobal.com" className="flex items-center gap-2 hover:text-white transition-colors">
+            info@priglobal.com
           </a>
           <span className="flex items-start gap-2 flex-wrap">
             <MapPin size={14} className="shrink-0 mt-0.5" /> Ellisville, MO · Hyderabad · Pune · Manila · Ottawa

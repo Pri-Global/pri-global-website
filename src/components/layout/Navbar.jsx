@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { scrollToPageTop } from "../../utils/scrollToPageTop";
 import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
@@ -20,7 +21,24 @@ const aiDropdown = [
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+
+  const onNavClick = () => {
+    setOpen(false);
+    scrollToPageTop();
+  };
+
+  const onLogoClick = (e) => {
+    e.preventDefault();
+    setOpen(false);
+    window.history.replaceState(null, "", "/");
+    if (pathname !== "/") {
+      navigate("/", { replace: true });
+    }
+    scrollToPageTop();
+  };
   const [aiOpen, setAiOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const aiRef = useRef(null);
@@ -49,7 +67,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group" onClick={() => { setOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+          <Link to="/" className="flex items-center gap-2 group" onClick={onLogoClick}>
             <motion.div
               whileHover={{ scale: 1.08, rotate: 3 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -69,6 +87,7 @@ export default function Navbar() {
               <NavLink
                 key={link.to}
                 to={link.to}
+                onClick={onNavClick}
                 className={({ isActive }) =>
                   `relative px-4 py-2 text-sm font-medium rounded-lg transition-colors group ${
                     isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"
@@ -88,6 +107,7 @@ export default function Navbar() {
               <NavLink
                 key={link.to}
                 to={link.to}
+                onClick={onNavClick}
                 className={({ isActive }) =>
                   `relative px-4 py-2 text-sm font-medium rounded-lg transition-colors group ${
                     isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"
@@ -147,7 +167,10 @@ export default function Navbar() {
                           className={({ isActive }) =>
                             `flex items-center px-4 py-3 text-sm transition-colors ${isActive ? "text-royal bg-royal/8 font-medium" : "text-[var(--text-secondary)] hover:text-royal hover:bg-[var(--border-subtle)]"}`
                           }
-                          onClick={() => setAiOpen(false)}
+                          onClick={() => {
+                            setAiOpen(false);
+                            scrollPageTop();
+                          }}
                         >
                           {item.label}
                         </NavLink>
@@ -163,6 +186,7 @@ export default function Navbar() {
               <NavLink
                 key={link.to}
                 to={link.to}
+                onClick={onNavClick}
                 className={({ isActive }) =>
                   `relative px-4 py-2 text-sm font-medium rounded-lg transition-colors group ${
                     isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"
@@ -183,10 +207,17 @@ export default function Navbar() {
           {/* Desktop actions */}
           <div className="hidden lg:flex items-center gap-3">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
-            <Button to="/careers" variant="secondary" size="sm" className="border-[var(--text-muted)]">
+            <Link
+              to="/employee-login"
+              onClick={onNavClick}
+              className="text-[12px] text-[var(--text-muted)] hover:text-royal dark:hover:text-royaldark transition-colors"
+            >
+              Employee Portal
+            </Link>
+            <Button to="/careers" variant="secondary" size="sm" className="border-[var(--text-muted)]" onClick={scrollToPageTop}>
               Careers
             </Button>
-            <Button to="/about" size="sm" className="pulse-cta">
+            <Button to="/about" size="sm" className="pulse-cta" onClick={scrollToPageTop}>
               Get in touch
             </Button>
           </div>
@@ -231,14 +262,14 @@ export default function Navbar() {
                 {/* Services + Talent */}
                 {navLinks.slice(0, 2).map((link, i) => (
                   <motion.div key={link.to} initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.04, duration: 0.2 }}>
-                    <NavLink to={link.to} onClick={() => setOpen(false)} className={({ isActive }) => `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
+                    <NavLink to={link.to} onClick={onNavClick} className={({ isActive }) => `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
                       {link.label}
                     </NavLink>
                   </motion.div>
                 ))}
                 {/* AI dropdown items flat on mobile */}
                 <motion.div initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.08, duration: 0.2 }}>
-                  <NavLink to="/ai-innovation" onClick={() => setOpen(false)} className={({ isActive }) => `flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
+                  <NavLink to="/ai-innovation" onClick={onNavClick} className={({ isActive }) => `flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
                     <span className="flex items-center gap-2">AI Innovation <span className="w-1.5 h-1.5 rounded-full bg-royal inline-block" /></span>
                   </NavLink>
                 </motion.div>
@@ -250,20 +281,27 @@ export default function Navbar() {
                 {/* Remaining links */}
                 {navLinks.slice(2).map((link, i) => (
                   <motion.div key={link.to} initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: (i + 4) * 0.04, duration: 0.2 }}>
-                    <NavLink to={link.to} onClick={() => setOpen(false)} className={({ isActive }) => `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
+                    <NavLink to={link.to} onClick={onNavClick} className={({ isActive }) => `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
                       {link.label}
                     </NavLink>
                   </motion.div>
                 ))}
                 <NavLink
                   to="/careers"
-                  onClick={() => setOpen(false)}
+                  onClick={onNavClick}
                   className="px-4 py-2.5 text-sm font-medium rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)] transition-colors"
                 >
                   Careers
                 </NavLink>
+                <NavLink
+                  to="/employee-login"
+                  onClick={onNavClick}
+                  className="px-4 py-2.5 text-xs font-medium rounded-lg text-[var(--text-muted)] hover:text-royal hover:bg-[var(--border-subtle)] transition-colors"
+                >
+                  Employee Portal
+                </NavLink>
               </nav>
-              <Button to="/about" size="sm" className="w-full mt-3" onClick={() => setOpen(false)}>
+              <Button to="/about" size="sm" className="w-full mt-3" onClick={onNavClick}>
                 Get in touch
               </Button>
             </div>

@@ -6,6 +6,9 @@ import CallToAction from "../components/sections/CallToAction";
 import IllustrationPlaceholder from "../components/ui/IllustrationPlaceholder";
 import { useInView } from "../hooks/useInView";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
+import { motion } from "framer-motion";
+import VideoPlayer from "../components/ui/VideoPlayer";
+import { VIDEOS } from "../data/videos";
 
 const offerings = [
   {
@@ -148,13 +151,67 @@ export default function TalentSolutions() {
         </div>
       </section>
 
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            label="Our Team"
+            heading="The People Behind the Placements"
+            subheading="Our consultants are more than resumes — they're the driving force behind your success."
+            className="mb-10"
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="max-w-[900px] mx-auto"
+          >
+            <VideoPlayer src={VIDEOS.people} title="PRI Global — Our People" />
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-[var(--bg-secondary)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            label="In Action"
+            heading="See Our Process in Action"
+            className="mb-10"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <VideoPlayer src={VIDEOS.process} title="The PRI Process" />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+            >
+              <VideoPlayer
+                src={VIDEOS.competitiveRecruiting}
+                title="Our Competitive Recruiting Advantage"
+              />
+            </motion.div>
+          </div>
+          <p className="text-center text-xs text-[var(--text-muted)] mt-6 max-w-xl mx-auto">
+            Large video files — playback starts when you press play. On mobile, Wi‑Fi is recommended.
+          </p>
+        </div>
+      </section>
+
       {/* Stats banner */}
       <section className="py-16 bg-navy">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
             {[
               { num: "12,700+", label: "IT resources successfully placed" },
-              { num: "29+",     label: "Years placing technology talent" },
+              { num: "28+",     label: "Years placing technology talent" },
               { num: "96%",     label: "Client retention rate" },
               { num: "300+",    label: "Successful projects delivered" },
             ].map((s) => (

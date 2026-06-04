@@ -99,9 +99,16 @@ export default function PrismAI() {
               PR1SM.AI
             </div>
 
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-white leading-snug mb-3">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-white leading-snug mb-2">
               Talk to Your Data. Get Answers. Instantly.
             </h2>
+
+            <p className="text-royaldark font-semibold text-base mb-1">
+              Let&apos;s Build Your Technology Advantage.
+            </p>
+            <p className="text-white/60 text-sm mb-6">
+              Smarter Data. Stronger Decisions. Better Outcomes.
+            </p>
 
             <p className="text-white/70 text-base sm:text-lg leading-relaxed mb-8">
               PR1SM.AI is PRI Global's AI intelligence layer — purpose-built for your business.

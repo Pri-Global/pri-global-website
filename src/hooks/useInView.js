@@ -27,6 +27,15 @@ export function useInView({ threshold = 0.1, rootMargin = "0px" } = {}) {
     );
 
     observer.observe(el);
+
+    // Elements already in viewport on mount (IO can miss the first paint)
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top < vh && rect.bottom > 0) {
+      setInView(true);
+      observer.disconnect();
+    }
+
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 

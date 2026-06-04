@@ -27,6 +27,8 @@ import ROICalculator from "../components/sections/ROICalculator";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import AnimatedLogo from "../components/ui/AnimatedLogo";
 import { useInView } from "../hooks/useInView";
+import VideoSection from "../components/sections/VideoSection";
+import { VIDEOS } from "../data/videos";
 
 const prismPillars = [
   { icon: Layers,       title: "Sits on Top, Not in the Way",       description: "No Rip-and-Replace. No Disruption. Works with your existing systems and data." },
@@ -164,8 +166,14 @@ export default function AiInnovation() {
             <p className="text-lg font-semibold text-royal dark:text-royaldark mb-4">
               PR1SM.AI Turns Your Data Into Decisions. Instantly.
             </p>
-            <p className="text-[var(--text-secondary)] leading-relaxed text-lg">
+            <p className="text-[var(--text-secondary)] leading-relaxed text-lg mb-2">
               Talk to Your Data. Get Answers. Make Smarter Moves.
+            </p>
+            <p className="text-lg font-semibold text-[var(--text-primary)]">
+              Let&apos;s Build Your Technology Advantage.
+            </p>
+            <p className="text-royal dark:text-royaldark font-medium mt-1">
+              Smarter Data. Stronger Decisions. Better Outcomes.
             </p>
           </div>
 
@@ -290,6 +298,16 @@ export default function AiInnovation() {
 
         </div>
       </section>
+
+      <VideoSection
+        label="Capabilities"
+        heading="Enterprise Application Development"
+        subheading="See how PRI Global builds custom applications powered by modern AI and cloud infrastructure."
+        src={VIDEOS.appDev}
+        title="PRI Global Application Development"
+        sectionClassName="py-20"
+        bgClassName="bg-[var(--bg-secondary)]"
+      />
 
       {/* ── POSTER SECTION ───────────────────────────────────────────────────── */}
       <section className="py-20 bg-[var(--bg-primary)]">

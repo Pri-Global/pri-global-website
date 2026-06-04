@@ -19,6 +19,9 @@ import Legal from "./pages/Legal";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookieSettings from "./pages/CookieSettings";
 import Quiz from "./pages/Quiz";
+import EmployeeLogin from "./pages/EmployeeLogin";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 import DarkModeToast from "./components/ui/DarkModeToast";
 
 /* ── Scroll progress bar ─────────────────────────────────────── */
@@ -53,7 +56,7 @@ function BackToTop() {
           transition={{ type: "spring", stiffness: 320, damping: 22 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.92 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => window.scrollTo(0, 0)}
           className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-royal text-white shadow-lg shadow-royal/30 flex items-center justify-center hover:bg-[var(--accent-hover)] transition-colors"
           aria-label="Back to top"
         >
@@ -128,6 +131,18 @@ function AnimatedRoutes() {
         <Route path="/industries"      element={<PW><Industries /></PW>} />
         <Route path="/about"           element={<PW><About /></PW>} />
         <Route path="/resources"       element={<PW><Resources /></PW>} />
+        <Route path="/resources/:slug" element={<PW><Resources /></PW>} />
+        <Route path="/employee-login" element={<PW><EmployeeLogin /></PW>} />
+        <Route
+          path="/employee-dashboard"
+          element={
+            <PW>
+              <ProtectedRoute>
+                <EmployeeDashboard />
+              </ProtectedRoute>
+            </PW>
+          }
+        />
         <Route path="/careers"         element={<PW><Careers /></PW>} />
         <Route path="/legal"           element={<PW><Legal /></PW>} />
         <Route path="/privacy-policy"  element={<PW><PrivacyPolicy /></PW>} />

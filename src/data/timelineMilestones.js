@@ -10,7 +10,7 @@ export const TYPE_COLORS = {
 
 export const milestones = [
   {
-    year: "1996",
+    year: "1997",
     title: "Founded",
     description:
       "PRI Global is established in Ellisville, Missouri. A bold vision: deliver top technology talent to businesses that need it most.",
@@ -123,4 +123,4 @@ export const milestones = [
   },
 ];
 
-export const CONDENSED_IDS = ["1996", "2010", "2015", "2024", "2025"];
+export const CONDENSED_IDS = ["1997", "2010", "2015", "2024", "2025"];

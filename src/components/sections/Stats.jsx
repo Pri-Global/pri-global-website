@@ -4,7 +4,7 @@ import AnimatedCounter from "../ui/AnimatedCounter";
 const stats = [
   { value: 12700, suffix: "+", label: "IT resources placed" },
   { value: 96,    suffix: "%", label: "Client retention rate" },
-  { value: 29,    suffix: "+", label: "Years of expertise" },
+  { value: 28,    suffix: "+", label: "Years of expertise" },
   { value: 300,   suffix: "+", label: "Projects delivered" },
 ];
 

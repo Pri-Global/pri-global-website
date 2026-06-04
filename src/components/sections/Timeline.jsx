@@ -96,7 +96,7 @@ export default function Timeline({ condensed = false }) {
           className="text-center max-w-2xl mx-auto mb-12"
         >
           <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">
-            29 Years of Excellence
+            28+ Years of Excellence
           </span>
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
             A Legacy Built on Trust, Talent & Technology.
@@ -185,7 +185,7 @@ export default function Timeline({ condensed = false }) {
         {condensed && (
           <p className="text-center mt-8">
             <Link
-              to="/about#timeline"
+              to="/about"
               className="inline-flex items-center gap-1 text-sm font-medium text-royal hover:underline"
             >
               See Full History →
@@ -211,7 +211,7 @@ export default function Timeline({ condensed = false }) {
                 <p className="text-[10px] uppercase tracking-widest text-white/60 mb-2">
                   {row.label}
                 </p>
-                <p className="text-sm text-white/70">1996: {row.then}</p>
+                <p className="text-sm text-white/70">1997: {row.then}</p>
                 <p className="font-heading font-bold text-lg mt-1">2025: {row.now}</p>
               </div>
             ))}

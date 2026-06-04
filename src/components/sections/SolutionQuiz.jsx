@@ -61,7 +61,7 @@ function getRecommendation(answers) {
   const q1 = answers[0];
   const q3 = answers[2];
 
-  if (q1 === "C" || q1 === "D" || q3 === "C" || q3 === "D") return "prism";
+  if (q1 === "C" || q1 === "D" || q3 === "C" || q3 === "D" || q3 === "E") return "prism";
   if (q1 === "A" || q3 === "A") return "staffing";
   if (q1 === "B" || q3 === "B") return "managed";
   return "overview";
@@ -114,27 +114,56 @@ const results = {
   },
 };
 
+const RESULT_KEYS = new Set(Object.keys(results));
+
+function loadSavedResult() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const { recommendation } = JSON.parse(raw);
+    if (!recommendation || !RESULT_KEYS.has(recommendation)) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return recommendation;
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+    return null;
+  }
+}
+
+function persistResult(recommendation) {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ recommendation, date: new Date().toISOString() })
+    );
+  } catch {
+    /* private mode / quota — quiz still works without storage */
+  }
+}
+
 export default function SolutionQuiz({ standalone = false }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
   const [direction, setDirection] = useState(1);
 
+  /* Homepage: always start fresh. /quiz page may restore last result. */
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!standalone) return;
+    const saved = loadSavedResult();
     if (saved) {
-      try {
-        const { recommendation } = JSON.parse(saved);
-        setResult(recommendation);
-        setStep(questions.length);
-      } catch {
-        /* ignore */
-      }
+      setResult(saved);
+      setStep(questions.length);
     }
-  }, []);
+  }, [standalone]);
 
-  const progress = result ? 100 : ((step + 1) / questions.length) * 100;
-  const q = questions[step];
+  const validResult = result && RESULT_KEYS.has(result) ? result : null;
+  const progress = validResult ? 100 : ((Math.min(step, questions.length - 1) + 1) / questions.length) * 100;
+  const activeStep = Math.min(step, questions.length - 1);
+  const q = questions[activeStep];
+  const showQuestions = !validResult && step < questions.length;
 
   const selectAnswer = (optionId) => {
     const next = [...answers, optionId];
@@ -143,11 +172,9 @@ export default function SolutionQuiz({ standalone = false }) {
 
     if (step + 1 >= questions.length) {
       const rec = getRecommendation(next);
+      if (!RESULT_KEYS.has(rec)) return;
       setResult(rec);
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ recommendation: rec, date: new Date().toISOString() })
-      );
+      persistResult(rec);
       setStep(questions.length);
     } else {
       setStep(step + 1);
@@ -155,18 +182,23 @@ export default function SolutionQuiz({ standalone = false }) {
   };
 
   const restart = () => {
-    localStorage.removeItem(STORAGE_KEY);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
     setAnswers([]);
     setResult(null);
     setStep(0);
     setDirection(-1);
   };
 
-  const rec = result ? results[result] : null;
+  const rec = validResult ? results[validResult] : null;
   const RecIcon = rec?.icon;
 
   return (
     <section
+      id="solution-quiz"
       className={`${standalone ? "pt-28 pb-20" : "py-20 md:py-28"} bg-[var(--bg-secondary)]`}
     >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -196,7 +228,7 @@ export default function SolutionQuiz({ standalone = false }) {
         </div>
 
         <AnimatePresence mode="wait" custom={direction}>
-          {!result ? (
+          {showQuestions && q ? (
             <motion.div
               key={step}
               custom={direction}
@@ -206,7 +238,7 @@ export default function SolutionQuiz({ standalone = false }) {
               transition={{ duration: 0.35 }}
             >
               <p className="text-sm text-[var(--text-muted)] mb-2">
-                Question {step + 1} of {questions.length}
+                Question {activeStep + 1} of {questions.length}
               </p>
               <h3 className="font-heading text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-6">
                 {q.text}
@@ -234,7 +266,7 @@ export default function SolutionQuiz({ standalone = false }) {
                 })}
               </div>
             </motion.div>
-          ) : (
+          ) : rec ? (
             <motion.div
               key="result"
               initial={{ opacity: 0, scale: 0.92 }}
@@ -294,7 +326,7 @@ export default function SolutionQuiz({ standalone = false }) {
                   <div
                     key={key}
                     className={`p-4 rounded-xl border text-sm ${
-                      key === result ? "border-royal bg-royal/5" : "border-[var(--border-subtle)]"
+                      key === validResult ? "border-royal bg-royal/5" : "border-[var(--border-subtle)]"
                     }`}
                   >
                     <p className="font-heading font-bold text-[var(--text-primary)] mb-1">
@@ -305,7 +337,7 @@ export default function SolutionQuiz({ standalone = false }) {
                 ))}
               </div>
             </motion.div>
-          )}
+          ) : null}
         </AnimatePresence>
       </div>
     </section>

@@ -5,7 +5,7 @@ import NewsScrollHint from "../components/ui/NewsScrollHint";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
 
 const Stats           = lazy(() => import("../components/sections/Stats"));
-const SolutionQuiz    = lazy(() => import("../components/sections/SolutionQuiz"));
+import SolutionQuiz from "../components/sections/SolutionQuiz";
 const ServicesSection = lazy(() => import("../components/sections/Services"));
 const DoingBusinessVideo = lazy(() => import("../components/sections/DoingBusinessVideo"));
 const PrismAI         = lazy(() => import("../components/sections/PrismAI"));
@@ -31,7 +31,7 @@ export default function Home() {
         <ClientLogos label="Trusted by leading organizations" />
       </div>
       <Suspense fallback={SectionFallback}><Stats /></Suspense>
-      <Suspense fallback={SectionFallback}><SolutionQuiz /></Suspense>
+      <SolutionQuiz />
       <Suspense fallback={SectionFallback}><ServicesSection /></Suspense>
       <Suspense fallback={SectionFallback}><DoingBusinessVideo /></Suspense>
       <Suspense fallback={SectionFallback}><PrismAI /></Suspense>

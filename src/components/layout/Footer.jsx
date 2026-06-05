@@ -55,7 +55,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex items-center mb-5" onClick={onLogoClick}>
-              <BrandLogo size="lg" variant="onDark" />
+              <BrandLogo size="xl" variant="onDark" />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed max-w-sm mb-6">
               Technology that moves business forward. In business since 1997 — over 28 years of trusted services. We combine deep expertise,

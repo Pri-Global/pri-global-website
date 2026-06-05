@@ -65,7 +65,7 @@ export default function PriVaWidget() {
             {/* Header */}
             <div className="bg-royal px-4 py-3 flex items-center justify-between">
               <div className="flex items-center gap-2.5 min-w-0">
-                <BrandLogo size="sm" variant="onDark" className="max-w-[88px] shrink-0" />
+                <BrandLogo size="sm" variant="onDark" className="shrink-0" />
                 <div className="min-w-0">
                   <div className="text-sm font-semibold text-white leading-tight">PriVa</div>
                   <div className="text-xs text-white/70 flex items-center gap-1">

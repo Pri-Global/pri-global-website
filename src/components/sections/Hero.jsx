@@ -211,7 +211,7 @@ const HeroChatCard = memo(function HeroChatCard() {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
         <HeroBackgroundVideo />
         {/* Mobile: static background (saves bandwidth) */}

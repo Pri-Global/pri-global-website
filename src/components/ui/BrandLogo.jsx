@@ -2,11 +2,19 @@ import { motion } from "framer-motion";
 import priGlobalLogo from "../../assets/logo/pri-global-logo.png";
 
 const HEIGHT = {
-  sm: "h-7",
-  md: "h-9",
-  lg: "h-11",
-  xl: "h-14",
-  "2xl": "h-16",
+  sm: "h-9",
+  md: "h-12",
+  lg: "h-14",
+  xl: "h-[4.5rem]",
+  "2xl": "h-24",
+};
+
+const MAX_WIDTH = {
+  sm: "max-w-[130px]",
+  md: "max-w-[220px]",
+  lg: "max-w-[260px]",
+  xl: "max-w-[300px]",
+  "2xl": "max-w-[340px]",
 };
 
 /**
@@ -28,9 +36,9 @@ export default function BrandLogo({
     <img
       src={priGlobalLogo}
       alt="PRI Global"
-      width={160}
-      height={48}
-      className={`${HEIGHT[size]} w-auto max-w-[min(200px,55vw)] object-contain object-left ${tone} ${className}`}
+      width={280}
+      height={84}
+      className={`${HEIGHT[size]} w-auto ${MAX_WIDTH[size]} sm:max-w-none object-contain object-left ${tone} ${className}`}
       decoding="async"
     />
   );

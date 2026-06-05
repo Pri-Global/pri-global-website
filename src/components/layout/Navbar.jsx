@@ -68,8 +68,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[4.5rem] lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center shrink-0 group" onClick={onLogoClick}>
-            <BrandLogo size="lg" animate />
+          <Link to="/" className="flex items-center shrink-0 group gap-2" onClick={onLogoClick}>
+            <BrandLogo mark size="lg" animate className="lg:hidden" />
+            <BrandLogo size="lg" animate className="hidden lg:block" />
           </Link>
 
           {/* Desktop nav */}

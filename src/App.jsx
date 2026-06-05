@@ -91,8 +91,8 @@ function PageLoader() {
             exit={{ opacity: 0, scale: 0.7, transition: { duration: 0.2 } }}
             className="flex flex-col items-center gap-3"
           >
-            <BrandLogo size="2xl" />
-            <span className="text-xs font-semibold tracking-widest text-[var(--text-muted)] uppercase">
+            <BrandLogo mark size="4xl" />
+            <span className="text-sm font-semibold tracking-widest text-[var(--text-muted)] uppercase">
               Loading…
             </span>
           </motion.div>

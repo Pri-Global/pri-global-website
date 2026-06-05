@@ -1,18 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import usePriVa from "./usePriVa";
-import BrandLogo from "../ui/BrandLogo";
+import BrandLogo, { PriMarkAvatar } from "../ui/BrandLogo";
 
 function MessageBubble({ message }) {
   const isUser = message.role === "user";
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} mb-3`}>
-      {!isUser && (
-        <div className="w-7 h-7 rounded-full bg-royal flex items-center justify-center shrink-0 mr-2 mt-0.5">
-          <Bot size={14} className="text-white" />
-        </div>
-      )}
+      {!isUser && <PriMarkAvatar size="md" className="mr-2 mt-0.5" />}
       <div
         className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
           isUser
@@ -65,7 +61,7 @@ export default function PriVaWidget() {
             {/* Header */}
             <div className="bg-royal px-4 py-3 flex items-center justify-between">
               <div className="flex items-center gap-2.5 min-w-0">
-                <BrandLogo size="sm" variant="onDark" className="shrink-0" />
+                <BrandLogo mark size="lg" variant="onDark" className="shrink-0" />
                 <div className="min-w-0">
                   <div className="text-sm font-semibold text-white leading-tight">PriVa</div>
                   <div className="text-xs text-white/70 flex items-center gap-1">
@@ -90,9 +86,7 @@ export default function PriVaWidget() {
               ))}
               {loading && (
                 <div className="flex justify-start mb-3">
-                  <div className="w-7 h-7 rounded-full bg-royal flex items-center justify-center shrink-0 mr-2">
-                    <Bot size={14} className="text-white" />
-                  </div>
+                  <PriMarkAvatar size="md" className="mr-2" />
                   <div className="bg-[var(--border-subtle)] dark:bg-white/10 rounded-2xl rounded-bl-sm px-4 py-3">
                     <Loader2 size={14} className="text-[var(--text-muted)] animate-spin" />
                   </div>

@@ -65,7 +65,7 @@ export default function EmployeeDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
           <div>
-            <BrandLogo size="lg" className="mb-4" />
+            <BrandLogo mark size="lg" className="mb-4" />
             <h1 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
               Welcome back, {name}
             </h1>

@@ -1,5 +1,6 @@
 import { memo, useRef, useEffect } from "react";
-import { ArrowRight, Sparkles, Send, Bot } from "lucide-react";
+import { ArrowRight, Sparkles, Send } from "lucide-react";
+import BrandLogo, { PriMarkAvatar } from "../ui/BrandLogo";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
 import usePriVa from "../chatbot/usePriVa";
@@ -115,8 +116,8 @@ const HeroChatCard = memo(function HeroChatCard() {
   return (
     <div className="w-full bg-[var(--bg-card)]/95 dark:bg-[#16181e]/95 backdrop-blur-md border border-[var(--border)] rounded-2xl shadow-xl shadow-navy/8 dark:shadow-black/30 flex flex-col overflow-hidden">
       <div className="bg-royal px-5 py-4 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
-          <Bot size={18} className="text-white" />
+        <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center">
+          <BrandLogo mark size="md" variant="onDark" />
         </div>
         <div>
           <div className="text-sm font-semibold text-white">Hello, I&apos;m PRI-VA</div>
@@ -134,11 +135,7 @@ const HeroChatCard = memo(function HeroChatCard() {
       >
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-            {msg.role === "assistant" && (
-              <div className="w-6 h-6 rounded-full bg-royal flex items-center justify-center shrink-0 mr-2 mt-0.5">
-                <Bot size={12} className="text-white" />
-              </div>
-            )}
+            {msg.role === "assistant" && <PriMarkAvatar size="sm" className="mr-2 mt-0.5" />}
             <div
               className={`max-w-[80%] px-3 py-2 rounded-xl text-sm leading-relaxed ${
                 msg.role === "user"
@@ -152,9 +149,7 @@ const HeroChatCard = memo(function HeroChatCard() {
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="w-6 h-6 rounded-full bg-royal flex items-center justify-center shrink-0 mr-2">
-              <Bot size={12} className="text-white" />
-            </div>
+            <PriMarkAvatar size="sm" className="mr-2" />
             <div className="bg-[var(--border-subtle)] dark:bg-white/10 rounded-xl rounded-bl-sm px-3 py-2">
               <span className="flex gap-1">
                 {[0, 1, 2].map((d) => (

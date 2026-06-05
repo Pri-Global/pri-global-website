@@ -23,6 +23,7 @@ import EmployeeLogin from "./pages/EmployeeLogin";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DarkModeToast from "./components/ui/DarkModeToast";
+import BrandLogo from "./components/ui/BrandLogo";
 
 /* ── Scroll progress bar ─────────────────────────────────────── */
 function ScrollProgress() {
@@ -90,11 +91,9 @@ function PageLoader() {
             exit={{ opacity: 0, scale: 0.7, transition: { duration: 0.2 } }}
             className="flex flex-col items-center gap-3"
           >
-            <div className="w-14 h-14 rounded-2xl bg-royal flex items-center justify-center shadow-lg shadow-royal/30">
-              <span className="text-white font-heading font-bold text-2xl">P</span>
-            </div>
+            <BrandLogo size="2xl" />
             <span className="text-xs font-semibold tracking-widest text-[var(--text-muted)] uppercase">
-              PRI Global
+              Loading…
             </span>
           </motion.div>
         </motion.div>

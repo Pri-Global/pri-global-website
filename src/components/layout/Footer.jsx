@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { scrollToPageTop } from "../../utils/scrollToPageTop";
 import { ExternalLink, Globe, Code2, MapPin, Phone } from "lucide-react";
 import AnimatedIcon from "../ui/AnimatedIcon";
+import BrandLogo from "../ui/BrandLogo";
 
 const footerLinks = {
   Services: [
@@ -53,11 +54,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-2 mb-4" onClick={onLogoClick}>
-              <div className="w-8 h-8 rounded-lg bg-royal flex items-center justify-center">
-                <span className="text-white font-heading font-bold text-sm">P</span>
-              </div>
-              <span className="font-heading font-bold text-lg">PRI Global</span>
+            <Link to="/" className="inline-flex items-center mb-5" onClick={onLogoClick}>
+              <BrandLogo size="lg" variant="onDark" />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed max-w-sm mb-6">
               Technology that moves business forward. In business since 1997 — over 28 years of trusted services. We combine deep expertise,

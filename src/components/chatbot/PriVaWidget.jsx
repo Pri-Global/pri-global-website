@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Bot, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import usePriVa from "./usePriVa";
+import BrandLogo from "../ui/BrandLogo";
 
 function MessageBubble({ message }) {
   const isUser = message.role === "user";
@@ -63,11 +64,9 @@ export default function PriVaWidget() {
           >
             {/* Header */}
             <div className="bg-royal px-4 py-3 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                  <Bot size={16} className="text-white" />
-                </div>
-                <div>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <BrandLogo size="sm" variant="onDark" className="max-w-[88px] shrink-0" />
+                <div className="min-w-0">
                   <div className="text-sm font-semibold text-white leading-tight">PriVa</div>
                   <div className="text-xs text-white/70 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />

@@ -5,6 +5,7 @@ import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import ThemeToggle from "../ui/ThemeToggle";
+import BrandLogo from "../ui/BrandLogo";
 
 const navLinks = [
   { label: "Services", to: "/services" },
@@ -67,17 +68,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group" onClick={onLogoClick}>
-            <motion.div
-              whileHover={{ scale: 1.08, rotate: 3 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="w-8 h-8 rounded-lg bg-royal flex items-center justify-center shadow-sm"
-            >
-              <span className="text-white font-heading font-bold text-sm">P</span>
-            </motion.div>
-            <span className="font-heading font-bold text-lg text-[var(--text-primary)] group-hover:text-royal transition-colors">
-              PRI Global
-            </span>
+          <Link to="/" className="flex items-center shrink-0 group" onClick={onLogoClick}>
+            <BrandLogo size="md" animate />
           </Link>
 
           {/* Desktop nav */}

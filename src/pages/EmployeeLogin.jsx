@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/ui/Button";
+import BrandLogo from "../components/ui/BrandLogo";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
 
 // DEMO CREDENTIALS - Replace with real auth in production
@@ -54,9 +55,7 @@ export default function EmployeeLogin() {
         className="w-full max-w-[420px] bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-lg"
       >
         <div className="flex flex-col items-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-royal flex items-center justify-center shadow-sm mb-4">
-            <span className="text-white font-heading font-bold text-2xl">P</span>
-          </div>
+          <BrandLogo size="xl" className="mb-5" />
           <h1 className="font-heading text-2xl font-bold text-[var(--text-primary)]">
             Employee Portal
           </h1>

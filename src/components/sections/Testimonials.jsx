@@ -41,8 +41,8 @@ function TestimonialCard({ t }) {
   const badgeClass = CATEGORY_BADGE[t.category] || CATEGORY_BADGE.client;
 
   return (
-    <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-7 h-full flex flex-col">
-      <div className="flex items-start justify-between gap-3 mb-4">
+    <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-7 w-full h-full min-h-[22rem] flex flex-col">
+      <div className="flex items-start justify-between gap-3 mb-4 shrink-0">
         <span
           className="font-heading text-[64px] leading-none text-royal dark:text-royaldark select-none"
           aria-hidden
@@ -54,18 +54,18 @@ function TestimonialCard({ t }) {
         </span>
       </div>
 
-      <p className="text-[var(--text-secondary)] text-sm leading-relaxed flex-1 mb-6 italic">
+      <p className="text-[var(--text-secondary)] text-sm leading-relaxed flex-1 min-h-[9.5rem] line-clamp-6 mb-6 italic">
         {t.quote}
       </p>
 
-      <div className="border-t border-[var(--border)] pt-5">
+      <div className="border-t border-[var(--border)] pt-5 shrink-0 mt-auto">
         <div className="flex items-center gap-3">
           <InitialsAvatar initials={t.initials} />
           <div className="min-w-0 flex-1">
-            <div className="font-heading font-bold text-sm text-[var(--text-primary)]">
+            <div className="font-heading font-bold text-sm text-[var(--text-primary)] line-clamp-1">
               {t.name}
             </div>
-            <div className="text-sm text-[var(--text-secondary)]">{t.title}</div>
+            <div className="text-sm text-[var(--text-secondary)] line-clamp-2">{t.title}</div>
             <div className="mt-1.5">
               <Stars count={t.rating} />
             </div>
@@ -104,10 +104,10 @@ export default function Testimonials() {
             }}
             autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
             pagination={{ clickable: true }}
-            className="!pb-12"
+            className="!pb-12 [&_.swiper-wrapper]:items-stretch"
           >
             {testimonials.map((t) => (
-              <SwiperSlide key={t.id}>
+              <SwiperSlide key={t.id} className="!h-auto flex">
                 <TestimonialCard t={t} />
               </SwiperSlide>
             ))}

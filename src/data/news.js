@@ -1,4 +1,6 @@
-export const newsItems = [
+import { newsBlogItems } from "./newsBlog";
+
+const priNewsItems = [
   {
     id: "pri-cares-community",
     title: "PRI Cares — Supporting the Communities We Serve",
@@ -137,7 +139,11 @@ We are just getting started.
   },
 ];
 
-export const NEWS_CATEGORIES = ["All", "Community", "Product", "Company"];
+export const newsItems = [...priNewsItems, ...newsBlogItems].sort(
+  (a, b) => new Date(b.date) - new Date(a.date)
+);
+
+export const NEWS_CATEGORIES = ["All", "Community", "Product", "Company", "Insights"];
 
 export function getNewsBySlug(slug) {
   return newsItems.find((item) => item.slug === slug);

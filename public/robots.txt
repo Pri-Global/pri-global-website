@@ -2,5 +2,10 @@ User-agent: *
 Allow: /
 Disallow: /employee-login
 Disallow: /employee-dashboard
+Disallow: /candidate-login
+Disallow: /candidate-dashboard
+Disallow: /candidate-profile
+Disallow: /customer-login
+Disallow: /customer-dashboard
 Disallow: /cookie-settings
 Sitemap: https://pri-global.vercel.app/sitemap.xml

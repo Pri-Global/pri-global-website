@@ -27,7 +27,17 @@ import CaseStudy from "./pages/CaseStudy";
 import NotFound from "./pages/NotFound";
 import EmployeeLogin from "./pages/EmployeeLogin";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
+import CandidateLogin from "./pages/candidate/CandidateLogin";
+import CandidateRegister from "./pages/candidate/CandidateRegister";
+import CandidateDashboard from "./pages/candidate/CandidateDashboard";
+import CandidateProfile from "./pages/candidate/CandidateProfile";
+import CandidateJobs from "./pages/candidate/CandidateJobs";
+import CustomerLogin from "./pages/customer/CustomerLogin";
+import CustomerRegister from "./pages/customer/CustomerRegister";
+import CustomerDashboard from "./pages/customer/CustomerDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedPortalRoute from "./components/portal/ProtectedPortalRoute";
+import { AUTH_KEYS } from "./hooks/usePortalAuth";
 import DarkModeToast from "./components/ui/DarkModeToast";
 import BrandLogo from "./components/ui/BrandLogo";
 
@@ -115,6 +125,41 @@ function AnimatedRoutes() {
               <ProtectedRoute>
                 <EmployeeDashboard />
               </ProtectedRoute>
+            </PW>
+          }
+        />
+        <Route path="/candidate-login" element={<PW><CandidateLogin /></PW>} />
+        <Route path="/candidate-register" element={<PW><CandidateRegister /></PW>} />
+        <Route
+          path="/candidate-dashboard"
+          element={
+            <PW>
+              <ProtectedPortalRoute authKey={AUTH_KEYS.candidate} redirectTo="/candidate-login">
+                <CandidateDashboard />
+              </ProtectedPortalRoute>
+            </PW>
+          }
+        />
+        <Route
+          path="/candidate-profile"
+          element={
+            <PW>
+              <ProtectedPortalRoute authKey={AUTH_KEYS.candidate} redirectTo="/candidate-login">
+                <CandidateProfile />
+              </ProtectedPortalRoute>
+            </PW>
+          }
+        />
+        <Route path="/candidate-jobs" element={<PW><CandidateJobs /></PW>} />
+        <Route path="/customer-login" element={<PW><CustomerLogin /></PW>} />
+        <Route path="/customer-register" element={<PW><CustomerRegister /></PW>} />
+        <Route
+          path="/customer-dashboard"
+          element={
+            <PW>
+              <ProtectedPortalRoute authKey={AUTH_KEYS.customer} redirectTo="/customer-login">
+                <CustomerDashboard />
+              </ProtectedPortalRoute>
             </PW>
           }
         />

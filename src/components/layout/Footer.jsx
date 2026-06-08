@@ -30,6 +30,12 @@ const footerLinks = {
     { label: "Business Transformation", to: "/services" },
     { label: "AI Strategy", to: "/ai-innovation" },
   ],
+  Portals: [
+    { label: "Candidate Portal", to: "/candidate-login" },
+    { label: "Client Portal", to: "/customer-login" },
+    { label: "Employee Portal", to: "/employee-login" },
+    { label: "Job Search", to: "/candidate-jobs" },
+  ],
 };
 
 const socials = [
@@ -55,7 +61,7 @@ export default function Footer() {
     <footer className="bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         {/* Top grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 pb-12 border-b border-white/10">
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex items-center mb-5" onClick={onLogoClick}>

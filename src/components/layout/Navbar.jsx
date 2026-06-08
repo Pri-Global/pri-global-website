@@ -5,6 +5,7 @@ import { Menu, X, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import ThemeToggle from "../ui/ThemeToggle";
+import PortalMenu from "../ui/PortalMenu";
 import BrandLogo from "../ui/BrandLogo";
 import MegaDropdown, { DropdownItemList } from "../ui/MegaDropdown";
 import {
@@ -24,7 +25,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
-
   const closeMenus = () => setOpenMenu(null);
   const toggleMenu = (id) => setOpenMenu((v) => (v === id ? null : id));
 
@@ -116,13 +116,7 @@ export default function Navbar() {
 
           <div className="hidden lg:flex items-center gap-2">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
-            <Link
-              to="/employee-login"
-              onClick={onNavClick}
-              className="text-[12px] text-[var(--text-muted)] hover:text-royal transition-colors px-2"
-            >
-              Employee Portal
-            </Link>
+            <PortalMenu />
             <Button to="/ai-innovation#demo" variant="ghost" size="sm" onClick={onNavClick}>
               See Demo
             </Button>
@@ -133,6 +127,7 @@ export default function Navbar() {
 
           <div className="flex lg:hidden items-center gap-2">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
+            <PortalMenu />
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}

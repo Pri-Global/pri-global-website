@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Phone, ArrowRight, ArrowLeft } from "lucide-react";
+import { Check, Phone, ArrowRight, ArrowLeft, Calendar } from "lucide-react";
 import Button from "../components/ui/Button";
+import SEO from "../components/SEO";
+import HubSpotMeetingEmbed from "../components/ui/HubSpotMeetingEmbed";
+import { HUBSPOT_MEETING_URL } from "../constants/links";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
 
 const TRUST_POINTS = [
@@ -90,6 +93,12 @@ export default function GetPricing() {
 
   if (submitted) {
     return (
+      <>
+      <SEO
+        title="Get Pricing — Custom IT Solutions Proposal"
+        description="Request a custom pricing proposal from PRI Global. IT staffing, managed services, or PR1SM.AI — we respond within 24 business hours."
+        url="/get-pricing"
+      />
       <section className="min-h-[70vh] flex items-center justify-center pt-28 pb-20 px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,10 +124,17 @@ export default function GetPricing() {
           </div>
         </motion.div>
       </section>
+      </>
     );
   }
 
   return (
+    <>
+    <SEO
+      title="Get Pricing — Custom IT Solutions Proposal"
+      description="Request a custom pricing proposal from PRI Global. IT staffing, managed services, or PR1SM.AI — we respond within 24 business hours."
+      url="/get-pricing"
+    />
     <section className="pt-28 pb-20 md:pt-32 md:pb-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-start">
@@ -143,13 +159,25 @@ export default function GetPricing() {
                 </li>
               ))}
             </ul>
-            <div className="space-y-3 text-sm">
+            <div className="space-y-3 text-sm mb-8">
               <a href="tel:6367791651" className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
                 <Phone size={14} /> Ajay Patel — 636-779-1651
               </a>
               <a href="tel:3147845854" className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
                 <Phone size={14} /> Liezl Moss — 314-784-5854
               </a>
+            </div>
+            <div className="p-5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)]">
+              <p className="text-sm font-medium text-[var(--text-primary)] mb-3">Prefer to talk now?</p>
+              <Button
+                href={HUBSPOT_MEETING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="md"
+                className="w-full sm:w-auto"
+              >
+                <Calendar size={16} /> Book a 15-min Call <ArrowRight size={16} />
+              </Button>
             </div>
           </motion.div>
 
@@ -359,8 +387,19 @@ export default function GetPricing() {
             </div>
           </motion.div>
         </div>
+
+        <div className="mt-16 max-w-3xl mx-auto">
+          <h2 className="font-heading text-2xl font-bold text-[var(--text-primary)] mb-2 text-center">
+            Rather book a call directly?
+          </h2>
+          <p className="text-sm text-[var(--text-secondary)] text-center mb-6">
+            Pick a time that works for you — no form required.
+          </p>
+          <HubSpotMeetingEmbed />
+        </div>
       </div>
     </section>
+    </>
   );
 }
 

@@ -38,6 +38,12 @@ export default function PriVaWidget() {
     }
   }, [open]);
 
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener("priva-open", onOpen);
+    return () => window.removeEventListener("priva-open", onOpen);
+  }, []);
+
   const handleKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -55,7 +61,7 @@ export default function PriVaWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 20 }}
             transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="w-[340px] sm:w-[380px] bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl shadow-2xl shadow-navy/15 dark:shadow-black/40 flex flex-col overflow-hidden"
+            className="w-[calc(100vw-3rem)] max-w-[380px] bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl shadow-2xl shadow-navy/15 dark:shadow-black/40 flex flex-col overflow-hidden"
             style={{ maxHeight: "520px" }}
           >
             {/* Header */}

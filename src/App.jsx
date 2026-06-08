@@ -1,10 +1,10 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { useState, useEffect } from "react";
-import { ArrowUp } from "lucide-react";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopButton from "./components/ui/ScrollToTopButton";
 import PriVaWidget from "./components/chatbot/PriVaWidget";
 import CookieBanner from "./components/ui/CookieBanner";
 import Home from "./pages/Home";
@@ -24,6 +24,7 @@ import ROICalculatorPage from "./pages/ROICalculatorPage";
 import FAQ from "./pages/FAQ";
 import WhyPRI from "./pages/WhyPRI";
 import CaseStudy from "./pages/CaseStudy";
+import NotFound from "./pages/NotFound";
 import EmployeeLogin from "./pages/EmployeeLogin";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -39,37 +40,6 @@ function ScrollProgress() {
       className="fixed top-0 left-0 right-0 h-[3px] bg-royal z-[200] origin-left pointer-events-none"
       style={{ scaleX }}
     />
-  );
-}
-
-/* ── Back to top button ──────────────────────────────────────── */
-function BackToTop() {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 400);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.button
-          key="back-to-top"
-          initial={{ opacity: 0, scale: 0.8, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 10 }}
-          transition={{ type: "spring", stiffness: 320, damping: 22 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.92 }}
-          onClick={() => window.scrollTo(0, 0)}
-          className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-royal text-white shadow-lg shadow-royal/30 flex items-center justify-center hover:bg-[var(--accent-hover)] transition-colors"
-          aria-label="Back to top"
-        >
-          <ArrowUp size={17} />
-        </motion.button>
-      )}
-    </AnimatePresence>
   );
 }
 
@@ -157,6 +127,7 @@ function AnimatedRoutes() {
         <Route path="/roi-calculator" element={<PW><ROICalculatorPage /></PW>} />
         <Route path="/faq" element={<PW><FAQ /></PW>} />
         <Route path="/why-pri-global" element={<PW><WhyPRI /></PW>} />
+        <Route path="*" element={<PW><NotFound /></PW>} />
       </Routes>
     </AnimatePresence>
   );
@@ -175,9 +146,9 @@ export default function App() {
       </main>
       <Footer />
       <CookieBanner />
+      <ScrollToTopButton />
       <DarkModeToast />
       <PriVaWidget />
-      <BackToTop />
     </div>
   );
 }

@@ -1,4 +1,6 @@
-import { MapPin, Phone, ExternalLink, Mail } from "lucide-react";
+import { MapPin, Phone, ExternalLink, Mail, Star } from "lucide-react";
+import SEO from "../components/SEO";
+import { GLASSDOOR_URL } from "../constants/links";
 import { motion } from "framer-motion";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
@@ -41,6 +43,11 @@ export default function About() {
 
   return (
     <>
+      <SEO
+        title="About PRI Global — 28 Years of Technology Excellence"
+        description="Founded in 1997 in Ellisville, Missouri. PRI Global operates across USA, India, Philippines, and Canada. Meet our leadership team and learn our story."
+        url="/about"
+      />
       {/* Hero */}
       <section className="pt-24 sm:pt-32 pb-20 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -143,6 +150,15 @@ export default function About() {
               A cohesive, experienced, diverse team managing operations across six offices in the
               U.S., India, and the Philippines.
             </p>
+            <a
+              href={GLASSDOOR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-5 px-4 py-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)] text-sm font-medium text-[var(--text-secondary)] hover:border-royal/40 hover:text-[var(--text-primary)] transition-colors"
+            >
+              <Star size={14} className="text-[#0caa41] fill-[#0caa41]" />
+              4.1★ on Glassdoor — 65+ employee reviews
+            </a>
           </motion.div>
 
           <div className="space-y-8 max-w-5xl mx-auto">

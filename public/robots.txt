@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /employee-login
+Disallow: /employee-dashboard
+Disallow: /cookie-settings
+Sitemap: https://pri-global.vercel.app/sitemap.xml

@@ -15,6 +15,7 @@ import {
   TrendingUp,
   DollarSign,
 } from "lucide-react";
+import SEO from "../components/SEO";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
 import pr1smLogo        from "../assets/pr1sm-logo.png";
@@ -102,6 +103,11 @@ export default function AiInnovation() {
 
   return (
     <>
+      <SEO
+        title="AI Innovation & PR1SM.AI Platform"
+        description="PRI Global's AI services and PR1SM.AI — your AI intelligence layer. Talk to your data. Get answers instantly. Enterprise-grade, secure, no rip-and-replace."
+        url="/ai-innovation"
+      />
       {/* ── SECTION 1: Hero ──────────────────────────────────────────────────── */}
       <section className="pt-24 sm:pt-32 pb-20 bg-navy relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import SEO from "../components/SEO";
 import { Link } from "react-router-dom";
 
 const sections = [
@@ -146,6 +147,8 @@ const sections = [
 
 export default function PrivacyPolicy() {
   return (
+    <>
+    <SEO title="Privacy Policy" description="PRI Global privacy policy — how we collect, use, and protect your data. CCPA compliant." url="/privacy-policy" />
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -193,5 +196,6 @@ export default function PrivacyPolicy() {
         </p>
       </div>
     </motion.div>
+    </>
   );
 }

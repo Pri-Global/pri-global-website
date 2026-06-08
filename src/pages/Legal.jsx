@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import SEO from "../components/SEO";
 
 const sections = [
   {
@@ -29,6 +30,8 @@ const sections = [
 
 export default function Legal() {
   return (
+    <>
+    <SEO title="Legal Notice" description="PRI Global legal notice and disclaimer." url="/legal" noindex />
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -91,5 +94,6 @@ export default function Legal() {
         </div>
       </div>
     </motion.div>
+    </>
   );
 }

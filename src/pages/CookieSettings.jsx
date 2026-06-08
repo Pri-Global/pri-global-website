@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Lock } from "lucide-react";
+import SEO from "../components/SEO";
 
 const STORAGE_KEY = "pri-cookie-consent";
 
@@ -52,6 +53,8 @@ export default function CookieSettings() {
   }
 
   return (
+    <>
+    <SEO title="Cookie Settings" description="Manage your cookie preferences on PRI Global." url="/cookie-settings" noindex />
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -162,5 +165,6 @@ export default function CookieSettings() {
         </div>
       </div>
     </motion.div>
+    </>
   );
 }

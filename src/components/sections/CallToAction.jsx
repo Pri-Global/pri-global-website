@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Button from "../ui/Button";
+import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import { useInView } from "../../hooks/useInView";
 
 export default function CallToAction() {
@@ -29,14 +30,23 @@ export default function CallToAction() {
               Tell us what you need — talent, managed services, or PR1SM.AI — and we&apos;ll
               deliver a custom proposal within 24 business hours. No obligation.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button to="/get-pricing" size="lg" className="pulse-cta">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
+              <Button to="/get-pricing" size="lg" className="pulse-cta w-full sm:w-auto">
                 Get Pricing <ArrowRight size={18} />
+              </Button>
+              <Button
+                href={HUBSPOT_MEETING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="lg"
+                className="bg-white/10 text-white border border-white/20 hover:bg-white/20 w-full sm:w-auto"
+              >
+                Book a Discovery Call <ArrowRight size={18} />
               </Button>
               <Button
                 to="/ai-innovation#demo"
                 size="lg"
-                className="bg-white/10 text-white border border-white/20 hover:bg-white/20"
+                className="bg-white/10 text-white border border-white/20 hover:bg-white/20 w-full sm:w-auto"
               >
                 See Demo
               </Button>

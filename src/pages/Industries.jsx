@@ -1,5 +1,6 @@
 import { CheckCircle } from "lucide-react";
 import { industries } from "../data/industries";
+import SEO from "../components/SEO";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
 import CaseStudies from "../components/sections/CaseStudies";
@@ -10,6 +11,11 @@ export default function Industries() {
 
   return (
     <>
+      <SEO
+        title="Industries We Serve"
+        description="PRI Global serves Financial Services, Manufacturing, Healthcare, Consumer Packaged Goods, Public Sector, and Retail industries with specialized IT solutions."
+        url="/industries"
+      />
       {/* Hero */}
       <section className="pt-24 sm:pt-32 pb-16 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

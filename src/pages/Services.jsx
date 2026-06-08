@@ -1,4 +1,5 @@
 import { CheckCircle } from "lucide-react";
+import SEO from "../components/SEO";
 import { services, iconMap } from "../data/services";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
@@ -54,6 +55,11 @@ function ServiceDetail({ svc, index }) {
 export default function Services() {
   return (
     <>
+      <SEO
+        title="IT Services & Technology Solutions"
+        description="PRI Global offers 8 integrated technology services: IT Staffing, Managed IT, Cybersecurity, Cloud Transformation, Data Solutions, Business Transformation, IT Consulting, and Network Services."
+        url="/services"
+      />
       <section className="pt-24 sm:pt-32 pb-16 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">

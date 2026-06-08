@@ -1,4 +1,5 @@
 import { Users, Search, Briefcase, BarChart2, CheckCircle, ArrowRight } from "lucide-react";
+import SEO from "../components/SEO";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
@@ -50,6 +51,11 @@ export default function TalentSolutions() {
 
   return (
     <>
+      <SEO
+        title="IT Staffing & Talent Solutions"
+        description="Find top IT talent fast. PRI Global places specialized technology professionals across every discipline — contract, contract-to-hire, and direct placement. Shortlist in 5 days."
+        url="/talent-solutions"
+      />
       {/* Hero */}
       <section className="pt-24 sm:pt-32 pb-20 bg-[var(--bg-secondary)] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

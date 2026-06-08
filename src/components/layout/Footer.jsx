@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { scrollToPageTop } from "../../utils/scrollToPageTop";
-import { ExternalLink, Globe, Code2, MapPin, Phone } from "lucide-react";
+import { ExternalLink, Globe, Code2, MapPin, Phone, Calendar } from "lucide-react";
+import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import BrandLogo from "../ui/BrandLogo";
 
@@ -120,6 +121,14 @@ export default function Footer() {
           <span className="flex items-start gap-2 flex-wrap">
             <MapPin size={14} className="shrink-0 mt-0.5" /> Ellisville, MO · Hyderabad · Pune · Manila · Ottawa
           </span>
+          <a
+            href={HUBSPOT_MEETING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:text-white transition-colors"
+          >
+            <Calendar size={14} /> Book a meeting: meetings.hubspot.com/priglobal/discovery
+          </a>
         </div>
 
         {/* Bottom bar */}

@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/ui/Button";
 import BrandLogo from "../components/ui/BrandLogo";
+import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
 
 // DEMO CREDENTIALS - Replace with real auth in production
@@ -48,6 +49,8 @@ export default function EmployeeLogin() {
   };
 
   return (
+    <>
+    <SEO title="Employee Portal" description="PRI Global employee portal login." url="/employee-login" noindex />
     <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-24 px-4 bg-[var(--bg-secondary)]">
       <motion.div
         animate={shaking ? "shake" : ""}
@@ -134,5 +137,6 @@ export default function EmployeeLogin() {
         </p>
       </motion.div>
     </section>
+    </>
   );
 }

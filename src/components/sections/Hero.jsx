@@ -1,5 +1,6 @@
 import { memo, useRef, useEffect } from "react";
-import { ArrowRight, Sparkles, Send } from "lucide-react";
+import { ArrowRight, Sparkles, Send, Calendar } from "lucide-react";
+import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import BrandLogo, { PriMarkAvatar } from "../ui/BrandLogo";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
@@ -242,7 +243,7 @@ export default function Hero() {
               variants={wordContainer}
               initial="initial"
               animate="animate"
-              className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.08] mb-6 overflow-hidden drop-shadow-sm"
+              className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.08] mb-6 overflow-hidden drop-shadow-sm"
             >
               {h1Lines.map((line, li) => (
                 <span key={li} className={`block ${line.className}`}>
@@ -264,17 +265,29 @@ export default function Hero() {
               global expertise.
             </motion.p>
 
-            <motion.div {...fadeUp(0.65)} className="flex flex-wrap gap-4">
-              <Button to="/services" size="lg">
+            <motion.div {...fadeUp(0.65)} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+              <Button to="/services" size="lg" className="w-full sm:w-auto">
                 Explore our services <ArrowRight size={18} />
               </Button>
-              <Button to="/get-pricing" variant="secondary" size="lg">
+              <Button to="/get-pricing" variant="secondary" size="lg" className="w-full sm:w-auto">
                 Get Pricing
               </Button>
-              <Button to="/ai-innovation#demo" variant="ghost" size="lg">
+              <Button to="/ai-innovation#demo" variant="ghost" size="lg" className="w-full sm:w-auto">
                 See Demo
               </Button>
             </motion.div>
+
+            <motion.p {...fadeUp(0.72)} className="mt-4">
+              <a
+                href={HUBSPOT_MEETING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-royal dark:hover:text-royaldark hover:underline transition-colors"
+              >
+                <Calendar size={15} className="shrink-0" />
+                Or book a 15-min discovery call →
+              </a>
+            </motion.p>
 
             <motion.div
               {...fadeUp(0.78)}
@@ -290,7 +303,7 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          <motion.div {...fadeRight}>
+          <motion.div {...fadeRight} className="hidden lg:block">
             <HeroChatCard />
           </motion.div>
         </div>

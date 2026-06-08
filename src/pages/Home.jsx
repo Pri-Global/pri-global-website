@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
+import SEO from "../components/SEO";
 import Hero from "../components/sections/Hero";
 import ClientLogos from "../components/ui/ClientLogos";
 import NewsScrollHint from "../components/ui/NewsScrollHint";
@@ -27,6 +28,11 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        title="Technology That Moves Business Forward"
+        description="PRI Global delivers IT staffing, managed services, cybersecurity, cloud transformation, and AI solutions. 28+ years, 12,700+ placements, 96% client retention."
+        url="/"
+      />
       <Hero />
       <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]">
         <ClientLogos label="Trusted by leading organizations" />

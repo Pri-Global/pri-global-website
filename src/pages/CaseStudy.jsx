@@ -23,6 +23,7 @@ import CaseStudyImage from "../components/caseStudies/CaseStudyImage";
 import CaseStudyMetric from "../components/caseStudies/CaseStudyMetric";
 import { formatNewsDate } from "../utils/formatNewsDate";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
+import SEO from "../components/SEO";
 import Button from "../components/ui/Button";
 
 const ICON_MAP = {
@@ -71,6 +72,13 @@ export default function CaseStudy() {
   }
 
   return (
+    <>
+    <SEO
+      title={study.title}
+      description={study.summary || study.excerpt || `Case study: ${study.title} — PRI Global success story.`}
+      url={`/case-studies/${slug}`}
+      type="article"
+    />
     <article className="pb-24 md:pb-28">
       <section className="pt-28 md:pt-32 pb-12 relative overflow-hidden">
         <motion.div
@@ -252,5 +260,6 @@ export default function CaseStudy() {
         </motion.div>
       </div>
     </article>
+    </>
   );
 }

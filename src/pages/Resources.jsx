@@ -12,6 +12,7 @@ import NewsPoster from "../components/news/NewsPoster";
 import { getNewsThumbnail } from "../utils/newsThumbnail";
 import { formatNewsDate } from "../utils/formatNewsDate";
 import { renderNewsBody } from "../utils/newsBody";
+import SEO from "../components/SEO";
 import Button from "../components/ui/Button";
 import CallToAction from "../components/sections/CallToAction";
 import PriCaresVideos from "../components/sections/PriCaresVideos";
@@ -224,6 +225,20 @@ export default function Resources() {
 
   return (
     <>
+      {article ? (
+        <SEO
+          title={article.title}
+          description={article.excerpt || article.summary || `Read ${article.title} from PRI Global.`}
+          url={`/resources/${article.slug}`}
+          type="article"
+        />
+      ) : (
+        <SEO
+          title="Resources — News, Case Studies & Insights"
+          description="PRI Global news, case studies, and technology insights. Learn how we've delivered 600% ROI for automotive manufacturers and real-time analytics for restaurant chains."
+          url="/resources"
+        />
+      )}
       {article ? <NewsArticle article={article} /> : <ResourcesList />}
       {!article && <CallToAction />}
     </>

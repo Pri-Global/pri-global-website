@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import SEO from "../components/SEO";
 import { FAQ_CATEGORIES, faqItems } from "../data/faq";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
 
@@ -62,6 +63,11 @@ export default function FAQ() {
 
   return (
     <>
+      <SEO
+        title="Frequently Asked Questions"
+        description="Answers to common questions about PRI Global's IT staffing, managed services, PR1SM.AI platform, pricing, and more."
+        url="/faq"
+      />
       <section className="pt-28 pb-12 md:pt-32 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-royal/6 rounded-full blur-[120px]" />

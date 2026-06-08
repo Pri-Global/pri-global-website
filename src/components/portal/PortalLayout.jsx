@@ -70,7 +70,7 @@ export default function PortalLayout({
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-[var(--bg-secondary)] flex flex-col lg:flex-row">
+    <div className="min-h-screen pt-[4.5rem] lg:pt-20 bg-[var(--bg-secondary)] flex flex-col lg:flex-row">
       {/* Mobile top bar */}
       <header className="lg:hidden sticky top-[4.5rem] z-40 bg-[var(--bg-primary)] border-b border-[var(--border)] px-4 py-3 flex items-center justify-between">
         <button
@@ -132,7 +132,7 @@ export default function PortalLayout({
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0 pb-20 lg:pb-0">
-        <div className="hidden lg:flex items-center justify-between px-6 py-4 border-b border-[var(--border)] bg-[var(--bg-primary)]">
+        <div className="hidden lg:flex items-center justify-between px-6 py-4 border-b border-[var(--border)] bg-[var(--bg-primary)] shrink-0">
           <div>
             <h1 className="font-heading text-xl font-bold text-[var(--text-primary)]">{userName}</h1>
             {userSubtitle && <p className="text-sm text-[var(--text-secondary)]">{userSubtitle}</p>}

@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
+import { Link, useParams, Navigate, useLocation } from "react-router-dom";
 import { Share2, Mail, ArrowLeft } from "lucide-react";
 import {
   newsItems,
@@ -15,6 +15,9 @@ import { renderNewsBody } from "../utils/newsBody";
 import Button from "../components/ui/Button";
 import CallToAction from "../components/sections/CallToAction";
 import PriCaresVideos from "../components/sections/PriCaresVideos";
+import { CaseStudiesContent } from "../components/sections/CaseStudies";
+
+const RESOURCE_TABS = ["News", "Case Studies"];
 
 const CATEGORY_STYLES = {
   Community: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/25",
@@ -103,7 +106,7 @@ function NewsArticle({ article }) {
   );
 }
 
-function NewsList() {
+function NewsContent() {
   const [filter, setFilter] = useState("All");
 
   const filtered = useMemo(() => {
@@ -117,6 +120,57 @@ function NewsList() {
 
   return (
     <>
+      <div className="flex flex-wrap gap-2 mb-10">
+        {NEWS_CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            type="button"
+            onClick={() => setFilter(cat)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              filter === cat
+                ? "bg-royal text-white"
+                : "bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className="text-[var(--text-secondary)]">No articles in this category yet.</p>
+      ) : (
+        <div className="space-y-8">
+          {featured && (
+            <div className="w-full">
+              <NewsCard item={featured} featured index={0} />
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {rest.map((item, i) => (
+              <NewsCard key={item.id} item={item} index={i + 1} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      <PriCaresVideos />
+    </>
+  );
+}
+
+function ResourcesList() {
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("News");
+
+  useEffect(() => {
+    if (location.state?.tab === "Case Studies") {
+      setActiveTab("Case Studies");
+    }
+  }, [location.state]);
+
+  return (
+    <>
       <section className="pt-32 pb-16 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-royal/6 rounded-full blur-[120px]" />
@@ -127,7 +181,7 @@ function NewsList() {
               Resources
             </h1>
             <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-              News, insights, and updates from PRI Global.
+              News, case studies, and updates from PRI Global.
             </p>
           </div>
         </div>
@@ -136,42 +190,25 @@ function NewsList() {
       <section className="pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-2 mb-10">
-            {NEWS_CATEGORIES.map((cat) => (
+            {RESOURCE_TABS.map((tab) => (
               <button
-                key={cat}
+                key={tab}
                 type="button"
-                onClick={() => setFilter(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  filter === cat
+                onClick={() => setActiveTab(tab)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
+                  activeTab === tab
                     ? "bg-royal text-white"
                     : "bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
-                {cat}
+                {tab}
               </button>
             ))}
           </div>
 
-          {filtered.length === 0 ? (
-            <p className="text-[var(--text-secondary)]">No articles in this category yet.</p>
-          ) : (
-            <div className="space-y-8">
-              {featured && (
-                <div className="w-full">
-                  <NewsCard item={featured} featured index={0} />
-                </div>
-              )}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {rest.map((item, i) => (
-                  <NewsCard key={item.id} item={item} index={i + 1} />
-                ))}
-              </div>
-            </div>
-          )}
+          {activeTab === "News" ? <NewsContent /> : <CaseStudiesContent showCta />}
         </div>
       </section>
-
-      <PriCaresVideos />
     </>
   );
 }
@@ -186,7 +223,7 @@ export default function Resources() {
 
   return (
     <>
-      {article ? <NewsArticle article={article} /> : <NewsList />}
+      {article ? <NewsArticle article={article} /> : <ResourcesList />}
       {!article && <CallToAction />}
     </>
   );

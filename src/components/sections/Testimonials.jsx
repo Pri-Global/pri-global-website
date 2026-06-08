@@ -1,23 +1,78 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import { Quote } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { testimonials } from "../../data/testimonials";
 import SectionHeading from "../ui/SectionHeading";
 import { useInView } from "../../hooks/useInView";
 import "swiper/css";
 import "swiper/css/pagination";
 
-function Avatar({ src }) {
+const CATEGORY_BADGE = {
+  client: "bg-royal/10 text-royal dark:bg-royaldark/15 dark:text-royaldark border-royal/20",
+  talent: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/25",
+};
+
+const CATEGORY_LABEL = {
+  client: "Client",
+  talent: "IT Professional",
+};
+
+function Stars({ count = 5 }) {
   return (
-    <img
-      src={src}
-      alt="Client avatar"
-      width={44}
-      height={44}
-      className="w-11 h-11 rounded-full object-cover shrink-0"
-      loading="lazy"
-      decoding="async"
-    />
+    <div className="flex gap-0.5 text-amber-400" aria-label={`${count} out of 5 stars`}>
+      {Array.from({ length: count }).map((_, i) => (
+        <span key={i} className="text-sm leading-none" aria-hidden>
+          ★
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function InitialsAvatar({ initials }) {
+  return (
+    <div className="w-11 h-11 rounded-full bg-royal dark:bg-royaldark flex items-center justify-center shrink-0">
+      <span className="text-white text-sm font-bold font-heading">{initials}</span>
+    </div>
+  );
+}
+
+function TestimonialCard({ t }) {
+  const badgeClass = CATEGORY_BADGE[t.category] || CATEGORY_BADGE.client;
+
+  return (
+    <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-7 h-full flex flex-col">
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <span
+          className="font-heading text-[64px] leading-none text-royal dark:text-royaldark select-none"
+          aria-hidden
+        >
+          &ldquo;
+        </span>
+        <span className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border shrink-0 ${badgeClass}`}>
+          {CATEGORY_LABEL[t.category] || "Client"}
+        </span>
+      </div>
+
+      <p className="text-[var(--text-secondary)] text-sm leading-relaxed flex-1 mb-6 italic">
+        {t.quote}
+      </p>
+
+      <div className="border-t border-[var(--border)] pt-5">
+        <div className="flex items-center gap-3">
+          <InitialsAvatar initials={t.initials} />
+          <div className="min-w-0 flex-1">
+            <div className="font-heading font-bold text-sm text-[var(--text-primary)]">
+              {t.name}
+            </div>
+            <div className="text-sm text-[var(--text-secondary)]">{t.title}</div>
+            <div className="mt-1.5">
+              <Stars count={t.rating} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -29,8 +84,8 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Client Stories"
-          heading="What our clients say"
-          subheading="Don't just take our word for it. Here's what the organisations we've partnered with have to say."
+          heading="Let our clients tell the story"
+          subheading="Real feedback from clients and IT professionals who partner with PRI Global every day."
           className="mb-14"
         />
 
@@ -47,32 +102,28 @@ export default function Testimonials() {
               640: { slidesPerView: 1.5 },
               1024: { slidesPerView: 2.5 },
             }}
-            autoplay={{ delay: 4500, disableOnInteraction: true, pauseOnMouseEnter: true }}
+            autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
             pagination={{ clickable: true }}
             className="!pb-12"
           >
             {testimonials.map((t) => (
               <SwiperSlide key={t.id}>
-                <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-7 h-full flex flex-col">
-                  <Quote size={28} className="text-royal/30 dark:text-royaldark/30 mb-4" />
-                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed flex-1 mb-6 italic">
-                    "{t.quote}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <Avatar src={t.avatar} />
-                    <div>
-                      <div className="font-semibold text-sm text-[var(--text-primary)]">
-                        {t.name}
-                      </div>
-                      <div className="text-xs text-[var(--text-muted)]">
-                        {t.title} · {t.company}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <TestimonialCard t={t} />
               </SwiperSlide>
             ))}
           </Swiper>
+
+          <div className="mt-4 text-center max-w-xl mx-auto">
+            <p className="text-[var(--text-secondary)] text-sm md:text-base mb-5 leading-relaxed">
+              Join 12,700+ IT professionals and hundreds of satisfied clients who trust PRI Global.
+            </p>
+            <a
+              href="mailto:info@priglobal.com?subject=Testimonial%20Submission"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-royal text-white text-sm font-semibold hover:bg-[var(--accent-hover)] transition-colors shadow-sm shadow-royal/20"
+            >
+              Share Your Experience <ArrowRight size={16} />
+            </a>
+          </div>
         </div>
       </div>
     </section>

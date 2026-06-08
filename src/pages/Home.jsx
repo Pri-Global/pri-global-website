@@ -11,6 +11,7 @@ const DoingBusinessVideo = lazy(() => import("../components/sections/DoingBusine
 const PrismAI         = lazy(() => import("../components/sections/PrismAI"));
 const PrismDemo       = lazy(() => import("../components/sections/PrismDemo"));
 const ROICalculator   = lazy(() => import("../components/sections/ROICalculator"));
+const CaseStudies     = lazy(() => import("../components/sections/CaseStudies"));
 const Timeline        = lazy(() => import("../components/sections/Timeline"));
 const HowWeWork       = lazy(() => import("../components/sections/HowWeWork"));
 const Testimonials    = lazy(() => import("../components/sections/Testimonials"));
@@ -37,10 +38,11 @@ export default function Home() {
       <Suspense fallback={SectionFallback}><PrismAI /></Suspense>
       <Suspense fallback={SectionFallback}><PrismDemo compact /></Suspense>
       <Suspense fallback={SectionFallback}><ROICalculator /></Suspense>
+      <Suspense fallback={SectionFallback}><CaseStudies limit={3} /></Suspense>
       <Suspense fallback={SectionFallback}><Timeline condensed /></Suspense>
       <Suspense fallback={SectionFallback}><NewsPreview /></Suspense>
-      <Suspense fallback={SectionFallback}><HowWeWork /></Suspense>
       <Suspense fallback={SectionFallback}><Testimonials /></Suspense>
+      <Suspense fallback={SectionFallback}><HowWeWork /></Suspense>
       <Suspense fallback={SectionFallback}><CallToAction /></Suspense>
       <NewsScrollHint />
     </>

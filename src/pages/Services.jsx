@@ -2,6 +2,7 @@ import { CheckCircle } from "lucide-react";
 import { services, iconMap } from "../data/services";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
+import CaseStudies from "../components/sections/CaseStudies";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import IllustrationPlaceholder from "../components/ui/IllustrationPlaceholder";
 import ClientLogos from "../components/ui/ClientLogos";
@@ -84,6 +85,7 @@ export default function Services() {
         </div>
       </section>
 
+      <CaseStudies />
       <CallToAction />
     </>
   );

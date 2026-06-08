@@ -23,6 +23,7 @@ import GetPricing from "./pages/GetPricing";
 import ROICalculatorPage from "./pages/ROICalculatorPage";
 import FAQ from "./pages/FAQ";
 import WhyPRI from "./pages/WhyPRI";
+import CaseStudy from "./pages/CaseStudy";
 import EmployeeLogin from "./pages/EmployeeLogin";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -135,6 +136,7 @@ function AnimatedRoutes() {
         <Route path="/about"           element={<PW><About /></PW>} />
         <Route path="/resources"       element={<PW><Resources /></PW>} />
         <Route path="/resources/:slug" element={<PW><Resources /></PW>} />
+        <Route path="/case-studies/:slug" element={<PW><CaseStudy /></PW>} />
         <Route path="/employee-login" element={<PW><EmployeeLogin /></PW>} />
         <Route
           path="/employee-dashboard"

@@ -2,6 +2,7 @@ import { CheckCircle } from "lucide-react";
 import { industries } from "../data/industries";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
+import CaseStudies from "../components/sections/CaseStudies";
 import { useInView } from "../hooks/useInView";
 
 export default function Industries() {
@@ -89,6 +90,7 @@ export default function Industries() {
         </div>
       </section>
 
+      <CaseStudies />
       <CallToAction />
     </>
   );

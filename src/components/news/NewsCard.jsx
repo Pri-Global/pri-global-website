@@ -1,6 +1,8 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { getNewsThumbnail } from "../../utils/newsThumbnail";
+import { formatNewsDate } from "../../utils/formatNewsDate";
+import NewsThumbnail from "./NewsThumbnail";
 
 const CATEGORY_STYLES = {
   Community: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/25",
@@ -8,42 +10,9 @@ const CATEGORY_STYLES = {
   Company: "bg-amber-500/15 text-amber-800 dark:text-amber-400 border-amber-500/25",
 };
 
-function PosterImage({ posterKey, featured }) {
-  const [imgFailed, setImgFailed] = useState(false);
-  const src = posterKey === "hero-network-poster" ? "/news/hero-network-poster.png" : null;
-  const showGradient = !src || imgFailed;
-
-  return (
-    <div
-      className={`relative overflow-hidden bg-navy ${
-        featured ? "aspect-[21/9] md:aspect-[2.4/1]" : "aspect-[16/10]"
-      }`}
-    >
-      {showGradient && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-navy via-royal to-royaldark px-6 text-center">
-          <span className="text-xs font-semibold tracking-[0.2em] text-white/50 uppercase mb-2">
-            PRI Global
-          </span>
-          <span className="font-heading text-2xl md:text-3xl font-extrabold text-white">
-            PR1SM.AI
-          </span>
-          <span className="text-xs text-white/40 mt-2">Hero Network Golf Event</span>
-        </div>
-      )}
-      {src && !imgFailed && (
-        <img
-          src={src}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-          onError={() => setImgFailed(true)}
-        />
-      )}
-    </div>
-  );
-}
-
 export default function NewsCard({ item, featured = false, index = 0 }) {
   const catClass = CATEGORY_STYLES[item.category] || CATEGORY_STYLES.Company;
+  const hasThumbnail = Boolean(getNewsThumbnail(item));
 
   return (
     <motion.article
@@ -56,7 +25,9 @@ export default function NewsCard({ item, featured = false, index = 0 }) {
         featured ? "h-full" : ""
       }`}
     >
-      {item.posterImage && <PosterImage posterKey={item.posterImage} featured={featured} />}
+      {hasThumbnail && (
+        <NewsThumbnail item={item} featured={featured} linkToArticle />
+      )}
 
       <div className={`flex flex-col flex-1 ${featured ? "p-6 md:p-8" : "p-5"}`}>
         <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -68,7 +39,7 @@ export default function NewsCard({ item, featured = false, index = 0 }) {
           </span>
         </div>
 
-        <p className="text-xs text-[var(--text-muted)] mb-2">{item.date}</p>
+        <p className="text-xs text-[var(--text-muted)] mb-2">{formatNewsDate(item.date)}</p>
 
         <h3
           className={`font-heading font-bold text-[var(--text-primary)] line-clamp-2 mb-2 ${

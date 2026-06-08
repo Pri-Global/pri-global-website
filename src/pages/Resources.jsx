@@ -8,6 +8,9 @@ import {
   sortNewsItems,
 } from "../data/news";
 import NewsCard from "../components/news/NewsCard";
+import NewsPoster from "../components/news/NewsPoster";
+import { getNewsThumbnail } from "../utils/newsThumbnail";
+import { formatNewsDate } from "../utils/formatNewsDate";
 import { renderNewsBody } from "../utils/newsBody";
 import Button from "../components/ui/Button";
 import CallToAction from "../components/sections/CallToAction";
@@ -19,29 +22,6 @@ const CATEGORY_STYLES = {
   Company: "bg-amber-500/15 text-amber-800 dark:text-amber-400 border-amber-500/25",
 };
 
-function ArticlePoster({ posterKey }) {
-  const [imgFailed, setImgFailed] = useState(false);
-  const src = posterKey === "hero-network-poster" ? "/news/hero-network-poster.png" : null;
-
-  return (
-    <div className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-8 bg-navy">
-      {(!src || imgFailed) && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-navy via-royal to-royaldark">
-          <span className="font-heading text-3xl font-extrabold text-white">PR1SM.AI</span>
-        </div>
-      )}
-      {src && !imgFailed && (
-        <img
-          src={src}
-          alt=""
-          className="w-full h-full object-cover"
-          onError={() => setImgFailed(true)}
-        />
-      )}
-    </div>
-  );
-}
-
 function NewsArticle({ article }) {
   const catClass = CATEGORY_STYLES[article.category] || CATEGORY_STYLES.Company;
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
@@ -49,9 +29,11 @@ function NewsArticle({ article }) {
   const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
   const emailUrl = `mailto:?subject=${shareTitle}&body=${encodeURIComponent(shareUrl)}`;
 
+  const hasPoster = Boolean(getNewsThumbnail(article));
+
   return (
     <article className="py-24 md:py-28">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${hasPoster ? "max-w-4xl" : "max-w-3xl"}`}>
         <Link
           to="/resources"
           className="inline-flex items-center gap-2 text-sm font-medium text-royal dark:text-royaldark hover:underline mb-8"
@@ -66,14 +48,14 @@ function NewsArticle({ article }) {
           <span className="text-[10px] font-bold tracking-widest text-[var(--text-muted)] uppercase">
             {article.tag}
           </span>
-          <span className="text-xs text-[var(--text-muted)]">{article.date}</span>
+          <span className="text-xs text-[var(--text-muted)]">{formatNewsDate(article.date)}</span>
         </div>
 
         <h1 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)] leading-tight mb-8">
           {article.title}
         </h1>
 
-        {article.posterImage && <ArticlePoster posterKey={article.posterImage} />}
+        {getNewsThumbnail(article) && <NewsPoster item={article} />}
 
         <div className="prose-custom">{renderNewsBody(article.body)}</div>
 

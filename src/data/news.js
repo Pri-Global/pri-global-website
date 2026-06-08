@@ -3,7 +3,7 @@ export const newsItems = [
     id: "pri-cares-community",
     title: "PRI Cares — Supporting the Communities We Serve",
     slug: "pri-cares-community",
-    date: "2025",
+    date: "2025-05-12",
     category: "Community",
     tag: "PRI CARES",
     excerpt:
@@ -22,7 +22,7 @@ Watch our community videos on the Resources page to see how we give back, or get
     id: "hero-network-golf-2025",
     title: "PRI Global & PR1SM.AI — Proud Sponsor of the St. Louis Hero Network Golf Event",
     slug: "hero-network-golf-2025",
-    date: "2025",
+    date: "2025-06-14",
     category: "Community",
     tag: "SPONSORSHIP",
     excerpt:
@@ -62,7 +62,7 @@ Visit: stlouisheronetwork.org`,
     id: "prism-ai-launch-2024",
     title: "PRI Global Launches PR1SM.AI — Your AI Intelligence Layer",
     slug: "prism-ai-launch",
-    date: "2024",
+    date: "2024-10-22",
     category: "Product",
     tag: "ANNOUNCEMENT",
     excerpt:
@@ -77,16 +77,45 @@ No rip-and-replace.
 Talk to Your Data. Get Answers. Make Smarter Moves.
 
 Visit www.pr1sm.ai to learn more.`,
-    image: null,
+    image: "/news/prism-ai-flyer.png",
+    imageFit: "contain",
+    imageAlt: "PR1SM.AI flyer — Less time in the office, more time on what matters",
     posterImage: null,
     featured: false,
     link: "https://www.pr1sm.ai",
   },
   {
+    id: "pri-team-momentum-2025",
+    title: "To Our PRI Team — Building Relationships, Driving Results",
+    slug: "pri-team-momentum",
+    date: "2025-06-06",
+    category: "Company",
+    tag: "TEAM",
+    excerpt:
+      "Great people. Strong teamwork. Big impact. Celebrating recruiting wins, new clients, and the momentum that fuels measurable success across PRI Global.",
+    body: `To our PRI Team — continued great momentum ahead!
+
+At PRI Global, we believe success is built one relationship at a time. 
+From recruiting top talent and welcoming new clients to opening new 
+positions and raising our visibility — every win moves us closer to 
+measurable success.
+
+**One team. One goal. Together.**
+
+Thank you for building relationships, driving results, and making an 
+impact every day.`,
+    image: "/news/pri-team-momentum.png",
+    imageFit: "cover",
+    imageAlt: "PRI Team celebration — great people, strong teamwork, big impact",
+    posterImage: null,
+    featured: false,
+    link: null,
+  },
+  {
     id: "pri-global-28-years",
     title: "28 Years of Trusted Technology Services — A Message from Our CEO",
     slug: "28-years-trusted-services",
-    date: "2025",
+    date: "2025-01-15",
     category: "Company",
     tag: "MILESTONE",
     excerpt:
@@ -118,6 +147,6 @@ export function sortNewsItems(items) {
   return [...items].sort((a, b) => {
     if (a.featured && !b.featured) return -1;
     if (!a.featured && b.featured) return 1;
-    return 0;
+    return new Date(b.date) - new Date(a.date);
   });
 }

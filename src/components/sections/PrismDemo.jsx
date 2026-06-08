@@ -48,7 +48,7 @@ export default function PrismDemo({ compact = false }) {
   const presets = compact ? PRISM_DEMO_PRESETS.slice(0, 3) : PRISM_DEMO_PRESETS;
 
   return (
-    <section className={compact ? "py-16" : "py-20 md:py-28 bg-[var(--bg-secondary)]"}>
+    <section id="demo" className={compact ? "py-16" : "py-20 md:py-28 bg-[var(--bg-secondary)]"}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {!compact && (
           <motion.div

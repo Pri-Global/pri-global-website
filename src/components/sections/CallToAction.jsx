@@ -1,4 +1,4 @@
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Button from "../ui/Button";
 import { useInView } from "../../hooks/useInView";
 
@@ -15,7 +15,6 @@ export default function CallToAction() {
           }`}
           style={{ animationDuration: "0.65s" }}
         >
-          {/* Background glows */}
           <div className="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-royal/25 blur-[100px]" />
           <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-royaldark/20 blur-[100px]" />
 
@@ -24,22 +23,22 @@ export default function CallToAction() {
               Ready to get started?
             </p>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-tight mb-6 max-w-2xl mx-auto">
-              Let's build something extraordinary together.
+              Let&apos;s build the right solution for your business.
             </h2>
             <p className="text-white/60 text-lg max-w-lg mx-auto mb-10">
-              Schedule a free 30-minute discovery call. No commitment, no sales pressure—just an
-              honest conversation about where we can add value.
+              Tell us what you need — talent, managed services, or PR1SM.AI — and we&apos;ll
+              deliver a custom proposal within 24 business hours. No obligation.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button to="/about" size="lg">
-                <Calendar size={18} /> Book a discovery call
+              <Button to="/get-pricing" size="lg" className="pulse-cta">
+                Get Pricing <ArrowRight size={18} />
               </Button>
               <Button
-                to="/services"
+                to="/ai-innovation#demo"
                 size="lg"
                 className="bg-white/10 text-white border border-white/20 hover:bg-white/20"
               >
-                View our services <ArrowRight size={18} />
+                See Demo
               </Button>
             </div>
           </div>

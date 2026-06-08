@@ -58,8 +58,7 @@ function HeroBackgroundVideo() {
       muted
       playsInline
       preload="auto"
-      className="hidden md:block absolute inset-0 w-full h-full object-cover scale-[1.03]"
-      style={{ opacity: 0.32 }}
+      className="hidden md:block absolute inset-0 w-full h-full object-cover scale-[1.03] opacity-[0.32] dark:opacity-[0.52] dark:brightness-110 dark:saturate-110"
       aria-hidden
     />
   );
@@ -217,10 +216,10 @@ export default function Hero() {
           loading="eager"
           decoding="async"
         />
-        {/* Readability overlays — stronger on text side */}
-        <div className="absolute inset-0 bg-[var(--bg-primary)]/40 dark:bg-[#0a0c12]/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-primary)]/85 to-[var(--bg-primary)]/25 dark:from-[#0a0c12] dark:via-[#0a0c12]/90 dark:to-[#0a0c12]/30" />
-        <div className="absolute inset-0 bg-[rgba(13,27,62,0.55)] dark:bg-[rgba(10,12,18,0.7)] md:bg-transparent md:dark:bg-transparent" />
+        {/* Readability overlays — lighter in dark mode so video shows through */}
+        <div className="absolute inset-0 bg-[var(--bg-primary)]/40 dark:bg-[#0a0c12]/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-primary)]/85 to-[var(--bg-primary)]/25 dark:from-[#0a0c12]/75 dark:via-[#0a0c12]/55 dark:to-[#0a0c12]/20" />
+        <div className="absolute inset-0 bg-[rgba(13,27,62,0.55)] dark:bg-[rgba(10,12,18,0.45)] md:bg-transparent md:dark:bg-transparent" />
         <div className="hero-mesh absolute inset-0 opacity-80" />
         <div className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full bg-royal/6 dark:bg-royaldark/8 blur-[80px]" />
         <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-navy/4 dark:bg-royaldark/5 blur-[90px]" />
@@ -269,8 +268,11 @@ export default function Hero() {
               <Button to="/services" size="lg">
                 Explore our services <ArrowRight size={18} />
               </Button>
-              <Button to="/about" variant="secondary" size="lg">
-                Meet the team
+              <Button to="/get-pricing" variant="secondary" size="lg">
+                Get Pricing
+              </Button>
+              <Button to="/ai-innovation#demo" variant="ghost" size="lg">
+                See Demo
               </Button>
             </motion.div>
 

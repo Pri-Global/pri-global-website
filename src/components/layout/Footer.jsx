@@ -15,13 +15,16 @@ const footerLinks = {
   ],
   Company: [
     { label: "About Us", to: "/about" },
+    { label: "Why PRI Global", to: "/why-pri-global" },
     { label: "Industries", to: "/industries" },
     { label: "Resources", to: "/resources" },
     { label: "Careers", to: "/careers" },
-    { label: "Contact", to: "/about" },
+    { label: "FAQ", to: "/faq" },
+    { label: "Get Pricing", to: "/get-pricing" },
   ],
   "AI Innovation": [
     { label: "PR1SM.AI Platform", to: "/ai-innovation" },
+    { label: "ROI Calculator", to: "/roi-calculator" },
     { label: "Strategic IT Consulting", to: "/services" },
     { label: "Business Transformation", to: "/services" },
     { label: "AI Strategy", to: "/ai-innovation" },
@@ -123,6 +126,9 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
           <span className="text-center sm:text-left">© 2026 PRI Global (PRI India Private Services Limited). All rights reserved.</span>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+            <Link to="/get-pricing" onClick={scrollToPageTop} className="hover:text-white/70 transition-colors">Get Pricing</Link>
+            <Link to="/faq" onClick={scrollToPageTop} className="hover:text-white/70 transition-colors">FAQ</Link>
+            <Link to="/roi-calculator" onClick={scrollToPageTop} className="hover:text-white/70 transition-colors">ROI Calculator</Link>
             <Link to="/privacy-policy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
             <Link to="/legal" className="hover:text-white/70 transition-colors">Legal Notice</Link>
             <Link to="/cookie-settings" className="hover:text-white/70 transition-colors">Cookie Settings</Link>

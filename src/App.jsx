@@ -19,6 +19,10 @@ import Legal from "./pages/Legal";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookieSettings from "./pages/CookieSettings";
 import Quiz from "./pages/Quiz";
+import GetPricing from "./pages/GetPricing";
+import ROICalculatorPage from "./pages/ROICalculatorPage";
+import FAQ from "./pages/FAQ";
+import WhyPRI from "./pages/WhyPRI";
 import EmployeeLogin from "./pages/EmployeeLogin";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -147,6 +151,10 @@ function AnimatedRoutes() {
         <Route path="/privacy-policy"  element={<PW><PrivacyPolicy /></PW>} />
         <Route path="/cookie-settings" element={<PW><CookieSettings /></PW>} />
         <Route path="/quiz" element={<PW><Quiz /></PW>} />
+        <Route path="/get-pricing" element={<PW><GetPricing /></PW>} />
+        <Route path="/roi-calculator" element={<PW><ROICalculatorPage /></PW>} />
+        <Route path="/faq" element={<PW><FAQ /></PW>} />
+        <Route path="/why-pri-global" element={<PW><WhyPRI /></PW>} />
       </Routes>
     </AnimatePresence>
   );

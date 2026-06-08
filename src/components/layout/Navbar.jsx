@@ -1,48 +1,47 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { scrollToPageTop } from "../../utils/scrollToPageTop";
-import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
+import { Menu, X, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import ThemeToggle from "../ui/ThemeToggle";
 import BrandLogo from "../ui/BrandLogo";
+import MegaDropdown, { DropdownItemList } from "../ui/MegaDropdown";
+import {
+  aiDropdown,
+  resourcesDropdown,
+  companyDropdown,
+} from "../../data/navDropdowns";
 
-const navLinks = [
+const simpleLinks = [
   { label: "Services", to: "/services" },
   { label: "Talent Solutions", to: "/talent-solutions" },
-  { label: "Industries", to: "/industries" },
-  { label: "Resources", to: "/resources" },
-  { label: "About", to: "/about" },
-];
-
-/* AI dropdown sub-links */
-const aiDropdown = [
-  { label: "AI Innovation", to: "/ai-innovation", external: false },
-  { label: "PR1SM.AI", to: "https://www.pr1sm.ai", external: true },
 ];
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
+
+  const closeMenus = () => setOpenMenu(null);
+  const toggleMenu = (id) => setOpenMenu((v) => (v === id ? null : id));
 
   const onNavClick = () => {
-    setOpen(false);
+    setMobileOpen(false);
+    closeMenus();
     scrollToPageTop();
   };
 
   const onLogoClick = (e) => {
     e.preventDefault();
-    setOpen(false);
+    setMobileOpen(false);
+    closeMenus();
     window.history.replaceState(null, "", "/");
-    if (pathname !== "/") {
-      navigate("/", { replace: true });
-    }
+    if (pathname !== "/") navigate("/", { replace: true });
     scrollToPageTop();
   };
-  const [aiOpen, setAiOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const aiRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -50,12 +49,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Close AI dropdown when clicking outside */
-  useEffect(() => {
-    const handler = (e) => { if (aiRef.current && !aiRef.current.contains(e.target)) setAiOpen(false); };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  const aiBadge = <span className="w-1.5 h-1.5 rounded-full bg-royal inline-block" />;
 
   return (
     <header
@@ -67,240 +61,168 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[4.5rem] lg:h-20">
-          {/* Logo */}
           <Link to="/" className="flex items-center shrink-0 group gap-2" onClick={onLogoClick}>
             <BrandLogo mark size="lg" animate className="lg:hidden" />
             <BrandLogo size="lg" animate className="hidden lg:block" />
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {/* Regular nav links (before AI) */}
-            {navLinks.slice(0, 1).map((link) => (
+          <nav className="hidden lg:flex items-center gap-0.5">
+            {simpleLinks.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 onClick={onNavClick}
                 className={({ isActive }) =>
-                  `relative px-4 py-2 text-sm font-medium rounded-lg transition-colors group ${
+                  `px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"
                   }`
                 }
               >
-                {({ isActive }) => (
-                  <>
-                    {link.label}
-                    <motion.span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-royal" initial={false} animate={{ scaleX: isActive ? 1 : 0 }} transition={{ duration: 0.2, ease: "easeOut" }} style={{ originX: 0 }} />
-                    {!isActive && <span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-royal scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />}
-                  </>
-                )}
-              </NavLink>
-            ))}
-            {navLinks.slice(1, 2).map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={onNavClick}
-                className={({ isActive }) =>
-                  `relative px-4 py-2 text-sm font-medium rounded-lg transition-colors group ${
-                    isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {link.label}
-                    <motion.span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-royal" initial={false} animate={{ scaleX: isActive ? 1 : 0 }} transition={{ duration: 0.2, ease: "easeOut" }} style={{ originX: 0 }} />
-                    {!isActive && <span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-royal scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />}
-                  </>
-                )}
+                {link.label}
               </NavLink>
             ))}
 
-            {/* AI & PR1SM.AI dropdown */}
-            <div ref={aiRef} className="relative">
-              <button
-                onMouseEnter={() => setAiOpen(true)}
-                onMouseLeave={() => setAiOpen(false)}
-                onClick={() => setAiOpen((v) => !v)}
-                className="relative flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"
-              >
-                AI &amp; PR1SM.AI
-                <span className="w-1.5 h-1.5 rounded-full bg-royal inline-block" />
-                <ChevronDown size={13} className={`transition-transform duration-200 ${aiOpen ? "rotate-180" : ""}`} />
-              </button>
-              <AnimatePresence>
-                {aiOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                    transition={{ duration: 0.18, ease: "easeOut" }}
-                    onMouseEnter={() => setAiOpen(true)}
-                    onMouseLeave={() => setAiOpen(false)}
-                    className="absolute top-full left-0 mt-1 w-52 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] shadow-lg overflow-hidden z-50"
-                  >
-                    {aiDropdown.map((item) =>
-                      item.external ? (
-                        <a
-                          key={item.label}
-                          href={item.to}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-between gap-2 px-4 py-3 text-sm text-[var(--text-secondary)] hover:text-royal hover:bg-[var(--border-subtle)] transition-colors"
-                          onClick={() => setAiOpen(false)}
-                        >
-                          {item.label}
-                          <ExternalLink size={12} className="text-[var(--text-muted)]" />
-                        </a>
-                      ) : (
-                        <NavLink
-                          key={item.label}
-                          to={item.to}
-                          className={({ isActive }) =>
-                            `flex items-center px-4 py-3 text-sm transition-colors ${isActive ? "text-royal bg-royal/8 font-medium" : "text-[var(--text-secondary)] hover:text-royal hover:bg-[var(--border-subtle)]"}`
-                          }
-                          onClick={() => {
-                            setAiOpen(false);
-                            scrollPageTop();
-                          }}
-                        >
-                          {item.label}
-                        </NavLink>
-                      )
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <MegaDropdown
+              label="AI & PR1SM.AI"
+              badge={aiBadge}
+              isOpen={openMenu === "ai"}
+              onOpen={() => setOpenMenu("ai")}
+              onClose={closeMenus}
+              onToggle={() => toggleMenu("ai")}
+            >
+              <DropdownItemList items={aiDropdown.items} onClose={closeMenus} />
+            </MegaDropdown>
 
-            {/* Remaining nav links */}
-            {navLinks.slice(2).map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={onNavClick}
-                className={({ isActive }) =>
-                  `relative px-4 py-2 text-sm font-medium rounded-lg transition-colors group ${
-                    isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {link.label}
-                    <motion.span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-royal" initial={false} animate={{ scaleX: isActive ? 1 : 0 }} transition={{ duration: 0.2, ease: "easeOut" }} style={{ originX: 0 }} />
-                    {!isActive && <span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-royal scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />}
-                  </>
-                )}
-              </NavLink>
-            ))}
+            <MegaDropdown
+              label="Resources"
+              isOpen={openMenu === "resources"}
+              onOpen={() => setOpenMenu("resources")}
+              onClose={closeMenus}
+              onToggle={() => toggleMenu("resources")}
+            >
+              <DropdownItemList items={resourcesDropdown.items} onClose={closeMenus} />
+            </MegaDropdown>
+
+            <MegaDropdown
+              label="Company"
+              isOpen={openMenu === "company"}
+              onOpen={() => setOpenMenu("company")}
+              onClose={closeMenus}
+              onToggle={() => toggleMenu("company")}
+            >
+              <DropdownItemList items={companyDropdown.items} onClose={closeMenus} />
+            </MegaDropdown>
           </nav>
 
-          {/* Desktop actions */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
             <Link
               to="/employee-login"
               onClick={onNavClick}
-              className="text-[12px] text-[var(--text-muted)] hover:text-royal dark:hover:text-royaldark transition-colors"
+              className="text-[12px] text-[var(--text-muted)] hover:text-royal transition-colors px-2"
             >
               Employee Portal
             </Link>
-            <Button to="/careers" variant="secondary" size="sm" className="border-[var(--text-muted)]" onClick={scrollToPageTop}>
-              Careers
+            <Button to="/ai-innovation#demo" variant="ghost" size="sm" onClick={onNavClick}>
+              See Demo
             </Button>
-            <Button to="/about" size="sm" className="pulse-cta" onClick={scrollToPageTop}>
-              Get in touch
+            <Button to="/get-pricing" size="sm" className="pulse-cta" onClick={onNavClick}>
+              Get Pricing
             </Button>
           </div>
 
-          {/* Mobile: theme + burger */}
           <div className="flex lg:hidden items-center gap-2">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
             <button
-              onClick={() => setOpen(!open)}
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:bg-[var(--border-subtle)] transition-colors"
+              type="button"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:bg-[var(--border-subtle)]"
               aria-label="Toggle menu"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {open ? (
-                  <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <X size={20} />
-                  </motion.span>
-                ) : (
-                  <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <Menu size={20} />
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
-        {open && (
+        {mobileOpen && (
           <motion.div
-            key="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="lg:hidden overflow-hidden bg-[var(--bg-primary)] border-b border-[var(--border)]"
+            className="lg:hidden overflow-hidden bg-[var(--bg-primary)] border-b border-[var(--border)] max-h-[80vh] overflow-y-auto"
           >
-            <div className="px-4 pb-4">
-              <nav className="flex flex-col gap-1 pt-2">
-                {/* Services + Talent */}
-                {navLinks.slice(0, 2).map((link, i) => (
-                  <motion.div key={link.to} initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.04, duration: 0.2 }}>
-                    <NavLink to={link.to} onClick={onNavClick} className={({ isActive }) => `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
-                      {link.label}
-                    </NavLink>
-                  </motion.div>
-                ))}
-                {/* AI dropdown items flat on mobile */}
-                <motion.div initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.08, duration: 0.2 }}>
-                  <NavLink to="/ai-innovation" onClick={onNavClick} className={({ isActive }) => `flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
-                    <span className="flex items-center gap-2">AI Innovation <span className="w-1.5 h-1.5 rounded-full bg-royal inline-block" /></span>
+            <div className="px-4 pb-5 pt-2 space-y-4">
+              <MobileSection title="Explore">
+                {simpleLinks.map((link) => (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    onClick={onNavClick}
+                    className="block py-2 text-sm text-[var(--text-secondary)] hover:text-royal"
+                  >
+                    {link.label}
                   </NavLink>
-                </motion.div>
-                <motion.div initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.1, duration: 0.2 }}>
-                  <a href="https://www.pr1sm.ai" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-lg transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]">
-                    PR1SM.AI <ExternalLink size={12} />
-                  </a>
-                </motion.div>
-                {/* Remaining links */}
-                {navLinks.slice(2).map((link, i) => (
-                  <motion.div key={link.to} initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: (i + 4) * 0.04, duration: 0.2 }}>
-                    <NavLink to={link.to} onClick={onNavClick} className={({ isActive }) => `block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${isActive ? "text-royal bg-royal/10" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)]"}`}>
-                      {link.label}
-                    </NavLink>
-                  </motion.div>
                 ))}
-                <NavLink
-                  to="/careers"
-                  onClick={onNavClick}
-                  className="px-4 py-2.5 text-sm font-medium rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)] transition-colors"
-                >
-                  Careers
-                </NavLink>
-                <NavLink
-                  to="/employee-login"
-                  onClick={onNavClick}
-                  className="px-4 py-2.5 text-xs font-medium rounded-lg text-[var(--text-muted)] hover:text-royal hover:bg-[var(--border-subtle)] transition-colors"
-                >
-                  Employee Portal
-                </NavLink>
-              </nav>
-              <Button to="/about" size="sm" className="w-full mt-3" onClick={onNavClick}>
-                Get in touch
-              </Button>
+              </MobileSection>
+              <MobileSection title="AI & PR1SM.AI">
+                {aiDropdown.items.map((item) => (
+                  <MobileLink key={item.label} item={item} onClick={onNavClick} />
+                ))}
+              </MobileSection>
+              <MobileSection title="Resources">
+                {resourcesDropdown.items.map((item) => (
+                  <MobileLink key={item.label} item={item} onClick={onNavClick} />
+                ))}
+              </MobileSection>
+              <MobileSection title="Company">
+                {companyDropdown.items.map((item) => (
+                  <MobileLink key={item.label} item={item} onClick={onNavClick} />
+                ))}
+              </MobileSection>
+              <div className="flex flex-col gap-2 pt-2 border-t border-[var(--border)]">
+                <Button to="/ai-innovation#demo" variant="ghost" size="sm" className="w-full" onClick={onNavClick}>
+                  See Demo
+                </Button>
+                <Button to="/get-pricing" size="sm" className="w-full" onClick={onNavClick}>
+                  Get Pricing
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
+  );
+}
+
+function MobileSection({ title, children }) {
+  return (
+    <div>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-muted)] mb-2">{title}</p>
+      <div className="space-y-1">{children}</div>
+    </div>
+  );
+}
+
+function MobileLink({ item, onClick }) {
+  if (item.external) {
+    return (
+      <a
+        href={item.to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-between py-2 text-sm text-[var(--text-secondary)]"
+        onClick={onClick}
+      >
+        {item.label} <ExternalLink size={12} />
+      </a>
+    );
+  }
+  return (
+    <Link to={item.to} onClick={onClick} className="block py-2 text-sm text-[var(--text-secondary)] hover:text-royal">
+      {item.label}
+    </Link>
   );
 }

@@ -11,7 +11,7 @@ const caresVideos = [
 
 export default function PriCaresVideos() {
   return (
-    <section className="py-20 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
+    <section id="pri-cares" className="py-20 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="PRI Cares"

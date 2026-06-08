@@ -9,6 +9,7 @@ import {
   LogOut,
 } from "lucide-react";
 import Button from "../components/ui/Button";
+import AnimatedIcon from "../components/ui/AnimatedIcon";
 import BrandLogo from "../components/ui/BrandLogo";
 import VideoPlayer from "../components/ui/VideoPlayer";
 import {
@@ -84,10 +85,10 @@ export default function EmployeeDashboard() {
           {cards.map(({ icon: Icon, title, description, action }) => (
             <div
               key={title}
-              className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6 flex flex-col"
+              className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6 flex flex-col hover:shadow-md transition-shadow"
             >
               <div className="w-10 h-10 rounded-lg bg-royal/10 flex items-center justify-center mb-4">
-                <Icon size={20} className="text-royal dark:text-royaldark" />
+                <AnimatedIcon Icon={Icon} size={20} className="text-royal dark:text-royaldark" />
               </div>
               <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-2">
                 {title}

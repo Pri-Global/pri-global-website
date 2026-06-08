@@ -251,8 +251,8 @@ export default function AiInnovation() {
             <span className="text-xs font-bold uppercase tracking-widest text-royal mb-4 block">Who PR1SM Fits</span>
             <div className="grid sm:grid-cols-2 gap-3">
               {prismIndustries.map((ind) => (
-                <div key={ind} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
-                  <CheckCircle size={15} className="text-royal dark:text-royaldark shrink-0 mt-0.5" />
+                <div key={ind} className="group flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                  <AnimatedIcon Icon={CheckCircle} size={15} className="text-royal dark:text-royaldark shrink-0 mt-0.5" />
                   <span>{ind}</span>
                 </div>
               ))}

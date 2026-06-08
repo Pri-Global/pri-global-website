@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
+import AnimatedIcon from "../ui/AnimatedIcon";
 import { useTheme } from "../../context/ThemeContext";
 import { offices } from "../../data/offices";
 
@@ -38,15 +39,15 @@ function OfficeTooltip({ office, onClose }) {
           ×
         </button>
       </div>
-      <p className="flex items-start gap-2 text-xs text-[var(--text-secondary)] mb-2">
-        <MapPin size={12} className="shrink-0 mt-0.5 text-royal" />
+      <p className="group flex items-start gap-2 text-xs text-[var(--text-secondary)] mb-2">
+        <AnimatedIcon Icon={MapPin} size={12} className="shrink-0 mt-0.5 text-royal" />
         {office.address}
       </p>
       <a
         href={`tel:${office.phone}`}
-        className="flex items-center gap-2 text-xs text-royal hover:underline mb-2"
+        className="group flex items-center gap-2 text-xs text-royal hover:underline mb-2"
       >
-        <Phone size={12} />
+        <AnimatedIcon Icon={Phone} size={12} className="text-royal" />
         {office.phoneDisplay}
       </a>
       <p className="text-[10px] text-[var(--text-muted)] mb-2">{office.contact}</p>
@@ -63,9 +64,9 @@ function OfficeTooltip({ office, onClose }) {
       {office.email && (
         <a
           href={`mailto:${office.email}`}
-          className="flex items-center gap-2 text-xs text-royal hover:underline mb-2"
+          className="group flex items-center gap-2 text-xs text-royal hover:underline mb-2"
         >
-          <Mail size={12} />
+          <AnimatedIcon Icon={Mail} size={12} className="text-royal" />
           {office.email}
         </a>
       )}
@@ -73,9 +74,9 @@ function OfficeTooltip({ office, onClose }) {
         href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1 text-xs font-medium text-royal hover:underline"
+        className="group inline-flex items-center gap-1 text-xs font-medium text-royal hover:underline"
       >
-        Get Directions <ExternalLink size={11} />
+        Get Directions <AnimatedIcon Icon={ExternalLink} size={11} className="text-royal" />
       </a>
     </motion.div>
   );

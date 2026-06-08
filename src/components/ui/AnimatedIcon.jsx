@@ -23,7 +23,7 @@ function drawTo(el, offset, duration, delay = 0) {
   el.style.strokeDashoffset = `${offset}`;
 }
 
-export default function AnimatedIcon({ Icon, size = 24, className = "" }) {
+export default function AnimatedIcon({ Icon, size = 24, className = "", style, ...props }) {
   const wrapRef = useRef(null);
 
   const resetAll = useCallback(() => {
@@ -102,7 +102,7 @@ export default function AnimatedIcon({ Icon, size = 24, className = "" }) {
       ref={wrapRef}
       className="inline-flex items-center justify-center leading-none pointer-events-none"
     >
-      <Icon size={size} className={className} />
+      <Icon size={size} className={className} style={style} {...props} />
     </span>
   );
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { Newspaper } from "lucide-react";
+import AnimatedIcon from "./AnimatedIcon";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NEWS_SECTION_ID = "latest-news";
@@ -83,11 +84,11 @@ export default function NewsScrollHint() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.92 }}
           onClick={scrollToNews}
-          className="fixed bottom-6 left-4 sm:left-6 z-50 w-10 h-10 rounded-full bg-royal text-white shadow-lg shadow-royal/30 flex items-center justify-center hover:bg-[var(--accent-hover)] transition-colors"
+          className="group fixed bottom-6 left-4 sm:left-6 z-50 w-10 h-10 rounded-full bg-royal text-white shadow-lg shadow-royal/30 flex items-center justify-center hover:bg-[var(--accent-hover)] transition-colors"
           aria-label="Zum News-Bereich scrollen"
           title="News"
         >
-          <Newspaper size={17} />
+          <AnimatedIcon Icon={Newspaper} size={17} className="text-white" />
         </motion.button>
       )}
     </AnimatePresence>

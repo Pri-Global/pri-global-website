@@ -8,6 +8,7 @@ import WorldMap from "../components/sections/WorldMap";
 import Timeline from "../components/sections/Timeline";
 import { useInView } from "../hooks/useInView";
 import { priGlobalLeadership, prismLeadership } from "../data/team";
+import AnimatedIcon from "../components/ui/AnimatedIcon";
 import PriGlobalLeaderRow from "../components/team/PriGlobalLeaderRow";
 import PrismTeamSection from "../components/team/PrismTeamSection";
 import PrismLeadershipDivider from "../components/team/PrismLeadershipDivider";
@@ -248,7 +249,7 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4, transition: { type: "spring", stiffness: 280, damping: 18 } }}
-                className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-7"
+                className="group bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-2xl p-7"
               >
                 <div className="flex items-center gap-4 mb-5">
                   <div className="w-12 h-12 rounded-full bg-royal flex items-center justify-center shrink-0">
@@ -263,14 +264,14 @@ export default function About() {
                   </div>
                 </div>
                 <div className="space-y-2.5 text-sm">
-                  <a href={`tel:${person.phone.replace(/-/g, "")}`} className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                    <Phone size={14} className="text-royal shrink-0" /> {person.phone}
+                  <a href={`tel:${person.phone.replace(/-/g, "")}`} className="group/link flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
+                    <AnimatedIcon Icon={Phone} size={14} className="text-royal shrink-0" /> {person.phone}
                   </a>
-                  <a href={`mailto:${person.email}`} className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                    <Mail size={14} className="text-royal shrink-0" /> {person.email}
+                  <a href={`mailto:${person.email}`} className="group/link flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
+                    <AnimatedIcon Icon={Mail} size={14} className="text-royal shrink-0" /> {person.email}
                   </a>
-                  <div className="flex items-start gap-3 text-[var(--text-secondary)]">
-                    <MapPin size={14} className="text-royal shrink-0 mt-0.5" /> {person.address}
+                  <div className="group/link flex items-start gap-3 text-[var(--text-secondary)]">
+                    <AnimatedIcon Icon={MapPin} size={14} className="text-royal shrink-0 mt-0.5" /> {person.address}
                   </div>
                 </div>
               </motion.div>
@@ -309,26 +310,26 @@ export default function About() {
               <div className="space-y-4 text-sm text-[var(--text-secondary)]">
                 <a
                   href="tel:6362567172"
-                  className="flex items-center gap-3 hover:text-[var(--text-primary)] transition-colors"
+                  className="group flex items-center gap-3 hover:text-[var(--text-primary)] transition-colors"
                 >
-                  <Phone size={16} className="text-royal" /> 636.256.7172
+                  <AnimatedIcon Icon={Phone} size={16} className="text-royal" /> 636.256.7172
                 </a>
-                <div className="flex items-start gap-3">
-                  <MapPin size={16} className="text-royal shrink-0 mt-0.5" />
+                <div className="group flex items-start gap-3">
+                  <AnimatedIcon Icon={MapPin} size={16} className="text-royal shrink-0 mt-0.5" />
                   <div className="space-y-0.5">
                     <div className="font-medium text-[var(--text-primary)]">Headquarters — USA</div>
                     <div>174 Clarkson Road, Ellisville, MO 63011</div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <MapPin size={16} className="text-royal shrink-0 mt-0.5" />
+                <div className="group flex items-start gap-3">
+                  <AnimatedIcon Icon={MapPin} size={16} className="text-royal shrink-0 mt-0.5" />
                   <div className="space-y-0.5">
                     <div className="font-medium text-[var(--text-primary)]">India — Hyderabad &amp; Pune</div>
                     <div>Madhapur, Hyderabad · Viman Nagar, Pune</div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <MapPin size={16} className="text-royal shrink-0 mt-0.5" />
+                <div className="group flex items-start gap-3">
+                  <AnimatedIcon Icon={MapPin} size={16} className="text-royal shrink-0 mt-0.5" />
                   <div className="space-y-0.5">
                     <div className="font-medium text-[var(--text-primary)]">Also in</div>
                     <div>Manila, Philippines · Ottawa, Canada</div>
@@ -338,9 +339,9 @@ export default function About() {
                   href="https://priglobal.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:text-[var(--text-primary)] transition-colors"
+                  className="group flex items-center gap-3 hover:text-[var(--text-primary)] transition-colors"
                 >
-                  <ExternalLink size={16} className="text-royal" /> Contact via priglobal.com
+                  <AnimatedIcon Icon={ExternalLink} size={16} className="text-royal" /> Contact via priglobal.com
                 </a>
               </div>
             </div>

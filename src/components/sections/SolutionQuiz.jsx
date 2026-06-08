@@ -272,14 +272,14 @@ export default function SolutionQuiz({ standalone = false }) {
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring", stiffness: 200, damping: 22 }}
-              className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 text-center"
+              className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 text-center"
             >
               <span className="inline-block text-xs font-bold uppercase tracking-widest text-royal mb-4">
                 {rec.badge}
               </span>
               {RecIcon && (
                 <div className="w-14 h-14 rounded-2xl bg-royal/10 flex items-center justify-center mx-auto mb-4">
-                  <RecIcon size={28} className="text-royal dark:text-royaldark" />
+                  <AnimatedIcon Icon={RecIcon} size={28} className="text-royal dark:text-royaldark" />
                 </div>
               )}
               <h3 className="font-heading text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-4">

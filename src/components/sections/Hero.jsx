@@ -4,6 +4,7 @@ import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import BrandLogo, { PriMarkAvatar } from "../ui/BrandLogo";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
+import AnimatedIcon from "../ui/AnimatedIcon";
 import usePriVa from "../chatbot/usePriVa";
 import { VIDEOS } from "../../data/videos";
 
@@ -231,9 +232,9 @@ export default function Hero() {
           <div>
             <motion.div
               {...fadeUp(0.1)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-royal/10 dark:bg-royaldark/15 border border-royal/20 dark:border-royaldark/30 mb-6"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-royal/10 dark:bg-royaldark/15 border border-royal/20 dark:border-royaldark/30 mb-6"
             >
-              <Sparkles size={14} className="text-royal dark:text-royaldark" />
+              <AnimatedIcon Icon={Sparkles} size={14} className="text-royal dark:text-royaldark" />
               <span className="text-xs font-semibold text-royal dark:text-royaldark tracking-wide uppercase">
                 Technology · Talent · AI Innovation
               </span>

@@ -106,28 +106,28 @@ export default function Footer() {
 
         {/* Contact strip */}
         <div className="flex flex-col md:flex-row flex-wrap gap-4 py-8 border-b border-white/10 text-sm text-white/50">
-          <a href="tel:6362567172" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone size={14} /> 636.256.7172 (PRI Global HQ)
+          <a href="tel:6362567172" className="group flex items-center gap-2 hover:text-white transition-colors">
+            <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 636.256.7172 (PRI Global HQ)
           </a>
-          <a href="tel:6367791651" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone size={14} /> 636-779-1651 (Ajay Patel · PR1SM.AI)
+          <a href="tel:6367791651" className="group flex items-center gap-2 hover:text-white transition-colors">
+            <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 636-779-1651 (Ajay Patel · PR1SM.AI)
           </a>
-          <a href="tel:3147845854" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone size={14} /> 314-784-5854 (Liezl Moss · Growth)
+          <a href="tel:3147845854" className="group flex items-center gap-2 hover:text-white transition-colors">
+            <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 314-784-5854 (Liezl Moss · Growth)
           </a>
           <a href="mailto:info@priglobal.com" className="flex items-center gap-2 hover:text-white transition-colors">
             info@priglobal.com
           </a>
-          <span className="flex items-start gap-2 flex-wrap">
-            <MapPin size={14} className="shrink-0 mt-0.5" /> Ellisville, MO · Hyderabad · Pune · Manila · Ottawa
+          <span className="group flex items-start gap-2 flex-wrap">
+            <AnimatedIcon Icon={MapPin} size={14} className="shrink-0 mt-0.5 text-white/50" /> Ellisville, MO · Hyderabad · Pune · Manila · Ottawa
           </span>
           <a
             href={HUBSPOT_MEETING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-white transition-colors"
+            className="group flex items-center gap-2 hover:text-white transition-colors"
           >
-            <Calendar size={14} /> Book a meeting: meetings.hubspot.com/priglobal/discovery
+            <AnimatedIcon Icon={Calendar} size={14} className="text-white/50 group-hover:text-white" /> Book a meeting: meetings.hubspot.com/priglobal/discovery
           </a>
         </div>
 

@@ -1,4 +1,5 @@
 import { Phone, Mail } from "lucide-react";
+import AnimatedIcon from "../ui/AnimatedIcon";
 import LinkedInIcon from "./LinkedInIcon";
 
 /** Shared contact row for leadership cards (PRI + PR1SM themes) */
@@ -12,8 +13,8 @@ export default function TeamContactLinks({
 
   const isPrism = theme === "prism";
   const linkClass = isPrism
-    ? "inline-flex items-center gap-2 text-sm text-[#4169E1] hover:text-white transition-colors"
-    : "inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-royal dark:hover:text-royaldark transition-colors";
+    ? "group inline-flex items-center gap-2 text-sm text-[#4169E1] hover:text-white transition-colors"
+    : "group inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-royal dark:hover:text-royaldark transition-colors";
   const iconBtnClass = isPrism
     ? "p-2 rounded-lg bg-[#0D1B3E] text-[#4169E1] hover:text-white transition-colors"
     : "p-2 rounded-lg bg-royal/10 text-royal hover:bg-royal/20 transition-colors";
@@ -42,13 +43,13 @@ export default function TeamContactLinks({
     >
       {member.phone && (
         <a href={`tel:${member.phone.replace(/[^\d+]/g, "")}`} className={linkClass}>
-          <Phone size={isPrism ? 14 : 15} className={isPrism ? "" : "text-royal"} />
+          <AnimatedIcon Icon={Phone} size={isPrism ? 14 : 15} className={isPrism ? "" : "text-royal"} />
           {!isPrism && member.phone}
         </a>
       )}
       {member.email && (
         <a href={`mailto:${member.email}`} className={linkClass}>
-          <Mail size={isPrism ? 14 : 15} className={isPrism ? "" : "text-royal"} />
+          <AnimatedIcon Icon={Mail} size={isPrism ? 14 : 15} className={isPrism ? "" : "text-royal"} />
           {!isPrism && member.email}
         </a>
       )}

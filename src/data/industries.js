@@ -2,7 +2,7 @@ export const industries = [
   {
     id: "financial-services",
     title: "Financial Services",
-    icon: "🏦",
+    icon: "Landmark",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
     description:
       "Supporting banks, credit unions, insurance carriers, asset managers, and fintechs with regulatory compliance, core system modernisation, fraud detection, and digital-first customer experiences.",
@@ -15,7 +15,7 @@ export const industries = [
   {
     id: "manufacturing-supply-chain",
     title: "Manufacturing and Supply Chain",
-    icon: "🏭",
+    icon: "Factory",
     image: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&q=80",
     description:
       "Empowering manufacturers and logistics organisations with smart factory solutions, IoT integration, ERP modernisation, and end-to-end supply chain visibility that drives operational efficiency.",
@@ -28,7 +28,7 @@ export const industries = [
   {
     id: "consumer-packaged-goods",
     title: "Consumer Packaged Goods",
-    icon: "🛒",
+    icon: "ShoppingBag",
     image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80",
     description:
       "Helping CPG companies accelerate go-to-market, optimise trade spend, and harness data to understand consumers—enabling agile product development and efficient distribution at global scale.",
@@ -41,7 +41,7 @@ export const industries = [
   {
     id: "healthcare",
     title: "Healthcare",
-    icon: "🏥",
+    icon: "HeartPulse",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
     description:
       "Partnering with health systems, hospitals, physician groups, and payers to deliver secure interoperable platforms, AI-assisted clinical workflows, and HIPAA-compliant cloud infrastructure.",
@@ -54,7 +54,7 @@ export const industries = [
   {
     id: "public-sector",
     title: "Public Sector",
-    icon: "🏛️",
+    icon: "Building2",
     image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
     description:
       "Delivering citizen-centric digital services, secure cloud adoption, and operational transformation for federal, state, and local government agencies under strict compliance and security requirements.",
@@ -67,7 +67,7 @@ export const industries = [
   {
     id: "retail",
     title: "Retail",
-    icon: "🛍️",
+    icon: "Store",
     image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
     description:
       "Helping retailers unify online and in-store operations, personalise customer journeys, and optimise fulfilment through modern commerce platforms and real-time data capabilities.",

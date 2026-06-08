@@ -17,6 +17,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { milestones, TYPE_COLORS, CONDENSED_IDS } from "../../data/timelineMilestones";
+import AnimatedIcon from "../ui/AnimatedIcon";
 
 const ICON_MAP = {
   Building2,
@@ -60,7 +61,7 @@ function MilestoneCard({ m, index, above }) {
           className="w-2 h-2 rounded-full mb-2"
           style={{ backgroundColor: color }}
         />
-        <Icon size={20} style={{ color }} className="mb-2" />
+        <AnimatedIcon Icon={Icon} size={20} style={{ color }} className="mb-2" />
         <p className="text-xs text-[var(--text-muted)] mb-0.5">{m.year}</p>
         <h4 className="font-heading font-bold text-sm text-[var(--text-primary)] mb-1">
           {m.title}
@@ -171,8 +172,8 @@ export default function Timeline({ condensed = false }) {
                   className="absolute -left-[25px] w-3 h-3 rounded-full border-2 bg-[var(--bg-card)]"
                   style={{ borderColor: color }}
                 />
-                <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-4">
-                  <Icon size={18} style={{ color }} className="mb-2" />
+                <div className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-4">
+                  <AnimatedIcon Icon={Icon} size={18} style={{ color }} className="mb-2" />
                   <p className="text-xs text-[var(--text-muted)]">{m.year}</p>
                   <h4 className="font-heading font-bold text-[var(--text-primary)]">{m.title}</h4>
                   <p className="text-sm text-[var(--text-secondary)] mt-1">{m.description}</p>

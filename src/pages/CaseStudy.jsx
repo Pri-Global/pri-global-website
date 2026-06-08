@@ -25,6 +25,7 @@ import { formatNewsDate } from "../utils/formatNewsDate";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
 import SEO from "../components/SEO";
 import Button from "../components/ui/Button";
+import AnimatedIcon from "../components/ui/AnimatedIcon";
 
 const ICON_MAP = {
   Factory,
@@ -114,9 +115,9 @@ export default function CaseStudy() {
               <motion.div variants={staggerItem} className="flex flex-wrap items-center gap-3 mb-4">
                 <motion.span
                   whileHover={{ scale: 1.05 }}
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full bg-royal/10 text-royal dark:bg-royaldark/15 dark:text-royaldark border border-royal/20"
+                  className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full bg-royal/10 text-royal dark:bg-royaldark/15 dark:text-royaldark border border-royal/20"
                 >
-                  <Icon size={14} />
+                  <AnimatedIcon Icon={Icon} size={14} className="text-royal dark:text-royaldark" />
                   {study.industry}
                 </motion.span>
                 {study.date && (

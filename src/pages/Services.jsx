@@ -41,8 +41,8 @@ function ServiceDetail({ svc, index }) {
         <p className="text-[var(--text-secondary)] leading-relaxed mb-5">{svc.description}</p>
         <ul className="grid sm:grid-cols-2 gap-2">
           {svc.bullets.map((b) => (
-            <li key={b} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
-              <CheckCircle size={16} className="text-royal dark:text-royaldark shrink-0 mt-0.5" />
+            <li key={b} className="group flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+              <AnimatedIcon Icon={CheckCircle} size={16} className="text-royal dark:text-royaldark shrink-0 mt-0.5" />
               {b}
             </li>
           ))}

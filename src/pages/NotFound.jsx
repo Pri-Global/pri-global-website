@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Home, Briefcase, MessageCircle } from "lucide-react";
 import SEO from "../components/SEO";
 import BrandLogo from "../components/ui/BrandLogo";
+import AnimatedIcon from "../components/ui/AnimatedIcon";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -68,9 +69,9 @@ export default function NotFound() {
               <motion.div key={label} variants={item}>
                 <Link
                   to={to}
-                  className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-royal/40 hover:shadow-md transition-all text-sm font-semibold text-[var(--text-primary)]"
+                  className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-royal/40 hover:shadow-md transition-all text-sm font-semibold text-[var(--text-primary)]"
                 >
-                  <Icon size={20} className="text-royal dark:text-royaldark" />
+                  <AnimatedIcon Icon={Icon} size={20} className="text-royal dark:text-royaldark" />
                   {label}
                 </Link>
               </motion.div>

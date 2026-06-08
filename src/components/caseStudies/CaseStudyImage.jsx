@@ -14,6 +14,7 @@ import {
   CreditCard,
   GraduationCap,
 } from "lucide-react";
+import AnimatedIcon from "../ui/AnimatedIcon";
 
 const ICON_MAP = {
   Factory,
@@ -78,8 +79,8 @@ export default function CaseStudyImage({
           />
         </>
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[var(--text-muted)]">
-          <Icon size={40} className="text-royal/40 dark:text-royaldark/40" aria-hidden />
+        <div className="group absolute inset-0 flex flex-col items-center justify-center gap-2 text-[var(--text-muted)]">
+          <AnimatedIcon Icon={Icon} size={40} className="text-royal/40 dark:text-royaldark/40" aria-hidden />
           <span className="text-xs">{study.industry}</span>
         </div>
       )}

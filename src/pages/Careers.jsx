@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import SEO from "../components/SEO";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
+import AnimatedIcon from "../components/ui/AnimatedIcon";
 import Button from "../components/ui/Button";
 import CallToAction from "../components/sections/CallToAction";
 import RatingWidget from "../components/ui/RatingWidget";
@@ -135,8 +136,10 @@ export default function Careers() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: i * 0.08, ease: EASE }}
               >
-                <Card className="h-full">
-                  <item.icon size={28} className="text-royal dark:text-royaldark mb-4" />
+                <Card hover className="h-full">
+                  <div className="w-12 h-12 rounded-xl bg-royal/10 dark:bg-royaldark/15 flex items-center justify-center mb-4">
+                    <AnimatedIcon Icon={item.icon} size={24} className="text-royal dark:text-royaldark" />
+                  </div>
                   <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-2">
                     {item.title}
                   </h3>
@@ -163,8 +166,10 @@ export default function Careers() {
                 className={benefitsInView ? "anim-fade-up" : "opacity-0"}
                 style={{ animationDelay: `${i * 0.07}s` }}
               >
-                <Card className="h-full">
-                  <b.icon size={22} className="text-royal dark:text-royaldark mb-3" />
+                <Card hover className="h-full">
+                  <div className="w-10 h-10 rounded-lg bg-royal/10 dark:bg-royaldark/15 flex items-center justify-center mb-3">
+                    <AnimatedIcon Icon={b.icon} size={20} className="text-royal dark:text-royaldark" />
+                  </div>
                   <h3 className="font-heading font-bold text-[var(--text-primary)] mb-2">{b.title}</h3>
                   <p className="text-sm text-[var(--text-secondary)]">{b.desc}</p>
                 </Card>

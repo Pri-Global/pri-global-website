@@ -1,4 +1,5 @@
 import { Star, ExternalLink } from "lucide-react";
+import AnimatedIcon from "./AnimatedIcon";
 import { GLASSDOOR_URL, INDEED_REVIEWS_URL } from "../../constants/links";
 
 function StarRow({ rating }) {
@@ -29,9 +30,9 @@ export default function RatingWidget({ className = "" }) {
           href={GLASSDOOR_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-royal dark:text-royaldark hover:underline"
+          className="group inline-flex items-center gap-1.5 text-sm font-semibold text-royal dark:text-royaldark hover:underline"
         >
-          View on Glassdoor <ExternalLink size={14} />
+          View on Glassdoor <AnimatedIcon Icon={ExternalLink} size={14} className="text-royal dark:text-royaldark" />
         </a>
       </div>
 
@@ -44,9 +45,9 @@ export default function RatingWidget({ className = "" }) {
           href={INDEED_REVIEWS_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-royal dark:text-royaldark hover:underline"
+          className="group inline-flex items-center gap-1.5 text-sm font-semibold text-royal dark:text-royaldark hover:underline"
         >
-          Read reviews on Indeed <ExternalLink size={14} />
+          Read reviews on Indeed <AnimatedIcon Icon={ExternalLink} size={14} className="text-royal dark:text-royaldark" />
         </a>
       </div>
     </div>

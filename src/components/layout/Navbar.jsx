@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { scrollToPageTop } from "../../utils/scrollToPageTop";
-import { Menu, X, ExternalLink, Calendar } from "lucide-react";
-import { HUBSPOT_MEETING_URL } from "../../constants/links";
+import { Menu, X, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import ThemeToggle from "../ui/ThemeToggle";
@@ -124,16 +123,6 @@ export default function Navbar() {
             >
               Employee Portal
             </Link>
-            <a
-              href={HUBSPOT_MEETING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Book a Call"
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:text-royal hover:bg-[var(--border-subtle)] transition-colors"
-              aria-label="Book a Call"
-            >
-              <Calendar size={18} />
-            </a>
             <Button to="/ai-innovation#demo" variant="ghost" size="sm" onClick={onNavClick}>
               See Demo
             </Button>
@@ -144,16 +133,6 @@ export default function Navbar() {
 
           <div className="flex lg:hidden items-center gap-2">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
-            <a
-              href={HUBSPOT_MEETING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Book a Call"
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:text-royal hover:bg-[var(--border-subtle)] transition-colors"
-              aria-label="Book a Call"
-            >
-              <Calendar size={18} />
-            </a>
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}

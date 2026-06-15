@@ -10,6 +10,7 @@ import { CANDIDATE_NAV } from "../../data/portalNav";
 import {
   DEMO_APPLICATIONS,
   RECOMMENDED_JOBS,
+  RECRUITER,
   RECRUITER_MESSAGE,
   INTERVIEW_PREP_LINKS,
 } from "../../data/portalDemoData";
@@ -119,9 +120,13 @@ export default function CandidateDashboard() {
         <section id="messages" className="mb-10 scroll-mt-24">
           <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">Message from Recruiter</h2>
           <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5 flex flex-col sm:flex-row gap-4">
-            <div className="w-12 h-12 rounded-full bg-royal flex items-center justify-center text-white font-bold shrink-0">SM</div>
+            <img
+              src={RECRUITER.photo}
+              alt={RECRUITER.name}
+              className="w-12 h-12 rounded-full object-cover object-top shrink-0 ring-2 ring-emerald-500/30"
+            />
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-[var(--text-primary)]">Sarah M., PRI Global Recruiter</p>
+              <p className="font-semibold text-[var(--text-primary)]">{RECRUITER.name}, {RECRUITER.title}</p>
               <p className="text-sm text-[var(--text-secondary)] mt-2 line-clamp-2">
                 Hi Alex, I came across your profile and have an exciting opportunity that matches your React and AWS background...
               </p>
@@ -155,7 +160,7 @@ export default function CandidateDashboard() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50" onClick={() => setMessageOpen(false)}>
               <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} onClick={(e) => e.stopPropagation()} className="bg-[var(--bg-card)] rounded-2xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto border border-[var(--border)] shadow-xl">
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-heading font-bold text-lg">Message from Sarah M.</h3>
+                  <h3 className="font-heading font-bold text-lg">Message from {RECRUITER.name}</h3>
                   <button type="button" onClick={() => setMessageOpen(false)} aria-label="Close"><X size={20} /></button>
                 </div>
                 <pre className="text-sm text-[var(--text-secondary)] whitespace-pre-wrap font-sans leading-relaxed">{RECRUITER_MESSAGE}</pre>

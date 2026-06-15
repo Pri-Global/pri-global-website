@@ -1,5 +1,12 @@
 import { HUBSPOT_MEETING_URL, JOBDIVA_PORTAL_URL } from "../constants/links";
 
+export const RECRUITER = {
+  name: "Karen Myers",
+  title: "PRI Global Recruiter",
+  photo: "/team/karen-myers.jpg",
+  phone: "636.256.7172",
+};
+
 export const RECRUITER_MESSAGE = `Hi Alex,
 
 I came across your profile and I'm excited to reach out! We have an urgent contract opportunity with a leading financial services client in St. Louis (remote-friendly).
@@ -11,7 +18,7 @@ Rate: $105-115/hr
 Would you be available for a quick 15-minute call this week? I have openings Thursday and Friday afternoon.
 
 Best,
-Sarah M.
+Karen Myers
 PRI Global Talent Team
 636.256.7172`;
 

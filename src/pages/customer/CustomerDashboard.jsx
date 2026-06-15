@@ -8,7 +8,7 @@ import Button from "../../components/ui/Button";
 import BrandLogo from "../../components/ui/BrandLogo";
 import { AUTH_KEYS, usePortalAuth } from "../../hooks/usePortalAuth";
 import { HIRING_NAV, SERVICES_NAV } from "../../data/portalNav";
-import { HIRING_SHORTLIST, HUBSPOT_URL } from "../../data/portalDemoData";
+import { HIRING_SHORTLIST, HUBSPOT_URL, RECRUITER } from "../../data/portalDemoData";
 import { Briefcase, Users, Calendar, Ticket, BrainCircuit } from "lucide-react";
 import pr1smLogo from "../../assets/pr1sm-logo.png";
 
@@ -51,7 +51,7 @@ function HiringDashboard({ session }) {
                   <td className="p-3"><span className="text-xs text-emerald-600 font-semibold">● Active</span></td>
                   <td className="p-3 text-[var(--text-secondary)]">{row.candidates}</td>
                   <td className="p-3 text-[var(--text-muted)]">{row.started}</td>
-                  <td className="p-3">Sarah M.</td>
+                  <td className="p-3">{RECRUITER.name}</td>
                 </tr>
               ))}
             </tbody>
@@ -239,7 +239,7 @@ export default function CustomerDashboard() {
         userName={`Welcome, ${session?.company || "Client"}`}
         userSubtitle={
           isHiring
-            ? "Your dedicated recruiter: Sarah M. | 636.256.7172"
+            ? `Your dedicated recruiter: ${RECRUITER.name} | ${RECRUITER.phone}`
             : "Your account manager: Liezl Moss | 314-784-5854"
         }
         navItems={nav}

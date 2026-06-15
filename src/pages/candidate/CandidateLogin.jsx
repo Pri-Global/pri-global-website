@@ -9,6 +9,7 @@ import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
 import {
   CANDIDATE_DEMO,
+  isDemoLoginConfigured,
   matchCandidateDemo,
 } from "../../data/portalDemoCredentials";
 import {
@@ -166,9 +167,11 @@ export default function CandidateLogin() {
             Create an Account →
           </Button>
 
-          <p className="text-[10px] text-center text-[var(--text-muted)] mt-6 leading-relaxed">
-            Demo: {CANDIDATE_DEMO.email} / {CANDIDATE_DEMO.password}
-          </p>
+          {isDemoLoginConfigured() && (
+            <p className="text-[10px] text-center text-[var(--text-muted)] mt-6 leading-relaxed">
+              Local demo email: {CANDIDATE_DEMO.email}
+            </p>
+          )}
         </motion.div>
 
         <p className="text-center mt-8 text-sm text-[var(--text-secondary)]">

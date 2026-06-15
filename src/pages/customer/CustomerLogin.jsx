@@ -8,6 +8,7 @@ import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
 import {
   CLIENT_DEMO_ACCOUNTS,
+  isDemoLoginConfigured,
   matchClientDemo,
 } from "../../data/portalDemoCredentials";
 import {
@@ -157,10 +158,12 @@ export default function CustomerLogin() {
             </button>
           </form>
 
-          <div className="mt-6 space-y-2 text-[10px] text-center text-[var(--text-muted)] leading-relaxed">
-            <p>Demo Hiring: {CLIENT_DEMO_ACCOUNTS.hiring.email} / {CLIENT_DEMO_ACCOUNTS.hiring.password}</p>
-            <p>Demo Services: {CLIENT_DEMO_ACCOUNTS.services.email} / {CLIENT_DEMO_ACCOUNTS.services.password}</p>
-          </div>
+          {isDemoLoginConfigured() && (
+            <div className="mt-6 space-y-2 text-[10px] text-center text-[var(--text-muted)] leading-relaxed">
+              <p>Local demo — Hiring: {CLIENT_DEMO_ACCOUNTS.hiring.email}</p>
+              <p>Local demo — Services: {CLIENT_DEMO_ACCOUNTS.services.email}</p>
+            </div>
+          )}
 
           <Button to="/customer-register" variant="ghost" size="sm" className="w-full mt-4">
             Request Access →

@@ -8,7 +8,7 @@ import { inputClass, labelClass } from "../../components/portal/portalStyles";
 const ACCENT = "#22c55e";
 
 const defaultProfile = {
-  firstName: "Alex", lastName: "Johnson", email: "candidate@priglobal.com", phone: "",
+  firstName: "Alex", lastName: "Johnson", email: "candidate@example.com", phone: "",
   location: "St. Louis, MO", linkedin: "", experience: "5-10", skillSet: "Software Engineering",
   topSkills: "React, TypeScript, AWS", employmentStatus: "actively", workTypes: ["Contract"],
   remotePref: "flexible", name: "Alex Johnson",

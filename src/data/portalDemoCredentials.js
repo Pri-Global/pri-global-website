@@ -1,11 +1,23 @@
 /**
- * DEMO ONLY — portal login credentials for localStorage fallback.
- * Works even when Supabase is configured (staging / demo access).
+ * Local demo portal login — password is read from VITE_PORTAL_DEMO_PASSWORD (.env only).
+ * Demo emails use example.com (RFC 2606) so real company domains are never paired with secrets.
  */
 
+function demoPassword() {
+  return import.meta.env.VITE_PORTAL_DEMO_PASSWORD?.trim() ?? "";
+}
+
+export function isDemoLoginConfigured() {
+  return demoPassword().length > 0;
+}
+
+function matchesDemoPassword(password) {
+  const expected = demoPassword();
+  return expected.length > 0 && password === expected;
+}
+
 export const CANDIDATE_DEMO = {
-  email: "candidate@priglobal.com",
-  password: "PRI2025!",
+  email: "candidate@example.com",
   session: {
     loggedIn: true,
     name: "Alex Johnson",
@@ -13,38 +25,52 @@ export const CANDIDATE_DEMO = {
   },
 };
 
+export const EMPLOYEE_DEMO = {
+  email: "employee@example.com",
+};
+
 export const CLIENT_DEMO_ACCOUNTS = {
   hiring: {
-    email: "hiring@priglobal.com",
-    password: "PRI2025!",
+    email: "hiring-client@example.com",
     company: "Acme Corp",
     type: "hiring",
   },
   services: {
-    email: "services@priglobal.com",
-    password: "PRI2025!",
+    email: "services-client@example.com",
     company: "Acme Corp",
     type: "services",
   },
 };
 
 export function matchCandidateDemo(email, password) {
+  if (!matchesDemoPassword(password)) return null;
+
   const normalized = email.trim().toLowerCase();
-  if (normalized === CANDIDATE_DEMO.email && password === CANDIDATE_DEMO.password) {
-    return {
-      loggedIn: true,
-      email: normalized,
-      name: CANDIDATE_DEMO.session.name,
-      role: CANDIDATE_DEMO.session.role,
-    };
-  }
-  return null;
+  if (normalized !== CANDIDATE_DEMO.email) return null;
+
+  return {
+    loggedIn: true,
+    email: normalized,
+    name: CANDIDATE_DEMO.session.name,
+    role: CANDIDATE_DEMO.session.role,
+  };
+}
+
+export function matchEmployeeDemo(email, password) {
+  if (!matchesDemoPassword(password)) return null;
+
+  const normalized = email.trim().toLowerCase();
+  if (normalized !== EMPLOYEE_DEMO.email) return null;
+
+  return { email: normalized };
 }
 
 export function matchClientDemo(email, password, tab = "hiring") {
+  if (!matchesDemoPassword(password)) return null;
+
   const normalized = email.trim().toLowerCase();
   const byTab = CLIENT_DEMO_ACCOUNTS[tab];
-  if (byTab && normalized === byTab.email && password === byTab.password) {
+  if (byTab && normalized === byTab.email) {
     return {
       loggedIn: true,
       email: normalized,
@@ -54,7 +80,7 @@ export function matchClientDemo(email, password, tab = "hiring") {
   }
 
   const match = Object.values(CLIENT_DEMO_ACCOUNTS).find(
-    (account) => normalized === account.email && password === account.password
+    (account) => normalized === account.email
   );
   if (!match) return null;
 
@@ -68,5 +94,5 @@ export function matchClientDemo(email, password, tab = "hiring") {
 
 export function demoHintForClientTab(tab) {
   const account = CLIENT_DEMO_ACCOUNTS[tab];
-  return `${account.email} / ${account.password}`;
+  return account.email;
 }

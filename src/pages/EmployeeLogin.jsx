@@ -6,6 +6,11 @@ import BrandLogo from "../components/ui/BrandLogo";
 import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
 import {
+  EMPLOYEE_DEMO,
+  isDemoLoginConfigured,
+  matchEmployeeDemo,
+} from "../data/portalDemoCredentials";
+import {
   isSupabaseConfigured,
   signInWithSupabase,
   resetSupabasePassword,
@@ -13,9 +18,6 @@ import {
   employeeSessionFromUser,
   hasPortalAccess,
 } from "../lib/portalSupabaseAuth";
-
-const DEMO_EMAIL = "employee@priglobal.com";
-const DEMO_PASSWORD = "PRI2025!";
 
 const shake = {
   shake: {
@@ -73,8 +75,9 @@ export default function EmployeeLogin() {
       return;
     }
 
-    if (normalized === DEMO_EMAIL && password === DEMO_PASSWORD) {
-      setEmployeeSession(employeeSessionFromUser({ email: normalized }, remember));
+    const demoSession = matchEmployeeDemo(normalized, password);
+    if (demoSession) {
+      setEmployeeSession(employeeSessionFromUser(demoSession, remember));
       finish();
       navigate("/employee-dashboard");
       return;
@@ -195,9 +198,9 @@ export default function EmployeeLogin() {
           </a>
         </p>
 
-        {!isSupabaseConfigured && (
+        {!isSupabaseConfigured && isDemoLoginConfigured() && (
           <p className="text-[10px] text-center text-[var(--text-muted)] mt-4">
-            Demo: {DEMO_EMAIL} / {DEMO_PASSWORD}
+            Local demo email: {EMPLOYEE_DEMO.email}
           </p>
         )}
       </motion.div>

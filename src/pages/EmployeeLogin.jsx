@@ -5,10 +5,7 @@ import Button from "../components/ui/Button";
 import BrandLogo from "../components/ui/BrandLogo";
 import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
-
-// DEMO CREDENTIALS - Replace with real auth in production
-const DEMO_EMAIL = "employee@priglobal.com";
-const DEMO_PASSWORD = "PRI2025!";
+import { supabase } from "../lib/supabaseClient";
 
 const shake = {
   shake: {
@@ -24,28 +21,53 @@ export default function EmployeeLogin() {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
   const [shaking, setShaking] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   if (getEmployeeSession()?.loggedIn) {
     return <Navigate to="/employee-dashboard" replace />;
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-    const normalized = email.trim().toLowerCase();
-    if (normalized === DEMO_EMAIL && password === DEMO_PASSWORD) {
-      setEmployeeSession({
-        loggedIn: true,
-        email: normalized,
-        loginTime: Date.now(),
-        remember,
-      });
-      navigate("/employee-dashboard");
-      return;
-    }
-    setError("Invalid credentials. Please contact IT if you need assistance.");
+  const fail = (message) => {
+    setError(message);
     setShaking(true);
     setTimeout(() => setShaking(false), 600);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSubmitting(true);
+    const normalized = email.trim().toLowerCase();
+
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
+      email: normalized,
+      password,
+    });
+
+    if (authError) {
+      setSubmitting(false);
+      fail(
+        authError.message.toLowerCase().includes("confirm")
+          ? "Please verify your email address before signing in."
+          : "Invalid credentials. Please contact IT if you need assistance."
+      );
+      return;
+    }
+
+    if (!data.user?.email_confirmed_at) {
+      await supabase.auth.signOut();
+      setSubmitting(false);
+      fail("Please verify your email address before signing in.");
+      return;
+    }
+
+    setEmployeeSession({
+      loggedIn: true,
+      email: data.user.email,
+      loginTime: Date.now(),
+      remember,
+    });
+    navigate("/employee-dashboard");
   };
 
   return (
@@ -115,8 +137,8 @@ export default function EmployeeLogin() {
             </p>
           )}
 
-          <Button type="submit" className="w-full">
-            Sign In
+          <Button type="submit" className="w-full" disabled={submitting}>
+            {submitting ? "Signing in..." : "Sign In"}
           </Button>
 
           <button

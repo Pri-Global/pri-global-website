@@ -21,7 +21,6 @@ import CookieSettings from "./pages/CookieSettings";
 import Quiz from "./pages/Quiz";
 import GetPricing from "./pages/GetPricing";
 import ROICalculatorPage from "./pages/ROICalculatorPage";
-import FAQ from "./pages/FAQ";
 import WhyPRI from "./pages/WhyPRI";
 import CaseStudy from "./pages/CaseStudy";
 import NotFound from "./pages/NotFound";
@@ -35,6 +34,8 @@ import CandidateJobs from "./pages/candidate/CandidateJobs";
 import CustomerLogin from "./pages/customer/CustomerLogin";
 import CustomerRegister from "./pages/customer/CustomerRegister";
 import CustomerDashboard from "./pages/customer/CustomerDashboard";
+import JobSeekerFAQ from "./pages/JobSeekerFAQ";
+import WorkingAtPRI from "./pages/WorkingAtPRI";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedPortalRoute from "./components/portal/ProtectedPortalRoute";
 import { AUTH_KEYS } from "./hooks/usePortalAuth";
@@ -164,13 +165,14 @@ function AnimatedRoutes() {
           }
         />
         <Route path="/careers"         element={<PW><Careers /></PW>} />
+        <Route path="/job-seeker-faq"  element={<PW><JobSeekerFAQ /></PW>} />
+        <Route path="/working-at-pri"  element={<PW><WorkingAtPRI /></PW>} />
         <Route path="/legal"           element={<PW><Legal /></PW>} />
         <Route path="/privacy-policy"  element={<PW><PrivacyPolicy /></PW>} />
         <Route path="/cookie-settings" element={<PW><CookieSettings /></PW>} />
         <Route path="/quiz" element={<PW><Quiz /></PW>} />
         <Route path="/get-pricing" element={<PW><GetPricing /></PW>} />
         <Route path="/roi-calculator" element={<PW><ROICalculatorPage /></PW>} />
-        <Route path="/faq" element={<PW><FAQ /></PW>} />
         <Route path="/why-pri-global" element={<PW><WhyPRI /></PW>} />
         <Route path="*" element={<PW><NotFound /></PW>} />
       </Routes>

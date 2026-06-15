@@ -89,6 +89,45 @@ export default function About() {
         </div>
       </section>
 
+      {/* PRI Global Leadership */}
+      <section className="py-24 bg-[var(--bg-secondary)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="text-center mb-14 max-w-3xl mx-auto"
+          >
+            <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-4">
+              Our Leadership
+            </span>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4">
+              The Team Behind PRI Global
+            </h2>
+            <p className="text-[var(--text-secondary)] leading-relaxed">
+              A cohesive, experienced, diverse team managing operations across six offices in the
+              U.S., India, and the Philippines.
+            </p>
+            <a
+              href={GLASSDOOR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-5 px-4 py-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)] text-sm font-medium text-[var(--text-secondary)] hover:border-royal/40 hover:text-[var(--text-primary)] transition-colors"
+            >
+              <Star size={14} className="text-[#0caa41] fill-[#0caa41]" />
+              4.1★ on Glassdoor — 65+ employee reviews
+            </a>
+          </motion.div>
+
+          <div className="space-y-8 max-w-5xl mx-auto">
+            {priGlobalLeadership.map((member, i) => (
+              <PriGlobalLeaderRow key={member.id} member={member} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       <VideoSection
         label="Our Growth Story"
         heading="From Missouri to the world"
@@ -130,45 +169,6 @@ export default function About() {
 
       {/* Timeline */}
       <Timeline />
-
-      {/* PRI Global Leadership */}
-      <section className="py-24 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="text-center mb-14 max-w-3xl mx-auto"
-          >
-            <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-4">
-              Our Leadership
-            </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4">
-              The Team Behind PRI Global
-            </h2>
-            <p className="text-[var(--text-secondary)] leading-relaxed">
-              A cohesive, experienced, diverse team managing operations across six offices in the
-              U.S., India, and the Philippines.
-            </p>
-            <a
-              href={GLASSDOOR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-5 px-4 py-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)] text-sm font-medium text-[var(--text-secondary)] hover:border-royal/40 hover:text-[var(--text-primary)] transition-colors"
-            >
-              <Star size={14} className="text-[#0caa41] fill-[#0caa41]" />
-              4.1★ on Glassdoor — 65+ employee reviews
-            </a>
-          </motion.div>
-
-          <div className="space-y-8 max-w-5xl mx-auto">
-            {priGlobalLeadership.map((member, i) => (
-              <PriGlobalLeaderRow key={member.id} member={member} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
 
       <PrismLeadershipDivider />
 
@@ -214,17 +214,8 @@ export default function About() {
             <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">Direct Contact</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Talk to Our Leaders</h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {[
-              {
-                initials: "KP",
-                name: "Keenan Patel",
-                title: "CEO, PRI Global",
-                phone: "636.256.7172",
-                email: "info@priglobal.com",
-                address: "174 Clarkson Road, Ellisville, MO 63011",
-                note: "PRI Global HQ",
-              },
               {
                 initials: "AP",
                 name: "Ajay Patel",
@@ -234,12 +225,13 @@ export default function About() {
                 address: "174 Clarkson Road, Ellisville, MO 63011",
               },
               {
-                initials: "LM",
-                name: "Liezl Moss",
-                title: "Managing Director & Growth Strategy, PR1SM.AI",
-                phone: "314-784-5854",
-                email: "liezl.moss@PR1SM.AI",
+                initials: "KP",
+                name: "Keenan Patel",
+                title: "CEO, PRI Global",
+                phone: "636.256.7172",
+                email: "info@priglobal.com",
                 address: "174 Clarkson Road, Ellisville, MO 63011",
+                note: "PRI Global HQ",
               },
             ].map((person) => (
               <motion.div
@@ -292,6 +284,19 @@ export default function About() {
             </p>
           </div>
           <WorldMap />
+
+          <div className="mt-12 max-w-3xl mx-auto text-center">
+            <h3 className="font-heading text-2xl font-bold text-[var(--text-primary)] mb-3">
+              PRI India — Our Global Delivery Engine
+            </h3>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+              Operating as PRI India IT Services Private Ltd, our Hyderabad and Pune delivery
+              centers power PRI Global's worldwide operations — IT staffing, software
+              development, cloud solutions, data engineering, and AI/ML engineering for clients
+              across the U.S. and beyond. It's the engine room behind our 24/7, follow-the-sun
+              delivery model.
+            </p>
+          </div>
         </div>
       </section>
 

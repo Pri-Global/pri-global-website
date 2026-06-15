@@ -8,12 +8,8 @@ import {
   Briefcase,
   Network,
   BrainCircuit,
-  Zap,
   Calculator,
-  Play,
   BookOpen,
-  Heart,
-  HelpCircle,
   Building2,
   Target,
   Newspaper,
@@ -50,19 +46,14 @@ export const servicesDropdown = {
 export const aiDropdown = {
   items: [
     { icon: BrainCircuit, label: "AI Innovation Overview", desc: "Intelligent systems built for your business", to: "/ai-innovation" },
-    { icon: Zap, label: "PR1SM.AI Platform", desc: "Your AI Intelligence Layer — Talk to your data", to: "https://www.pr1sm.ai", external: true },
     { icon: Calculator, label: "ROI Calculator", desc: "See your return before you commit", to: "/roi-calculator" },
-    { icon: Play, label: "Live Demo", desc: "See PR1SM.AI answer real business questions", to: "/ai-innovation#demo" },
   ],
 };
 
 export const resourcesDropdown = {
   items: [
     { icon: BookOpen, label: "Resources Overview", desc: "News, insights, and company updates", to: "/resources" },
-    { icon: Calculator, label: "ROI Calculator", desc: "Estimate your PR1SM.AI returns", to: "/roi-calculator" },
     { icon: Newspaper, label: "News & Updates", desc: "Latest from PRI Global", to: "/resources" },
-    { icon: Heart, label: "PRI Cares", desc: "Community and giving back", to: "/resources#pri-cares" },
-    { icon: HelpCircle, label: "FAQ", desc: "Answers to common questions", to: "/faq" },
   ],
 };
 

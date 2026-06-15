@@ -10,8 +10,6 @@ import RatingWidget from "../components/ui/RatingWidget";
 import { useInView } from "../hooks/useInView";
 import {
   JOBDIVA_PORTAL_URL,
-  WORKING_AT_PRI_URL,
-  JOB_SEEKER_FAQ_URL,
   OFFICE_PHOTOS,
 } from "../constants/links";
 
@@ -96,7 +94,7 @@ export default function Careers() {
                 <Button href={JOBDIVA_PORTAL_URL} target="_blank" rel="noopener noreferrer" size="lg">
                   Search Open Positions <ArrowRight size={18} />
                 </Button>
-                <Button href={WORKING_AT_PRI_URL} target="_blank" rel="noopener noreferrer" variant="secondary" size="lg">
+                <Button to="/working-at-pri" variant="secondary" size="lg">
                   Learn About Working at PRI
                 </Button>
               </div>
@@ -221,7 +219,7 @@ export default function Careers() {
             <Button href={JOBDIVA_PORTAL_URL} target="_blank" rel="noopener noreferrer" size="lg">
               Search All Open Positions <ArrowRight size={18} />
             </Button>
-            <Button href={JOB_SEEKER_FAQ_URL} target="_blank" rel="noopener noreferrer" variant="ghost" size="lg">
+            <Button to="/job-seeker-faq" variant="ghost" size="lg">
               Job Seeker FAQ
             </Button>
           </div>

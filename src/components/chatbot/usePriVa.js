@@ -25,8 +25,8 @@ Key differentiators:
 To learn more or see a demo: www.pr1sm.ai
 
 PRI GLOBAL LEADERSHIP:
-- Keenan Patel — CEO, PRI Global
 - Ajay Patel — Chairman, PRI Global & CEO, PR1SM.AI | 636-779-1651 | ajay@pr1sm.ai
+- Keenan Patel — CEO, PRI Global
 - Marla Dicandia — CFO, PRI Global
 - Suresh Karampudi — Managing Director, PRI Global India
 
@@ -36,7 +36,7 @@ PR1SM.AI FULL TEAM:
 - Marla Dicandia — CFO / HR
 - Liezl Moss — Managing Director & Growth Strategy | 314-784-5854 | liezl.moss@PR1SM.AI
 - Jash Yenugu — Lead Engineer / Architect
-- Brianna Philippe — Lead Coordinator & Client Success Manager
+- Karen Myers — Managing Director, Strategic Client Growth
 - Robbie Wetzel — Innovative AI Engineer, Applied AI & Automation | LinkedIn: linkedin.com/in/robbie-wetzel
 - Neha Kaur — AI Engineer / UI
 - Hetvi Choksi — Data Analytics AI Engineer

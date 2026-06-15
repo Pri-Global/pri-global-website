@@ -193,31 +193,6 @@ export default function Timeline({ condensed = false }) {
             </Link>
           </p>
         )}
-
-        {/* Then vs Now */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-14 rounded-2xl bg-royal text-white overflow-hidden"
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/15">
-            {[
-              { label: "Offices", then: "1 office", now: "4 countries" },
-              { label: "Placements", then: "0", now: "12,700+" },
-              { label: "Services", then: "IT Staffing", now: "8 service lines" },
-              { label: "Products", then: "—", now: "PR1SM.AI" },
-            ].map((row) => (
-              <div key={row.label} className="p-5 text-center">
-                <p className="text-[10px] uppercase tracking-widest text-white/60 mb-2">
-                  {row.label}
-                </p>
-                <p className="text-sm text-white/70">1997: {row.then}</p>
-                <p className="font-heading font-bold text-lg mt-1">2025: {row.now}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

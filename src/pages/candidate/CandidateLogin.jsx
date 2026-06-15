@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import SEO from "../../components/SEO";
 import BrandLogo from "../../components/ui/BrandLogo";
 import Button from "../../components/ui/Button";
+import CandidateCareersNav from "../../components/portal/CandidateCareersNav";
 import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
 
@@ -52,11 +53,14 @@ export default function CandidateLogin() {
         url="/candidate-login"
         noindex
       />
-      <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-24 px-4 bg-[var(--bg-secondary)]">
+      <section className="min-h-[calc(100vh-4rem)] py-24 px-4 bg-[var(--bg-secondary)]">
+        <div className="max-w-[440px] mx-auto mb-10">
+          <CandidateCareersNav />
+        </div>
         <motion.div
           animate={shaking ? "shake" : ""}
           variants={shakeVariants}
-          className="w-full max-w-[440px] bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-lg"
+          className="w-full max-w-[440px] mx-auto bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-lg"
         >
           <div className="flex flex-col items-center mb-8">
             <BrandLogo size="xl" className="mb-5" />
@@ -96,6 +100,14 @@ export default function CandidateLogin() {
             Demo: {DEMO_EMAIL} / {DEMO_PASSWORD}
           </p>
         </motion.div>
+
+        <p className="text-center mt-8 text-sm text-[var(--text-secondary)]">
+          Or{" "}
+          <Link to="/candidate-jobs" className="text-emerald-600 hover:underline font-medium">
+            browse open positions
+          </Link>{" "}
+          without signing in.
+        </p>
       </section>
     </>
   );

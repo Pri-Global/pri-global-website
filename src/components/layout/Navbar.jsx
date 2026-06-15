@@ -117,9 +117,6 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-2">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
             <PortalMenu />
-            <Button to="/ai-innovation#demo" variant="ghost" size="sm" onClick={onNavClick}>
-              See Demo
-            </Button>
             <Button to="/get-pricing" size="sm" className="pulse-cta" onClick={onNavClick}>
               Get Pricing
             </Button>
@@ -177,9 +174,6 @@ export default function Navbar() {
                 ))}
               </MobileSection>
               <div className="flex flex-col gap-2 pt-2 border-t border-[var(--border)]">
-                <Button to="/ai-innovation#demo" variant="ghost" size="sm" className="w-full" onClick={onNavClick}>
-                  See Demo
-                </Button>
                 <Button to="/get-pricing" size="sm" className="w-full" onClick={onNavClick}>
                   Get Pricing
                 </Button>

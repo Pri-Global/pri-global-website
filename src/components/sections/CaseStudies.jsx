@@ -222,9 +222,9 @@ export function CaseStudiesContent({ showCta = false, studies = caseStudies }) {
 export default function CaseStudies({
   showHeader = true,
   showResourcesCta = false,
-  limit,
-  studies = limit ? featuredCaseStudies.slice(0, limit) : caseStudies,
-  showViewAll = Boolean(limit),
+  limit = 3,
+  studies = featuredCaseStudies.slice(0, limit),
+  showViewAll = true,
 }) {
   return (
     <section className="py-20 md:py-28 bg-[var(--bg-secondary)] relative overflow-hidden">

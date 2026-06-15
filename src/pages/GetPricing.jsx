@@ -4,8 +4,7 @@ import { Check, Phone, ArrowRight, ArrowLeft, Calendar } from "lucide-react";
 import Button from "../components/ui/Button";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import SEO from "../components/SEO";
-import HubSpotMeetingEmbed from "../components/ui/HubSpotMeetingEmbed";
-import { HUBSPOT_MEETING_URL } from "../constants/links";
+import { BOOKING_URL } from "../constants/links";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
 
 const TRUST_POINTS = [
@@ -171,7 +170,7 @@ export default function GetPricing() {
             <div className="group p-5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)]">
               <p className="text-sm font-medium text-[var(--text-primary)] mb-3">Prefer to talk now?</p>
               <Button
-                href={HUBSPOT_MEETING_URL}
+                href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 size="md"
@@ -396,7 +395,17 @@ export default function GetPricing() {
           <p className="text-sm text-[var(--text-secondary)] text-center mb-6">
             Pick a time that works for you — no form required.
           </p>
-          <HubSpotMeetingEmbed />
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center">
+            <Button
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="lg"
+              className="mx-auto"
+            >
+              <AnimatedIcon Icon={Calendar} size={18} className="text-white" /> Book a Call <ArrowRight size={18} />
+            </Button>
+          </div>
         </div>
       </div>
     </section>

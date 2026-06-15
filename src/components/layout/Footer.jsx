@@ -20,7 +20,6 @@ const footerLinks = {
     { label: "Industries", to: "/industries" },
     { label: "Resources", to: "/resources" },
     { label: "Careers", to: "/careers" },
-    { label: "FAQ", to: "/faq" },
     { label: "Get Pricing", to: "/get-pricing" },
   ],
   "AI Innovation": [
@@ -133,7 +132,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="group flex items-center gap-2 hover:text-white transition-colors"
           >
-            <AnimatedIcon Icon={Calendar} size={14} className="text-white/50 group-hover:text-white" /> Book a meeting: meetings.hubspot.com/priglobal/discovery
+            <AnimatedIcon Icon={Calendar} size={14} className="text-white/50 group-hover:text-white" /> Book a call online
           </a>
         </div>
 
@@ -142,7 +141,6 @@ export default function Footer() {
           <span className="text-center sm:text-left">© 2026 PRI Global (PRI India Private Services Limited). All rights reserved.</span>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             <Link to="/get-pricing" onClick={scrollToPageTop} className="hover:text-white/70 transition-colors">Get Pricing</Link>
-            <Link to="/faq" onClick={scrollToPageTop} className="hover:text-white/70 transition-colors">FAQ</Link>
             <Link to="/roi-calculator" onClick={scrollToPageTop} className="hover:text-white/70 transition-colors">ROI Calculator</Link>
             <Link to="/privacy-policy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
             <Link to="/legal" className="hover:text-white/70 transition-colors">Legal Notice</Link>

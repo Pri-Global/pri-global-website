@@ -7,6 +7,9 @@
   <url><loc>https://pri-global.vercel.app/industries</loc><priority>0.8</priority></url>
   <url><loc>https://pri-global.vercel.app/about</loc><priority>0.8</priority></url>
   <url><loc>https://pri-global.vercel.app/careers</loc><priority>0.7</priority></url>
+  <url><loc>https://pri-global.vercel.app/job-seeker-faq</loc><priority>0.7</priority></url>
+  <url><loc>https://pri-global.vercel.app/working-at-pri</loc><priority>0.7</priority></url>
+  <url><loc>https://pri-global.vercel.app/candidate-jobs</loc><priority>0.7</priority></url>
   <url><loc>https://pri-global.vercel.app/resources</loc><priority>0.7</priority></url>
   <url><loc>https://pri-global.vercel.app/get-pricing</loc><priority>0.8</priority></url>
   <url><loc>https://pri-global.vercel.app/roi-calculator</loc><priority>0.7</priority></url>

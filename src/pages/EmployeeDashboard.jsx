@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  FolderOpen,
   ExternalLink,
   Phone,
   Briefcase,
   Mail,
   LogOut,
+  Building2,
 } from "lucide-react";
 import Button from "../components/ui/Button";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
@@ -18,13 +18,9 @@ import {
   employeeDisplayName,
 } from "../components/ProtectedRoute";
 import { employeeVideoLibrary } from "../data/videos";
+import { offices } from "../data/offices";
 
 const cards = [
-  {
-    icon: FolderOpen,
-    title: "Company Resources",
-    description: "Links, documents, and internal guides — coming soon.",
-  },
   {
     icon: ExternalLink,
     title: "PR1SM.AI Access",
@@ -34,20 +30,20 @@ const cards = [
   {
     icon: Phone,
     title: "IT Support",
-    description: "636.256.7172",
+    description: "636.256.7172 — call for portal, hardware, or access issues.",
     action: { label: "Call IT", href: "tel:6362567172", external: true },
   },
   {
     icon: Briefcase,
     title: "Careers & Openings",
-    description: "Explore current opportunities at PRI Global.",
+    description: "Explore current opportunities and refer a candidate.",
     action: { label: "View Careers", to: "/careers" },
   },
   {
     icon: Mail,
-    title: "Submit a Request",
-    description: "Reach our team for portal or access requests.",
-    action: { label: "Email Us", href: "mailto:info@priglobal.com", external: true },
+    title: "HR & General Requests",
+    description: "Reach our team for HR, payroll, or access requests.",
+    action: { label: "Email HR", href: "mailto:info@priglobal.com", external: true },
   },
 ];
 
@@ -81,7 +77,7 @@ export default function EmployeeDashboard() {
           </button>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {cards.map(({ icon: Icon, title, description, action }) => (
             <div
               key={title}
@@ -114,6 +110,50 @@ export default function EmployeeDashboard() {
           ))}
         </div>
 
+        <section className="border-t border-[var(--border)] pt-12 mb-16">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">
+            Office Directory
+          </h2>
+          <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
+            PRI Global locations and primary contacts.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {offices.map((office) => (
+              <div
+                key={office.id}
+                className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6"
+              >
+                <div className="w-10 h-10 rounded-lg bg-royal/10 flex items-center justify-center mb-4">
+                  <AnimatedIcon Icon={Building2} size={20} className="text-royal dark:text-royaldark" />
+                </div>
+                <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-1">
+                  {office.label}
+                </h3>
+                <p className="text-xs text-[var(--text-muted)] mb-3">{office.specialty}</p>
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-2">
+                  {office.address}
+                </p>
+                {office.phoneDisplay && (
+                  <a
+                    href={`tel:${office.phone}`}
+                    className="text-sm text-royal dark:text-royaldark hover:underline"
+                  >
+                    {office.phoneDisplay}
+                  </a>
+                )}
+                {office.email && (
+                  <a
+                    href={`mailto:${office.email}`}
+                    className="block text-sm text-royal dark:text-royaldark hover:underline mt-1"
+                  >
+                    {office.email}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section id="video-library" className="border-t border-[var(--border)] pt-12">
           <h2 className="font-heading text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">
             Video Library
@@ -140,9 +180,19 @@ export default function EmployeeDashboard() {
         </section>
 
         <p className="mt-12 text-sm text-[var(--text-muted)] leading-relaxed max-w-3xl border-t border-[var(--border)] pt-8">
-          This portal is currently in beta. Full features including document access, project
-          tracking, and HR resources will be available in the next phase. Contact Ajay Patel for
-          access to full PR1SM.AI platform features.
+          Need access to additional resources or have a portal question? Reach out to IT Support
+          at{" "}
+          <a href="tel:6362567172" className="text-royal dark:text-royaldark hover:underline">
+            636.256.7172
+          </a>{" "}
+          or{" "}
+          <a
+            href="mailto:info@priglobal.com"
+            className="text-royal dark:text-royaldark hover:underline"
+          >
+            info@priglobal.com
+          </a>
+          .
         </p>
       </div>
     </div>

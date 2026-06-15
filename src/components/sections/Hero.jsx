@@ -1,8 +1,7 @@
-import { memo, useRef, useEffect } from "react";
-import { ArrowRight, Sparkles, Send, Calendar } from "lucide-react";
+import { memo, useRef, useEffect, useState } from "react";
+import { ArrowRight, Sparkles, Send, Calendar, Bot, MessageCircle } from "lucide-react";
 import { HUBSPOT_MEETING_URL } from "../../constants/links";
-import BrandLogo, { PriMarkAvatar } from "../ui/BrandLogo";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import usePriVa from "../chatbot/usePriVa";
@@ -99,6 +98,7 @@ const quickPrompts = [
 ];
 
 const HeroChatCard = memo(function HeroChatCard() {
+  const [minimized, setMinimized] = useState(false);
   const { messages, input, setInput, loading, sendMessage } = usePriVa();
   const containerRef = useRef(null);
 
@@ -115,92 +115,197 @@ const HeroChatCard = memo(function HeroChatCard() {
   };
 
   return (
-    <div className="w-full bg-[var(--bg-card)]/95 dark:bg-[#16181e]/95 backdrop-blur-md border border-[var(--border)] rounded-2xl shadow-xl shadow-navy/8 dark:shadow-black/30 flex flex-col overflow-hidden">
-      <div className="bg-royal px-5 py-4 flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center">
-          <BrandLogo mark size="md" variant="onDark" />
-        </div>
-        <div>
-          <div className="text-sm font-semibold text-white">Hello, I&apos;m PRI-VA</div>
-          <div className="text-xs text-white/70 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-            PRI Global AI Assistant · Online
-          </div>
-        </div>
-      </div>
-
-      <div
-        ref={containerRef}
-        className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
-        style={{ maxHeight: "220px" }}
-      >
-        {messages.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-            {msg.role === "assistant" && <PriMarkAvatar size="sm" className="mr-2 mt-0.5" />}
+    <div className="relative w-full max-w-md ml-auto min-h-[440px] flex items-end justify-end">
+      <AnimatePresence mode="wait">
+        {minimized ? (
+          <motion.button
+            key="bubble"
+            type="button"
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.6 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            onClick={() => setMinimized(false)}
+            className="relative w-16 h-16 rounded-full bg-gradient-to-br from-royal to-[#4169E1] text-white shadow-xl shadow-royal/35 flex items-center justify-center hover:shadow-royal/50 transition-shadow"
+            aria-label="Open PriVa chat"
+          >
+            <span
+              className="absolute inset-0 rounded-full bg-royal/30 animate-ping pointer-events-none"
+              aria-hidden
+            />
+            <MessageCircle size={26} strokeWidth={1.75} className="relative z-10" />
+            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-emerald-400 border-2 border-[var(--bg-primary)] dark:border-[#0a0c12]" />
+          </motion.button>
+        ) : (
+          <motion.div
+            key="panel"
+            initial={{ opacity: 0, scale: 0.92, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.88, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full"
+          >
+            {/* AI glow */}
             <div
-              className={`max-w-[80%] px-3 py-2 rounded-xl text-sm leading-relaxed ${
-                msg.role === "user"
-                  ? "bg-royal text-white rounded-br-sm"
-                  : "bg-[var(--border-subtle)] dark:bg-white/10 text-[var(--text-primary)] rounded-bl-sm"
-              }`}
-            >
-              {msg.content}
+              className="absolute -inset-1 rounded-[1.4rem] bg-gradient-to-br from-royal/30 via-violet-500/15 to-cyan-400/20 blur-md opacity-70 dark:opacity-90 pointer-events-none"
+              aria-hidden
+            />
+
+            <div className="relative flex flex-col overflow-hidden rounded-[1.25rem] border border-[var(--border)] dark:border-white/10 bg-[var(--bg-card)]/98 dark:bg-[#0b0d12]/95 backdrop-blur-xl shadow-2xl shadow-navy/10 dark:shadow-black/50 min-h-[440px]">
+              {/* Window chrome — red/yellow minimize to bubble */}
+              <div className="flex items-center gap-3 px-4 py-2.5 border-b border-[var(--border)] dark:border-white/10 bg-[var(--bg-secondary)]/80 dark:bg-[#12151c]/90">
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setMinimized(true)}
+                    className="w-2.5 h-2.5 rounded-full bg-[#ff5f57] hover:brightness-90 transition-[filter] cursor-pointer"
+                    aria-label="Minimize chat"
+                    title="Minimize"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setMinimized(true)}
+                    className="w-2.5 h-2.5 rounded-full bg-[#febc2e] hover:brightness-90 transition-[filter] cursor-pointer"
+                    aria-label="Minimize chat"
+                    title="Minimize"
+                  />
+                  <span
+                    className="w-2.5 h-2.5 rounded-full bg-[#28c840] opacity-60"
+                    aria-hidden
+                  />
+                </div>
+                <div className="flex-1 flex items-center justify-center gap-1.5 min-w-0">
+                  <Sparkles size={12} className="text-royal dark:text-royaldark shrink-0" />
+                  <span className="text-[11px] font-medium text-[var(--text-muted)] truncate">
+                    priva.priglobal.com — AI Chat
+                  </span>
+                </div>
+                <div className="w-12" aria-hidden />
+              </div>
+
+        {/* Agent bar */}
+        <div className="px-4 py-3 border-b border-[var(--border)] dark:border-white/10 bg-gradient-to-r from-royal/8 via-transparent to-violet-500/5 dark:from-royal/15 dark:to-violet-500/10">
+          <div className="flex items-center gap-3">
+            <div className="relative shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-royal to-[#4169E1] flex items-center justify-center shadow-lg shadow-royal/25">
+                <Bot size={20} className="text-white" strokeWidth={1.75} />
+              </div>
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[var(--bg-card)] dark:border-[#0b0d12]" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-[var(--text-primary)]">PriVa</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-royal/10 text-royal dark:bg-royal/20 dark:text-royaldark">
+                  AI
+                </span>
+              </div>
+              <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                PRI Global assistant · Ready to help
+              </p>
             </div>
           </div>
-        ))}
-        {loading && (
-          <div className="flex justify-start">
-            <PriMarkAvatar size="sm" className="mr-2" />
-            <div className="bg-[var(--border-subtle)] dark:bg-white/10 rounded-xl rounded-bl-sm px-3 py-2">
-              <span className="flex gap-1">
-                {[0, 1, 2].map((d) => (
-                  <span
-                    key={d}
-                    className="w-1.5 h-1.5 rounded-full bg-[var(--text-muted)] animate-bounce"
-                    style={{ animationDelay: `${d * 0.15}s` }}
-                  />
-                ))}
-              </span>
+        </div>
+
+        {/* Messages */}
+        <div
+          ref={containerRef}
+          className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-[var(--bg-primary)]/40 dark:bg-[#080a0f]/60"
+          style={{ minHeight: "240px", maxHeight: "260px" }}
+        >
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start gap-2"}`}>
+              {msg.role === "assistant" && (
+                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-royal to-[#4169E1] flex items-center justify-center shrink-0 mt-0.5">
+                  <Bot size={14} className="text-white" strokeWidth={2} />
+                </div>
+              )}
+              <div className={`max-w-[85%] ${msg.role === "user" ? "" : ""}`}>
+                {msg.role === "assistant" && (
+                  <p className="text-[10px] font-medium text-[var(--text-muted)] mb-1 ml-0.5">PriVa</p>
+                )}
+                <div
+                  className={`px-3.5 py-2.5 text-sm leading-relaxed ${
+                    msg.role === "user"
+                      ? "bg-gradient-to-br from-royal to-[#3358cc] text-white rounded-2xl rounded-br-md shadow-md shadow-royal/20"
+                      : "bg-[var(--bg-card)] dark:bg-white/[0.06] border border-[var(--border)] dark:border-white/10 text-[var(--text-primary)] rounded-2xl rounded-bl-md"
+                  }`}
+                >
+                  {msg.content}
+                </div>
+              </div>
             </div>
+          ))}
+          {loading && (
+            <div className="flex justify-start gap-2">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-royal to-[#4169E1] flex items-center justify-center shrink-0">
+                <Bot size={14} className="text-white" strokeWidth={2} />
+              </div>
+              <div>
+                <p className="text-[10px] font-medium text-[var(--text-muted)] mb-1 ml-0.5">PriVa</p>
+                <div className="bg-[var(--bg-card)] dark:bg-white/[0.06] border border-[var(--border)] dark:border-white/10 rounded-2xl rounded-bl-md px-4 py-3">
+                  <span className="flex gap-1 items-center">
+                    {[0, 1, 2].map((d) => (
+                      <span
+                        key={d}
+                        className="w-1.5 h-1.5 rounded-full bg-royal/70 dark:bg-royaldark animate-bounce"
+                        style={{ animationDelay: `${d * 0.15}s` }}
+                      />
+                    ))}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {messages.length === 1 && (
+          <div className="px-4 pb-2 flex flex-wrap gap-2 bg-[var(--bg-primary)]/40 dark:bg-[#080a0f]/60">
+            {quickPrompts.map((prompt, i) => (
+              <motion.button
+                key={prompt}
+                type="button"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45 + i * 0.07, duration: 0.3 }}
+                onClick={() => sendMessage(prompt)}
+                className="text-[11px] px-3 py-1.5 rounded-full border border-[var(--border)] dark:border-white/10 bg-[var(--bg-card)] dark:bg-white/[0.04] text-[var(--text-secondary)] hover:border-royal/50 hover:text-royal dark:hover:text-royaldark transition-colors"
+              >
+                {prompt}
+              </motion.button>
+            ))}
           </div>
         )}
-      </div>
 
-      {messages.length === 1 && (
-        <div className="px-4 pb-2 flex flex-wrap gap-2">
-          {quickPrompts.map((prompt, i) => (
-            <motion.button
-              key={prompt}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + i * 0.08, duration: 0.3 }}
-              onClick={() => sendMessage(prompt)}
-              className="text-xs px-3 py-1.5 rounded-full border border-[var(--border)] text-[var(--text-secondary)] hover:border-royal hover:text-royal transition-colors"
+        {/* Composer */}
+        <div className="p-3 border-t border-[var(--border)] dark:border-white/10 bg-[var(--bg-secondary)]/50 dark:bg-[#12151c]/80">
+          <div className="flex items-end gap-2 rounded-xl border border-[var(--border)] dark:border-white/10 bg-[var(--bg-card)] dark:bg-[#0f1218] px-3 py-2 shadow-inner focus-within:border-royal/40 dark:focus-within:border-royaldark/50 transition-colors">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKey}
+              placeholder="Message PriVa…"
+              className="flex-1 text-sm bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none py-1"
+            />
+            <button
+              type="button"
+              onClick={() => sendMessage()}
+              disabled={!input.trim() || loading}
+              className="w-8 h-8 rounded-lg bg-gradient-to-br from-royal to-[#3358cc] flex items-center justify-center text-white shadow-md shadow-royal/25 hover:opacity-90 transition-opacity disabled:opacity-35 disabled:pointer-events-none shrink-0"
+              aria-label="Send message"
             >
-              {prompt}
-            </motion.button>
-          ))}
+              <Send size={14} />
+            </button>
+          </div>
+          <p className="text-[10px] text-center text-[var(--text-muted)] mt-2">
+            AI assistant · Answers about PRI services, talent & PR1SM.AI
+          </p>
         </div>
-      )}
-
-      <div className="px-4 py-3 border-t border-[var(--border)] flex items-center gap-2">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKey}
-          placeholder="Ask me anything about PRI Global…"
-          className="flex-1 text-sm bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none"
-        />
-        <button
-          type="button"
-          onClick={() => sendMessage()}
-          disabled={!input.trim() || loading}
-          className="w-8 h-8 rounded-full bg-royal flex items-center justify-center text-white hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-40 disabled:pointer-events-none"
-          aria-label="Send"
-        >
-          <Send size={13} />
-        </button>
-      </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 });

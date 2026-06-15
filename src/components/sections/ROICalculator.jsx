@@ -38,13 +38,14 @@ function StatBar({ results }) {
           value: results.prismSavings,
           prefix: "$",
           suffix: "/yr",
-          label: "Cost Eliminated",
+          label: "Potential Savings",
           format: "currency",
         },
         {
-          value: Math.round(results.roiMultiple),
+          value: Math.max(1, Math.round(results.roiMultiple * 10) / 10),
+          decimals: 1,
           suffix: "× ROI",
-          label: "Return",
+          label: "Est. Return",
         },
       ].map((stat) => (
         <div
@@ -138,40 +139,40 @@ export default function ROICalculator({ showPageHero = false }) {
 
   const metrics = [
     {
-      label: "Annual Cost of Current State",
-      value: results.totalAnnualCost,
+      label: "Cost of Manual Reporting Today",
+      value: results.annualTimeCost,
       prefix: "$",
       color: "text-red-400",
-      note: "What fragmented data is costing you today",
+      note: "Estimated annual cost of time spent on manual reporting",
     },
     {
-      label: "Estimated Savings with PR1SM.AI",
+      label: "Estimated Annual Savings",
       value: results.prismSavings,
       prefix: "$",
       color: "text-[#22c55e]",
-      note: "75% reduction in reporting time + tool consolidation",
+      note: "~40% reduction in reporting time + tool consolidation",
     },
     {
       label: "Hours Saved Per Year",
       value: results.hoursSaved,
       suffix: " hours",
       color: "text-sky-400",
-      note: "Redirected to strategic work",
+      note: "Redirected to higher-value work",
     },
     {
       label: "Tool Consolidation Savings",
       value: results.toolConsolidationSavings,
       prefix: "$",
       color: "text-purple-400",
-      note: "By replacing redundant BI tools",
+      note: "From streamlining redundant BI/analytics tools",
     },
     {
-      label: "Estimated ROI",
-      value: results.roiMultiple,
-      decimals: 0,
+      label: "Estimated Annual ROI",
+      value: Math.max(1, results.roiMultiple),
+      decimals: 1,
       suffix: "× return",
       color: "text-amber-400",
-      note: "Based on typical PR1SM.AI investment",
+      note: "Net savings relative to estimated PR1SM.AI investment",
     },
   ];
 
@@ -293,6 +294,12 @@ export default function ROICalculator({ showPageHero = false }) {
             <LeadCapture employees={employees} systems={systems} />
           </motion.div>
         </div>
+
+        <p className="text-center text-xs text-white/35 mt-6 max-w-2xl mx-auto leading-relaxed">
+          Estimates are illustrative, based on industry benchmarks for reporting time and BI
+          tool spend. Actual results vary by organization — book a discovery call for a
+          tailored analysis.
+        </p>
       </div>
     </section>
   );

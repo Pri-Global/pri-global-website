@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bookmark, X, Mail, ExternalLink } from "lucide-react";
+import { X, Mail, ExternalLink, ArrowRight } from "lucide-react";
 import SEO from "../../components/SEO";
 import PortalLayout from "../../components/portal/PortalLayout";
 import PortalCard from "../../components/portal/PortalCard";
@@ -9,7 +10,6 @@ import { AUTH_KEYS, usePortalAuth } from "../../hooks/usePortalAuth";
 import { CANDIDATE_NAV } from "../../data/portalNav";
 import {
   DEMO_APPLICATIONS,
-  RECOMMENDED_JOBS,
   RECRUITER,
   RECRUITER_MESSAGE,
   INTERVIEW_PREP_LINKS,
@@ -51,7 +51,7 @@ export default function CandidateDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           <PortalCard icon={FileText} value="3" label="Active Applications" color="green" />
-          <PortalCard icon={Briefcase} value="12" label="Jobs Match Your Profile" color="green" />
+          <PortalCard icon={Briefcase} value="Live" label="Open Positions on Job Board" color="green" />
           <PortalCard icon={MessageSquare} value="1" label="New Message from PRI Recruiter" color="green" />
           <PortalCard icon={BookmarkIcon} value="2" label="Saved Jobs" color="green" />
         </div>
@@ -85,34 +85,19 @@ export default function CandidateDashboard() {
           </div>
         </section>
 
-        {/* Recommended jobs */}
+        {/* Open positions */}
         <section className="mb-10">
-          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">Recommended Jobs</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            {RECOMMENDED_JOBS.map((job) => (
-              <div key={job.id} className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5 hover:shadow-md transition-shadow">
-                <h3 className="font-heading font-bold text-[var(--text-primary)] mb-2">{job.title}</h3>
-                <p className="text-xs text-[var(--text-muted)] mb-2">{job.type} · {job.location}</p>
-                <p className="text-sm font-semibold text-emerald-600 mb-3">{job.rate}</p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {job.skills.map((s) => (
-                    <span key={s} className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--border-subtle)] text-[var(--text-secondary)]">{s}</span>
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    href={`mailto:info@priglobal.com?subject=${encodeURIComponent(`Job Application: ${job.title}`)}`}
-                    size="sm"
-                    className="!bg-emerald-600 hover:!bg-emerald-700 flex-1"
-                  >
-                    Apply Now →
-                  </Button>
-                  <button type="button" className="w-9 h-9 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--text-muted)] hover:text-emerald-600" aria-label="Save job">
-                    <Bookmark size={16} />
-                  </button>
-                </div>
-              </div>
-            ))}
+          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">Open Positions</h2>
+          <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="font-medium text-[var(--text-primary)]">Search live IT roles on PRI Global&apos;s job board</p>
+              <p className="text-sm text-[var(--text-secondary)] mt-1">
+                Contract, contract-to-hire, and direct hire — updated daily via JobDiva.
+              </p>
+            </div>
+            <Button to="/candidate-jobs" size="sm" className="!bg-emerald-600 hover:!bg-emerald-700 shrink-0">
+              Search Jobs <ArrowRight size={16} />
+            </Button>
           </div>
         </section>
 
@@ -141,17 +126,28 @@ export default function CandidateDashboard() {
         <section id="prep" className="scroll-mt-24">
           <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">Interview Prep Resources</h2>
           <div className="grid sm:grid-cols-3 gap-4">
-            {INTERVIEW_PREP_LINKS.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-emerald-500/40 transition-colors text-sm font-medium text-[var(--text-primary)]"
-              >
-                {link.label} <ExternalLink size={14} className="text-[var(--text-muted)]" />
-              </a>
-            ))}
+            {INTERVIEW_PREP_LINKS.map((link) => {
+              const className =
+                "group flex items-center justify-between p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-emerald-500/40 transition-colors text-sm font-medium text-[var(--text-primary)]";
+              if (link.external) {
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={className}
+                  >
+                    {link.label} <ExternalLink size={14} className="text-[var(--text-muted)]" />
+                  </a>
+                );
+              }
+              return (
+                <Link key={link.label} to={link.href} className={className}>
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         </section>
 

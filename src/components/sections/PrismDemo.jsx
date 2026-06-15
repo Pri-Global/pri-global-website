@@ -74,11 +74,11 @@ export default function PrismDemo({ compact = false }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className={`mx-auto rounded-2xl border border-[#1e2028] overflow-hidden shadow-2xl bg-[#0d0f12] ${
+          className={`mx-auto rounded-2xl border border-[#1e2028] overflow-hidden shadow-2xl bg-[#0d0f12] relative ${
             compact ? "max-w-3xl" : "max-w-4xl"
           }`}
         >
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e2028] bg-[#111318]">
+          <div className="flex items-center justify-between px-4 py-3 glass-header-accent border-b border-[#1e2028]">
             <div className="flex items-center gap-2">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60" />
@@ -97,7 +97,7 @@ export default function PrismDemo({ compact = false }) {
                 key={preset}
                 type="button"
                 onClick={() => sendQuestion(preset)}
-                className="text-left text-xs px-3 py-2 rounded-lg border border-[#2a2d36] text-white/70 hover:border-royaldark hover:text-white hover:-translate-y-0.5 transition-all"
+                className="text-left text-xs px-3 py-2 rounded-xl glass-subtle text-white/70 hover:border-l-[3px] hover:border-l-royaldark hover:text-white hover:-translate-y-0.5 transition-all"
               >
                 {preset}
               </button>
@@ -123,8 +123,8 @@ export default function PrismDemo({ compact = false }) {
                   <div
                     className={`max-w-[90%] rounded-xl px-4 py-3 text-sm whitespace-pre-line leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-royal text-white"
-                        : "bg-[#1a1d24] text-white/80 border border-[#2a2d36]"
+                        ? "glass-btn-accent text-white"
+                        : "glass-subtle text-white/85 border-l-[3px] border-l-royaldark/60"
                     }`}
                   >
                     {msg.text}
@@ -134,7 +134,7 @@ export default function PrismDemo({ compact = false }) {
             </AnimatePresence>
             {typing && (
               <div className="flex justify-start">
-                <div className="bg-[#1a1d24] border border-[#2a2d36] rounded-xl">
+                <div className="glass-subtle border-l-[3px] border-l-royaldark/60 rounded-xl">
                   <TypingIndicator />
                 </div>
               </div>
@@ -154,11 +154,11 @@ export default function PrismDemo({ compact = false }) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything about your business..."
-              className="flex-1 px-4 py-2.5 rounded-xl bg-[#1a1d24] border border-[#2a2d36] text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-royaldark"
+              className="flex-1 px-4 py-2.5 rounded-xl glass text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-royaldark border border-white/10"
             />
             <button
               type="submit"
-              className="shrink-0 w-11 h-11 rounded-xl bg-royaldark text-white flex items-center justify-center hover:bg-royaldark/80 transition-colors"
+              className="shrink-0 w-11 h-11 rounded-xl glass-btn-accent flex items-center justify-center transition-colors"
               aria-label="Send"
             >
               <Send size={18} />

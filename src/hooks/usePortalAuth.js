@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { signOutSupabase } from "../lib/portalSupabaseAuth";
 
 /**
  * DEMO ONLY — localStorage portal auth helpers.
@@ -70,7 +71,8 @@ export function getInitials(name) {
 export function usePortalAuth(authKey, redirectTo) {
   const navigate = useNavigate();
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    await signOutSupabase();
     clearAuth(authKey);
     navigate(redirectTo, { replace: true });
   }, [authKey, redirectTo, navigate]);

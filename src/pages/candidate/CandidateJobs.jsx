@@ -1,18 +1,20 @@
 import SEO from "../../components/SEO";
-import PortalLayout from "../../components/portal/PortalLayout";
 import CandidateCareersNav from "../../components/portal/CandidateCareersNav";
 import JobSearchList from "../../components/portal/JobSearchList";
-import { AUTH_KEYS, usePortalAuth, isLoggedIn } from "../../hooks/usePortalAuth";
-import { CANDIDATE_NAV } from "../../data/portalNav";
-
-const ACCENT = "#22c55e";
+import { AUTH_KEYS, isLoggedIn, readAuth } from "../../hooks/usePortalAuth";
 
 export default function CandidateJobs() {
   const authed = isLoggedIn(AUTH_KEYS.candidate);
-  const { session, logout } = usePortalAuth(AUTH_KEYS.candidate, "/candidate-login");
+  const session = authed ? readAuth(AUTH_KEYS.candidate) : null;
 
-  const jobSearchContent = (
+  return (
     <>
+      <SEO
+        title="Job Search"
+        description={authed ? "Search IT jobs at PRI Global." : "Search live open IT positions at PRI Global."}
+        url="/candidate-jobs"
+        noindex={authed}
+      />
       <div className="mb-6">
         <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
           Job Search
@@ -24,45 +26,7 @@ export default function CandidateJobs() {
       </div>
 
       <CandidateCareersNav />
-      <JobSearchList session={authed ? session : null} />
-    </>
-  );
-
-  if (!authed) {
-    return (
-      <>
-        <SEO
-          title="Job Search"
-          description="Search live open IT positions at PRI Global."
-          url="/candidate-jobs"
-        />
-        <section className="min-h-[calc(100vh-4rem)] py-24 px-4 bg-[var(--bg-secondary)]">
-          <div className="max-w-6xl mx-auto">
-            <p className="text-sm text-[var(--text-secondary)] mb-6">
-              <a href="/candidate-login" className="text-emerald-600 hover:underline font-medium">
-                Sign in
-              </a>{" "}
-              to save jobs and track applications in your candidate portal.
-            </p>
-            {jobSearchContent}
-          </div>
-        </section>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <SEO title="Job Search" description="Search IT jobs at PRI Global." url="/candidate-jobs" noindex />
-      <PortalLayout
-        portalLabel="Candidate Portal"
-        accentColor={ACCENT}
-        userName={session?.name}
-        navItems={CANDIDATE_NAV}
-        onLogout={logout}
-      >
-        {jobSearchContent}
-      </PortalLayout>
+      <JobSearchList session={session} />
     </>
   );
 }

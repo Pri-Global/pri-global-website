@@ -44,7 +44,7 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -55,8 +55,8 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[var(--bg-primary)]/95 backdrop-blur-md border-b border-[var(--border)] shadow-sm"
-          : "bg-transparent"
+          ? "glass-strong glass-nav border-b border-white/20 dark:border-white/10"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -117,7 +117,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-2">
             <ThemeToggle className="hover:bg-[var(--border-subtle)] rounded-lg" />
             <PortalMenu />
-            <Button to="/get-pricing" size="sm" className="pulse-cta" onClick={onNavClick}>
+            <Button to="/get-pricing" variant="glass-accent" size="sm" className="pulse-cta" onClick={onNavClick}>
               Get Pricing
             </Button>
           </div>
@@ -143,7 +143,7 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden overflow-hidden bg-[var(--bg-primary)] border-b border-[var(--border)] max-h-[80vh] overflow-y-auto"
+            className="lg:hidden overflow-hidden glass-strong border-b border-white/20 dark:border-white/10 max-h-[80vh] overflow-y-auto"
           >
             <div className="px-4 pb-5 pt-2 space-y-4">
               <MobileSection title="Explore">
@@ -174,7 +174,7 @@ export default function Navbar() {
                 ))}
               </MobileSection>
               <div className="flex flex-col gap-2 pt-2 border-t border-[var(--border)]">
-                <Button to="/get-pricing" size="sm" className="w-full" onClick={onNavClick}>
+                <Button to="/get-pricing" variant="glass-accent" size="sm" className="w-full" onClick={onNavClick}>
                   Get Pricing
                 </Button>
               </div>

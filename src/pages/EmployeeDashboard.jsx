@@ -1,152 +1,253 @@
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ExternalLink,
   Phone,
-  Briefcase,
   Mail,
-  LogOut,
-  Building2,
+  Megaphone,
+  Users,
+  BookOpen,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
+import SEO from "../components/SEO";
+import PortalLayout from "../components/portal/PortalLayout";
+import PortalCard from "../components/portal/PortalCard";
 import Button from "../components/ui/Button";
-import AnimatedIcon from "../components/ui/AnimatedIcon";
-import BrandLogo from "../components/ui/BrandLogo";
 import VideoPlayer from "../components/ui/VideoPlayer";
 import {
   clearEmployeeSession,
   getEmployeeSession,
   employeeDisplayName,
 } from "../components/ProtectedRoute";
+import { signOutSupabase } from "../lib/portalSupabaseAuth";
+import { EMPLOYEE_NAV } from "../data/portalNav";
+import {
+  EMPLOYEE_ANNOUNCEMENTS,
+  EMPLOYEE_QUICK_LINKS,
+  EMPLOYEE_CONTACTS,
+  EMPLOYEE_POLICIES,
+  EMPLOYEE_ONBOARDING,
+} from "../data/employeePortal";
 import { employeeVideoLibrary } from "../data/videos";
 import { offices } from "../data/offices";
 
-const cards = [
-  {
-    icon: ExternalLink,
-    title: "PR1SM.AI Access",
-    description: "Launch the PR1SM.AI intelligence layer.",
-    action: { label: "Launch PR1SM.AI", href: "https://www.pr1sm.ai", external: true },
-  },
-  {
-    icon: Phone,
-    title: "IT Support",
-    description: "636.256.7172 — call for portal, hardware, or access issues.",
-    action: { label: "Call IT", href: "tel:6362567172", external: true },
-  },
-  {
-    icon: Briefcase,
-    title: "Careers & Openings",
-    description: "Explore current opportunities and refer a candidate.",
-    action: { label: "View Careers", to: "/careers" },
-  },
-  {
-    icon: Mail,
-    title: "HR & General Requests",
-    description: "Reach our team for HR, payroll, or access requests.",
-    action: { label: "Email HR", href: "mailto:info@priglobal.com", external: true },
-  },
-];
+const ACCENT = "#8b5cf6";
 
 export default function EmployeeDashboard() {
   const navigate = useNavigate();
   const session = getEmployeeSession();
   const name = employeeDisplayName(session?.email);
 
-  const logout = () => {
+  const logout = async () => {
+    await signOutSupabase();
     clearEmployeeSession();
     navigate("/", { replace: true });
   };
 
   return (
-    <div className="py-24 md:py-28 bg-[var(--bg-secondary)] min-h-[calc(100vh-4rem)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
-          <div>
-            <BrandLogo mark size="lg" className="mb-4" />
-            <h1 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
-              Welcome back, {name}
-            </h1>
-            <p className="text-sm text-[var(--text-secondary)] mt-1">{session?.email}</p>
+    <>
+      <SEO
+        title="Employee Portal"
+        description="PRI Global employee portal — HR, IT, training, and internal resources."
+        url="/employee-dashboard"
+        noindex
+      />
+      <PortalLayout
+        portalLabel="Employee Portal"
+        accentColor={ACCENT}
+        userName={`Welcome back, ${name}`}
+        userSubtitle={session?.email}
+        navItems={EMPLOYEE_NAV}
+        onLogout={logout}
+      >
+        {/* Hero strip */}
+        <section className="mb-8 rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-500/10 via-[var(--bg-card)] to-[var(--bg-card)] p-6 md:p-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400 mb-2">
+                <Sparkles size={14} /> Internal Team Hub
+              </span>
+              <h2 className="font-heading text-xl md:text-2xl font-bold text-[var(--text-primary)]">
+                Everything you need for your day at PRI Global
+              </h2>
+              <p className="text-sm text-[var(--text-secondary)] mt-2 max-w-xl">
+                Payroll, HR, IT support, training, referrals, and company updates — in one place.
+              </p>
+            </div>
+            <Button
+              href="https://www.pr1sm.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="!bg-violet-600 hover:!bg-violet-700 shrink-0"
+            >
+              Launch PR1SM.AI <ExternalLink size={16} />
+            </Button>
           </div>
-          <button
-            type="button"
-            onClick={logout}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--border)] text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card)] transition-colors"
-          >
-            <LogOut size={16} /> Logout
-          </button>
+        </section>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          <PortalCard icon={Megaphone} value={String(EMPLOYEE_ANNOUNCEMENTS.length)} label="New Announcements" color="purple" />
+          <PortalCard icon={BookOpen} value={String(employeeVideoLibrary.length)} label="Training Videos" color="purple" />
+          <PortalCard icon={Users} value={String(offices.length)} label="Global Offices" color="purple" />
+          <PortalCard icon={Phone} value="IT" label="636.256.7172 · Help Desk" color="purple" />
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {cards.map(({ icon: Icon, title, description, action }) => (
-            <div
-              key={title}
-              className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6 flex flex-col hover:shadow-md transition-shadow"
-            >
-              <div className="w-10 h-10 rounded-lg bg-royal/10 flex items-center justify-center mb-4">
-                <AnimatedIcon Icon={Icon} size={20} className="text-royal dark:text-royaldark" />
+        {/* Announcements */}
+        <section id="announcements" className="mb-10 scroll-mt-24">
+          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">
+            Company Announcements
+          </h2>
+          <div className="space-y-3">
+            {EMPLOYEE_ANNOUNCEMENTS.map((item) => (
+              <div
+                key={item.id}
+                className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-start gap-4 hover:border-violet-500/30 transition-colors"
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                      {item.tag}
+                    </span>
+                    <span className="text-xs text-[var(--text-muted)]">{item.date}</span>
+                  </div>
+                  <h3 className="font-semibold text-[var(--text-primary)]">{item.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] mt-1">{item.summary}</p>
+                </div>
+                {item.href.startsWith("/") ? (
+                  <Link to={item.href} className="text-sm font-semibold text-violet-600 dark:text-violet-400 hover:underline shrink-0 inline-flex items-center gap-1">
+                    Read more <ArrowRight size={14} />
+                  </Link>
+                ) : (
+                  <a href={item.href} className="text-sm font-semibold text-violet-600 dark:text-violet-400 hover:underline shrink-0 inline-flex items-center gap-1">
+                    Read more <ArrowRight size={14} />
+                  </a>
+                )}
               </div>
-              <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-2">
-                {title}
-              </h2>
-              <p className="text-sm text-[var(--text-secondary)] flex-1 mb-4">{description}</p>
-              {action &&
-                (action.to ? (
-                  <Button to={action.to} size="sm" variant="secondary">
-                    {action.label}
+            ))}
+          </div>
+        </section>
+
+        {/* Quick links */}
+        <section id="links" className="mb-10 scroll-mt-24">
+          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">
+            Quick Access
+          </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {EMPLOYEE_QUICK_LINKS.map((link) => (
+              <div
+                key={link.id}
+                className={`bg-[var(--bg-card)] border rounded-2xl p-5 flex flex-col ${
+                  link.priority ? "border-violet-500/30 shadow-sm" : "border-[var(--border)]"
+                }`}
+              >
+                <h3 className="font-heading font-bold text-[var(--text-primary)] mb-1">{link.title}</h3>
+                <p className="text-sm text-[var(--text-secondary)] flex-1 mb-4">{link.description}</p>
+                {link.href.startsWith("/") ? (
+                  <Button to={link.href} size="sm" variant="secondary">
+                    {link.cta}
                   </Button>
                 ) : (
                   <Button
-                    href={action.href}
+                    href={link.href}
                     size="sm"
                     variant="secondary"
-                    target={action.external ? "_blank" : undefined}
-                    rel={action.external ? "noopener noreferrer" : undefined}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
                   >
-                    {action.label}
+                    {link.cta} {link.external && <ExternalLink size={14} />}
                   </Button>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* HR contacts + policies */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-10">
+          <section id="policies" className="scroll-mt-24">
+            <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">
+              HR & Policies
+            </h2>
+            <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5 mb-4">
+              <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-3">New hire checklist</h3>
+              <ol className="space-y-3">
+                {EMPLOYEE_ONBOARDING.map((item) => (
+                  <li key={item.step} className="flex gap-3 text-sm">
+                    <span className="w-6 h-6 rounded-full bg-violet-500/15 text-violet-600 dark:text-violet-400 flex items-center justify-center text-xs font-bold shrink-0">
+                      {item.step}
+                    </span>
+                    <div>
+                      <p className="font-medium text-[var(--text-primary)]">{item.title}</p>
+                      <p className="text-[var(--text-muted)] text-xs mt-0.5">{item.detail}</p>
+                    </div>
+                  </li>
                 ))}
+              </ol>
             </div>
-          ))}
+            <div className="space-y-2">
+              {EMPLOYEE_POLICIES.map((p) =>
+                p.href.startsWith("/") ? (
+                  <Link
+                    key={p.label}
+                    to={p.href}
+                    className="flex items-center justify-between p-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-sm font-medium hover:border-violet-500/40 transition-colors"
+                  >
+                    {p.label} <ArrowRight size={14} className="text-[var(--text-muted)]" />
+                  </Link>
+                ) : (
+                  <a
+                    key={p.label}
+                    href={p.href}
+                    className="flex items-center justify-between p-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-sm font-medium hover:border-violet-500/40 transition-colors"
+                  >
+                    {p.label} <ExternalLink size={14} className="text-[var(--text-muted)]" />
+                  </a>
+                )
+              )}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">
+              Key Contacts
+            </h2>
+            <div className="space-y-3">
+              {EMPLOYEE_CONTACTS.map((c) => (
+                <div key={c.name} className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5">
+                  <h3 className="font-semibold text-[var(--text-primary)]">{c.name}</h3>
+                  <p className="text-xs text-violet-600 dark:text-violet-400 font-medium mt-0.5">{c.role}</p>
+                  <p className="text-xs text-[var(--text-muted)] mt-2">{c.topics}</p>
+                  <div className="flex flex-wrap gap-3 mt-3">
+                    <a href={`mailto:${c.email}`} className="inline-flex items-center gap-1 text-xs text-royal dark:text-royaldark hover:underline">
+                      <Mail size={12} /> Email
+                    </a>
+                    {c.phone && (
+                      <a href={`tel:${c.phone.replace(/\./g, "")}`} className="inline-flex items-center gap-1 text-xs text-royal dark:text-royaldark hover:underline">
+                        <Phone size={12} /> {c.phone}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
 
-        <section className="border-t border-[var(--border)] pt-12 mb-16">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">
+        {/* Office directory */}
+        <section id="directory" className="mb-10 scroll-mt-24">
+          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">
             Office Directory
           </h2>
-          <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
-            PRI Global locations and primary contacts.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {offices.map((office) => (
-              <div
-                key={office.id}
-                className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6"
-              >
-                <div className="w-10 h-10 rounded-lg bg-royal/10 flex items-center justify-center mb-4">
-                  <AnimatedIcon Icon={Building2} size={20} className="text-royal dark:text-royaldark" />
-                </div>
-                <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-1">
-                  {office.label}
-                </h3>
-                <p className="text-xs text-[var(--text-muted)] mb-3">{office.specialty}</p>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-2">
-                  {office.address}
-                </p>
+              <div key={office.id} className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5">
+                <h3 className="font-semibold text-[var(--text-primary)]">{office.label}</h3>
+                <p className="text-xs text-[var(--text-muted)] mt-1">{office.specialty}</p>
+                <p className="text-sm text-[var(--text-secondary)] mt-2 leading-relaxed">{office.address}</p>
                 {office.phoneDisplay && (
-                  <a
-                    href={`tel:${office.phone}`}
-                    className="text-sm text-royal dark:text-royaldark hover:underline"
-                  >
+                  <a href={`tel:${office.phone}`} className="text-sm text-violet-600 dark:text-violet-400 hover:underline mt-2 inline-block">
                     {office.phoneDisplay}
-                  </a>
-                )}
-                {office.email && (
-                  <a
-                    href={`mailto:${office.email}`}
-                    className="block text-sm text-royal dark:text-royaldark hover:underline mt-1"
-                  >
-                    {office.email}
                   </a>
                 )}
               </div>
@@ -154,47 +255,21 @@ export default function EmployeeDashboard() {
           </div>
         </section>
 
-        <section id="video-library" className="border-t border-[var(--border)] pt-12">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">
-            Video Library
+        {/* Videos */}
+        <section id="videos" className="scroll-mt-24">
+          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-1">
+            Training & Brand Library
           </h2>
-          <p className="text-sm text-[var(--text-secondary)] mb-2 max-w-2xl">
-            Internal brand and training videos. Videos load on demand — use Wi‑Fi when possible.
+          <p className="text-sm text-[var(--text-secondary)] mb-6">
+            Onboarding, culture, and client-ready brand videos. Use Wi‑Fi when possible.
           </p>
-          <p className="text-xs text-[var(--text-muted)] mb-8">
-            {employeeVideoLibrary.length} videos available
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {employeeVideoLibrary.map((video, i) => (
-              <motion.div
-                key={video.src}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}
-              >
-                <VideoPlayer src={video.src} title={video.title} />
-              </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {employeeVideoLibrary.map((video) => (
+              <VideoPlayer key={video.src} src={video.src} title={video.title} />
             ))}
           </div>
         </section>
-
-        <p className="mt-12 text-sm text-[var(--text-muted)] leading-relaxed max-w-3xl border-t border-[var(--border)] pt-8">
-          Need access to additional resources or have a portal question? Reach out to IT Support
-          at{" "}
-          <a href="tel:6362567172" className="text-royal dark:text-royaldark hover:underline">
-            636.256.7172
-          </a>{" "}
-          or{" "}
-          <a
-            href="mailto:info@priglobal.com"
-            className="text-royal dark:text-royaldark hover:underline"
-          >
-            info@priglobal.com
-          </a>
-          .
-        </p>
-      </div>
-    </div>
+      </PortalLayout>
+    </>
   );
 }

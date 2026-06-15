@@ -46,13 +46,23 @@ export default function Stats() {
               key={stat.label}
               variants={cardVariants}
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -6, transition: { type: "spring", stiffness: 300, damping: 18 } }}
-              className="text-center bg-white/5 border border-white/8 rounded-xl3 py-6 md:py-8 px-3 md:px-4 cursor-default"
+              whileHover={{ y: -4, transition: { type: "spring", stiffness: 300, damping: 18 } }}
+              className="group relative text-center glass rounded-2xl py-6 md:py-8 px-3 md:px-4 cursor-default overflow-hidden transition-all duration-300"
             >
-              <div className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-1">
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle at 50% 0%, rgba(26,86,219,0.12) 0%, transparent 70%)",
+                }}
+                aria-hidden
+              />
+              <div
+                className="relative font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-1"
+                style={{ textShadow: "0 0 30px rgba(26,86,219,0.25)" }}
+              >
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-xs text-white/50 leading-snug">{stat.label}</div>
+              <div className="relative text-xs text-white/70 leading-snug">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>

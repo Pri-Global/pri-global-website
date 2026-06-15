@@ -16,7 +16,20 @@ import {
   Ticket,
   BarChart3,
   BrainCircuit,
+  Megaphone,
+  Shield,
+  Video,
+  Building2,
 } from "lucide-react";
+
+export const EMPLOYEE_NAV = [
+  { label: "Home", to: "/employee-dashboard", icon: Home },
+  { label: "Announcements", to: "/employee-dashboard#announcements", icon: Megaphone, badge: "3" },
+  { label: "Quick Links", to: "/employee-dashboard#links", icon: LayoutDashboard },
+  { label: "HR & Policies", to: "/employee-dashboard#policies", icon: Shield },
+  { label: "Directory", to: "/employee-dashboard#directory", icon: Building2 },
+  { label: "Training", to: "/employee-dashboard#videos", icon: Video },
+];
 
 export const CANDIDATE_NAV = [
   { label: "Dashboard", to: "/candidate-dashboard", icon: Home },
@@ -26,7 +39,7 @@ export const CANDIDATE_NAV = [
   { label: "Saved Jobs", to: "/candidate-dashboard#saved", icon: Bookmark },
   { label: "Messages", to: "/candidate-dashboard#messages", icon: MessageSquare, badge: "1" },
   { label: "Interview Prep", to: "/candidate-dashboard#prep", icon: Star },
-  { label: "Settings", to: "#", icon: Settings, comingSoon: true },
+  { label: "Settings", to: "/candidate-profile#settings", icon: Settings },
 ];
 
 export const HIRING_NAV = [
@@ -35,8 +48,8 @@ export const HIRING_NAV = [
   { label: "Active Searches", to: "/customer-dashboard#searches", icon: Search },
   { label: "Candidate Shortlists", to: "/customer-dashboard#shortlist", icon: UserCheck },
   { label: "Interviews", to: "/customer-dashboard#interviews", icon: Calendar },
-  { label: "Placements", to: "/customer-dashboard#placements", icon: Briefcase, comingSoon: true },
-  { label: "Invoices", to: "#", icon: Receipt, comingSoon: true },
+  { label: "Placements", to: "/customer-dashboard#placements", icon: Briefcase },
+  { label: "Invoices", to: "/customer-dashboard#invoices", icon: Receipt },
   { label: "Messages", to: "/customer-dashboard#messages", icon: MessageSquare },
 ];
 
@@ -45,7 +58,7 @@ export const SERVICES_NAV = [
   { label: "PR1SM.AI Access", to: "/customer-dashboard#prism", icon: BrainCircuit },
   { label: "Active Projects", to: "/customer-dashboard#projects", icon: Briefcase },
   { label: "Service Tickets", to: "/customer-dashboard#tickets", icon: Ticket },
-  { label: "Reports", to: "#", icon: BarChart3, comingSoon: true },
-  { label: "Invoices", to: "#", icon: Receipt, comingSoon: true },
+  { label: "Reports", to: "/customer-dashboard#reports", icon: BarChart3 },
+  { label: "Invoices", to: "/customer-dashboard#invoices", icon: Receipt },
   { label: "Messages", to: "/customer-dashboard#messages", icon: MessageSquare },
 ];

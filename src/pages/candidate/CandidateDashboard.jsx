@@ -3,13 +3,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, ExternalLink, ArrowRight } from "lucide-react";
 import SEO from "../../components/SEO";
-import PortalLayout from "../../components/portal/PortalLayout";
 import PortalCard from "../../components/portal/PortalCard";
 import Button from "../../components/ui/Button";
-import { AUTH_KEYS, usePortalAuth } from "../../hooks/usePortalAuth";
-import { CANDIDATE_NAV } from "../../data/portalNav";
 import {
   DEMO_APPLICATIONS,
+  DEMO_SAVED_JOBS,
   RECRUITER,
   RECRUITER_MESSAGE,
   INTERVIEW_PREP_LINKS,
@@ -17,24 +15,12 @@ import {
 import { STATUS_STYLES } from "../../components/portal/portalStyles";
 import { Briefcase, FileText, MessageSquare, BookmarkIcon } from "lucide-react";
 
-const ACCENT = "#22c55e";
-
 export default function CandidateDashboard() {
-  const { session, logout } = usePortalAuth(AUTH_KEYS.candidate, "/candidate-login");
   const [messageOpen, setMessageOpen] = useState(false);
 
   return (
     <>
       <SEO title="Candidate Dashboard" description="PRI Global candidate dashboard." url="/candidate-dashboard" noindex />
-      <PortalLayout
-        portalLabel="Candidate Portal"
-        accentColor={ACCENT}
-        userName={`Welcome back, ${session?.name || "Candidate"}`}
-        userSubtitle="Your career journey with PRI Global"
-        navItems={CANDIDATE_NAV}
-        profileLink="/candidate-profile"
-        onLogout={logout}
-      >
         {/* Status banner */}
         <section className="mb-8 p-5 rounded-2xl border border-emerald-500/25 bg-emerald-500/5">
           <span className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 mb-2">
@@ -82,6 +68,35 @@ export default function CandidateDashboard() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Saved jobs */}
+        <section id="saved" className="mb-10 scroll-mt-24">
+          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">Saved Jobs</h2>
+          <div className="space-y-3">
+            {DEMO_SAVED_JOBS.map((job) => (
+              <div
+                key={job.id}
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)]"
+              >
+                <div>
+                  <p className="font-medium text-[var(--text-primary)]">{job.role}</p>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    {job.company} · {job.location}
+                  </p>
+                  <p className="text-xs text-[var(--text-muted)] mt-1">Saved {job.saved}</p>
+                </div>
+                <div className="flex gap-2 shrink-0">
+                  <Button to="/candidate-jobs" size="sm" variant="secondary">
+                    View Job
+                  </Button>
+                  <button type="button" className="text-sm text-[var(--text-muted)] hover:text-red-500 px-2">
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -167,7 +182,6 @@ export default function CandidateDashboard() {
             </motion.div>
           )}
         </AnimatePresence>
-      </PortalLayout>
     </>
   );
 }

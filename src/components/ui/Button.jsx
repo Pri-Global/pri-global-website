@@ -14,6 +14,8 @@ const variants = {
   secondary: "bg-transparent border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--border-subtle)]",
   ghost:     "bg-transparent text-[var(--text-primary)] hover:bg-[var(--border-subtle)]",
   dark:      "bg-navy text-white hover:bg-navy/90 dark:bg-white dark:text-navy dark:hover:bg-white/90",
+  glass:     "glass-btn text-[var(--text-primary)]",
+  "glass-accent": "glass-btn-accent text-white",
 };
 
 const sizes = {
@@ -29,11 +31,14 @@ const Button = forwardRef(function Button(
   ref
 ) {
   const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
-  const motionProps = {
-    whileHover: { scale: 1.025 },
-    whileTap:   { scale: 0.965 },
-    transition: tapSpring,
-  };
+  const isGlass = variant === "glass" || variant === "glass-accent";
+  const motionProps = isGlass
+    ? { whileTap: { scale: 0.965 }, transition: tapSpring }
+    : {
+        whileHover: { scale: 1.025 },
+        whileTap: { scale: 0.965 },
+        transition: tapSpring,
+      };
 
   if (to) {
     return (

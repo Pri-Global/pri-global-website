@@ -128,6 +128,33 @@ export default function About() {
         </div>
       </section>
 
+      <PrismLeadershipDivider />
+
+      {/* PR1SM.AI Team — always dark brand section */}
+      <section className="py-24 bg-[#0d1628]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="text-center mb-14 max-w-3xl mx-auto"
+          >
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0D1B3E] border border-[#1A56DB] text-xs font-bold tracking-widest uppercase text-[#93c5fd] mb-4">
+              PR1SM.AI
+            </span>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
+              The PR1SM.AI Team
+            </h2>
+            <p className="text-[#6a8aaa] leading-relaxed">
+              Experienced leaders. Proven track record.
+            </p>
+          </motion.div>
+
+          <PrismTeamSection members={prismLeadership} />
+        </div>
+      </section>
+
       <VideoSection
         label="Our Growth Story"
         heading="From Missouri to the world"
@@ -169,33 +196,6 @@ export default function About() {
 
       {/* Timeline */}
       <Timeline />
-
-      <PrismLeadershipDivider />
-
-      {/* PR1SM.AI Team — always dark brand section */}
-      <section className="py-24 bg-[#0d1628]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="text-center mb-14 max-w-3xl mx-auto"
-          >
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0D1B3E] border border-[#1A56DB] text-xs font-bold tracking-widest uppercase text-[#93c5fd] mb-4">
-              PR1SM.AI
-            </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
-              The PR1SM.AI Team
-            </h2>
-            <p className="text-[#6a8aaa] leading-relaxed">
-              Experienced leaders. Proven track record.
-            </p>
-          </motion.div>
-
-          <PrismTeamSection members={prismLeadership} />
-        </div>
-      </section>
 
       <VideoSection
         label="Take a Tour"

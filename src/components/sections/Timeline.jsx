@@ -43,30 +43,39 @@ function MilestoneCard({ m, index, above }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.06, duration: 0.45 }}
-      className={`timeline-card shrink-0 w-[200px] snap-center ${
+      className={`timeline-card shrink-0 w-[200px] snap-center group ${
         above ? "mb-8" : "mt-8"
       }`}
     >
       <div
-        className="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-4 hover:scale-105 transition-transform duration-300 group"
-        style={{ borderColor: "var(--border)" }}
+        className="relative bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-4 transition-all duration-300 group-hover:glass group-hover:-translate-y-1 overflow-hidden"
+        style={{ borderLeftWidth: "3px", borderLeftColor: "transparent" }}
         onMouseEnter={(e) => {
+          e.currentTarget.style.borderLeftColor = color;
           e.currentTarget.style.borderColor = color;
         }}
         onMouseLeave={(e) => {
+          e.currentTarget.style.borderLeftColor = "transparent";
           e.currentTarget.style.borderColor = "";
         }}
       >
         <div
-          className="w-2 h-2 rounded-full mb-2"
+          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at 0% 50%, ${color}18 0%, transparent 65%)`,
+          }}
+          aria-hidden
+        />
+        <div
+          className="w-2 h-2 rounded-full mb-2 relative z-10"
           style={{ backgroundColor: color }}
         />
-        <AnimatedIcon Icon={Icon} size={20} style={{ color }} className="mb-2" />
-        <p className="text-xs text-[var(--text-muted)] mb-0.5">{m.year}</p>
-        <h4 className="font-heading font-bold text-sm text-[var(--text-primary)] mb-1">
+        <AnimatedIcon Icon={Icon} size={20} style={{ color }} className="mb-2 relative z-10" />
+        <p className="text-xs text-[var(--text-muted)] mb-0.5 relative z-10">{m.year}</p>
+        <h4 className="font-heading font-bold text-sm text-[var(--text-primary)] mb-1 relative z-10">
           {m.title}
         </h4>
-        <p className="text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-4 group-hover:line-clamp-none">
+        <p className="text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-4 group-hover:line-clamp-none relative z-10">
           {m.description}
         </p>
       </div>

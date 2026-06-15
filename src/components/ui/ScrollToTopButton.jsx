@@ -21,7 +21,7 @@ export default function ScrollToTopButton() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="hidden md:flex fixed bottom-6 left-6 z-40 w-11 h-11 rounded-full bg-royal text-white shadow-lg shadow-royal/30 items-center justify-center hover:bg-[var(--accent-hover)] transition-colors"
+          className="hidden md:flex fixed bottom-6 left-6 z-40 w-11 h-11 rounded-full glass-btn-accent items-center justify-center"
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-5 h-5" />

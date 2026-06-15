@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Mail, ExternalLink, Lock } from "lucide-react";
+import { X, Mail } from "lucide-react";
 import SEO from "../../components/SEO";
 import PortalLayout from "../../components/portal/PortalLayout";
 import PortalCard from "../../components/portal/PortalCard";
@@ -8,8 +8,8 @@ import Button from "../../components/ui/Button";
 import BrandLogo from "../../components/ui/BrandLogo";
 import { AUTH_KEYS, usePortalAuth } from "../../hooks/usePortalAuth";
 import { HIRING_NAV, SERVICES_NAV } from "../../data/portalNav";
-import { HIRING_SHORTLIST, HUBSPOT_URL, RECRUITER } from "../../data/portalDemoData";
-import { Briefcase, Users, Calendar, Ticket, BrainCircuit } from "lucide-react";
+import { HIRING_SHORTLIST, HUBSPOT_URL, RECRUITER, HIRING_PIPELINE, HIRING_INTERVIEWS, HIRING_PLACEMENTS, DEMO_INVOICES } from "../../data/portalDemoData";
+import { Briefcase, Users, Calendar, Ticket, BrainCircuit, BarChart3 } from "lucide-react";
 import pr1smLogo from "../../assets/pr1sm-logo.png";
 
 function SkillDots({ level }) {
@@ -33,6 +33,18 @@ function HiringDashboard({ session }) {
         <PortalCard icon={Users} value="8" label="Candidates in Pipeline" color="royal" />
         <PortalCard icon={Calendar} value="1" label="Interview Scheduled" color="royal" />
       </div>
+
+      <section id="pipeline" className="mb-10 scroll-mt-24">
+        <h2 className="font-heading font-bold text-lg mb-4">Talent Pipeline</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {HIRING_PIPELINE.map((stage) => (
+            <div key={stage.stage} className="p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-center">
+              <p className="text-2xl font-bold text-[var(--text-primary)]">{stage.count}</p>
+              <p className="text-sm text-[var(--text-secondary)] mt-1">{stage.stage}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section id="searches" className="mb-10 scroll-mt-24">
         <h2 className="font-heading font-bold text-lg mb-4">Active Job Searches</h2>
@@ -84,6 +96,24 @@ function HiringDashboard({ session }) {
         </div>
       </section>
 
+      <section id="interviews" className="mb-10 scroll-mt-24">
+        <h2 className="font-heading font-bold text-lg mb-4">Upcoming Interviews</h2>
+        <div className="space-y-3">
+          {HIRING_INTERVIEWS.map((item) => (
+            <div key={item.candidate + item.date} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)]">
+              <div>
+                <p className="font-semibold text-[var(--text-primary)]">{item.candidate}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{item.role}</p>
+                <p className="text-xs text-[var(--text-muted)] mt-1">{item.date} · {item.type}</p>
+              </div>
+              <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${item.status === "Confirmed" ? "bg-emerald-500/10 text-emerald-600" : "bg-amber-500/10 text-amber-600"}`}>
+                {item.status}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section id="messages" className="mb-10 scroll-mt-24">
         <h2 className="font-heading font-bold text-lg mb-4">Messages</h2>
         <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5">
@@ -94,12 +124,55 @@ function HiringDashboard({ session }) {
         </div>
       </section>
 
+      <section id="placements" className="mb-10 scroll-mt-24">
+        <h2 className="font-heading font-bold text-lg mb-4">Recent Placements</h2>
+        <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+          <table className="w-full text-sm min-w-[560px]">
+            <thead className="bg-[var(--bg-secondary)]">
+              <tr>{["Candidate", "Role", "Client", "Start Date", "Type"].map((h) => <th key={h} className="text-left p-3 font-semibold">{h}</th>)}</tr>
+            </thead>
+            <tbody>
+              {HIRING_PLACEMENTS.map((row, i) => (
+                <tr key={row.name} className={i % 2 === 0 ? "bg-[var(--bg-card)]" : "bg-[var(--bg-primary)]"}>
+                  <td className="p-3 font-medium">{row.name}</td>
+                  <td className="p-3">{row.role}</td>
+                  <td className="p-3 text-[var(--text-secondary)]">{row.client}</td>
+                  <td className="p-3 text-[var(--text-muted)]">{row.startDate}</td>
+                  <td className="p-3">{row.type}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="invoices" className="mb-10 scroll-mt-24">
+        <h2 className="font-heading font-bold text-lg mb-4">Invoices</h2>
+        <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+          <table className="w-full text-sm min-w-[480px]">
+            <thead className="bg-[var(--bg-secondary)]">
+              <tr>{["Invoice", "Period", "Amount", "Status", "Due"].map((h) => <th key={h} className="text-left p-3 font-semibold">{h}</th>)}</tr>
+            </thead>
+            <tbody>
+              {DEMO_INVOICES.map((row, i) => (
+                <tr key={row.id} className={i % 2 === 0 ? "bg-[var(--bg-card)]" : "bg-[var(--bg-primary)]"}>
+                  <td className="p-3 font-medium">{row.id}</td>
+                  <td className="p-3">{row.period}</td>
+                  <td className="p-3">{row.amount}</td>
+                  <td className="p-3"><span className={`text-xs font-semibold ${row.status === "Paid" ? "text-emerald-600" : "text-amber-600"}`}>{row.status}</span></td>
+                  <td className="p-3 text-[var(--text-muted)]">{row.due}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section>
         <h2 className="font-heading font-bold text-lg mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           <Button size="sm" onClick={() => setJobModal(true)}>Submit a New Job Request</Button>
           <Button href={HUBSPOT_URL} target="_blank" rel="noopener noreferrer" size="sm" variant="secondary">Book a Call with Recruiter</Button>
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--border)] text-sm text-[var(--text-muted)] opacity-60"><Lock size={14} /> View All Placements — coming soon</span>
         </div>
       </section>
 
@@ -199,14 +272,38 @@ function ServicesDashboard() {
         <Button href="mailto:info@priglobal.com?subject=New%20Support%20Ticket" size="sm" className="mt-4">Submit New Ticket</Button>
       </section>
 
-      <section className="mb-10">
+      <section id="reports" className="mb-10 scroll-mt-24">
         <h2 className="font-heading font-bold text-lg mb-4">Recent Reports</h2>
         <div className="grid sm:grid-cols-3 gap-3">
           {["Q1 2026 Performance Report", "Infrastructure Health Report — May 2026", "PR1SM.AI Usage Analytics"].map((r) => (
-            <div key={r} className="flex items-center gap-2 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] opacity-60 text-sm text-[var(--text-muted)]">
-              <Lock size={14} /> {r} — coming soon
-            </div>
+            <button
+              key={r}
+              type="button"
+              className="flex items-center gap-2 p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-sm text-[var(--text-primary)] hover:border-amber-500/40 transition-colors text-left"
+            >
+              <BarChart3 size={14} className="text-amber-500 shrink-0" /> {r}
+            </button>
           ))}
+        </div>
+      </section>
+
+      <section id="invoices" className="mb-10 scroll-mt-24">
+        <h2 className="font-heading font-bold text-lg mb-4">Invoices</h2>
+        <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
+          <table className="w-full text-sm">
+            <thead className="bg-[var(--bg-secondary)]"><tr>{["Invoice", "Period", "Amount", "Status", "Due"].map((h) => <th key={h} className="text-left p-3">{h}</th>)}</tr></thead>
+            <tbody>
+              {DEMO_INVOICES.map((row, i) => (
+                <tr key={row.id} className={i % 2 === 0 ? "bg-[var(--bg-card)]" : "bg-[var(--bg-primary)]"}>
+                  <td className="p-3 font-medium">{row.id}</td>
+                  <td className="p-3">{row.period}</td>
+                  <td className="p-3">{row.amount}</td>
+                  <td className="p-3"><span className={`text-xs font-semibold ${row.status === "Paid" ? "text-emerald-600" : "text-amber-600"}`}>{row.status}</span></td>
+                  <td className="p-3 text-[var(--text-muted)]">{row.due}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 

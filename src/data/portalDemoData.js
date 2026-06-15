@@ -39,6 +39,33 @@ export const HIRING_SHORTLIST = [
   { id: "b", name: "Candidate B", experience: "6 yrs experience", location: "St. Louis, MO", skills: [{ name: "React", level: 5 }, { name: "Node.js", level: 5 }, { name: "GCP", level: 3 }], status: "2 weeks notice" },
 ];
 
+export const DEMO_SAVED_JOBS = [
+  { id: 1, role: "Senior React Developer", company: "Financial Services Client", location: "Remote", saved: "2 days ago" },
+  { id: 2, role: "DevOps Engineer", company: "Healthcare Client", location: "St. Louis, MO", saved: "5 days ago" },
+];
+
+export const HIRING_PIPELINE = [
+  { stage: "Sourced", count: 12, color: "blue" },
+  { stage: "Screening", count: 6, color: "amber" },
+  { stage: "Client Review", count: 4, color: "purple" },
+  { stage: "Interview", count: 2, color: "green" },
+];
+
+export const HIRING_INTERVIEWS = [
+  { candidate: "Candidate A", role: "Senior React Developer", date: "Thu, Jun 5 · 2:00 PM", type: "Video", status: "Confirmed" },
+  { candidate: "Candidate C", role: "Cloud Architect", date: "Fri, Jun 6 · 10:00 AM", type: "On-site", status: "Pending" },
+];
+
+export const HIRING_PLACEMENTS = [
+  { name: "Jordan Lee", role: "Data Engineer", client: "Manufacturing Client", startDate: "May 12, 2026", type: "Contract" },
+  { name: "Sam Rivera", role: "Security Analyst", client: "Financial Services Client", startDate: "Apr 3, 2026", type: "Direct Hire" },
+];
+
+export const DEMO_INVOICES = [
+  { id: "INV-2026-041", amount: "$12,400", period: "May 2026", status: "Paid", due: "—" },
+  { id: "INV-2026-052", amount: "$8,750", period: "Jun 2026", status: "Open", due: "Jun 15, 2026" },
+];
+
 export const HUBSPOT_URL = BOOKING_URL;
 
 export const SKILL_OPTIONS = [

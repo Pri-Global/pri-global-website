@@ -31,22 +31,24 @@ export default function CallToAction() {
               deliver a custom proposal within 24 business hours. No obligation.
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-              <Button to="/get-pricing" size="lg" className="pulse-cta w-full sm:w-auto">
+              <Button to="/get-pricing" variant="glass-accent" size="lg" className="pulse-cta w-full sm:w-auto">
                 Get Pricing <ArrowRight size={18} />
               </Button>
               <Button
                 href={HUBSPOT_MEETING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                variant="glass"
                 size="lg"
-                className="bg-white/10 text-white border border-white/20 hover:bg-white/20 w-full sm:w-auto"
+                className="text-white w-full sm:w-auto"
               >
                 Book a Discovery Call <ArrowRight size={18} />
               </Button>
               <Button
                 to="/ai-innovation#demo"
+                variant="glass"
                 size="lg"
-                className="bg-white/10 text-white border border-white/20 hover:bg-white/20 w-full sm:w-auto"
+                className="text-white w-full sm:w-auto"
               >
                 See Demo
               </Button>

@@ -5,9 +5,15 @@ import Button from "../components/ui/Button";
 import BrandLogo from "../components/ui/BrandLogo";
 import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
-import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
+import {
+  isSupabaseConfigured,
+  signInWithSupabase,
+  resetSupabasePassword,
+  formatAuthError,
+  employeeSessionFromUser,
+  hasPortalAccess,
+} from "../lib/portalSupabaseAuth";
 
-// DEMO — used when Supabase env vars are not set (e.g. preview / staging)
 const DEMO_EMAIL = "employee@priglobal.com";
 const DEMO_PASSWORD = "PRI2025!";
 
@@ -44,61 +50,38 @@ export default function EmployeeLogin() {
     const normalized = email.trim().toLowerCase();
     const finish = () => setSubmitting(false);
 
-    if (isSupabaseConfigured && supabase) {
-      const { data, error: authError } = await supabase.auth.signInWithPassword({
-        email: normalized,
-        password,
-      });
-
-      if (authError) {
+    if (isSupabaseConfigured) {
+      const result = await signInWithSupabase(normalized, password);
+      if (result.notConfigured) {
         finish();
-        const msg = authError.message.toLowerCase();
-        if (msg.includes("confirm") || msg.includes("verified")) {
-          fail(
-            "Please verify your email first — check your inbox for the confirmation link from Supabase."
-          );
-        } else if (msg.includes("invalid") || msg.includes("credentials")) {
-          fail(
-            "Email or password incorrect. In Supabase: Authentication → Users — confirm your user exists, is confirmed, and the password matches."
-          );
-        } else {
-          fail(authError.message);
-        }
+        fail("Employee login is not configured. Ask IT to set Supabase keys in Vercel.");
         return;
       }
-
-      if (!data.user?.email) {
+      if (!result.ok) {
         finish();
-        fail("Sign-in failed. Please try again or contact IT.");
+        fail(formatAuthError(result.error));
         return;
       }
-
-      setEmployeeSession({
-        loggedIn: true,
-        email: data.user.email,
-        loginTime: Date.now(),
-        remember,
-      });
+      if (!hasPortalAccess(result.user, "employee")) {
+        finish();
+        fail("This account is not registered for the Employee Portal.");
+        return;
+      }
+      setEmployeeSession(employeeSessionFromUser(result.user, remember));
       finish();
       navigate("/employee-dashboard");
       return;
     }
 
-    // Fallback only when Supabase env vars are missing (local / staging)
     if (normalized === DEMO_EMAIL && password === DEMO_PASSWORD) {
-      setEmployeeSession({
-        loggedIn: true,
-        email: normalized,
-        loginTime: Date.now(),
-        remember,
-      });
+      setEmployeeSession(employeeSessionFromUser({ email: normalized }, remember));
       finish();
       navigate("/employee-dashboard");
       return;
     }
 
     finish();
-    fail("Employee login is not configured. Ask IT to set Supabase keys in Vercel.");
+    fail("Invalid credentials. Please contact IT if you need assistance.");
   };
 
   const handleForgotPassword = async () => {
@@ -107,17 +90,15 @@ export default function EmployeeLogin() {
       fail("Enter your email address first.");
       return;
     }
-    if (!isSupabaseConfigured || !supabase) {
+    if (!isSupabaseConfigured) {
       fail("Password reset is not available. Contact IT at 636.256.7172.");
       return;
     }
     setSubmitting(true);
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(normalized, {
-      redirectTo: `${window.location.origin}/employee-login`,
-    });
+    const result = await resetSupabasePassword(normalized, "/employee-login");
     setSubmitting(false);
-    if (resetError) {
-      fail(resetError.message);
+    if (!result.ok) {
+      fail(result.error);
       return;
     }
     setError("");
@@ -139,7 +120,7 @@ export default function EmployeeLogin() {
             Employee Portal
           </h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1 text-center">
-            Sign in to access internal resources
+            Sign in with your PRI Global account
           </p>
         </div>
 
@@ -213,6 +194,12 @@ export default function EmployeeLogin() {
             636.256.7172
           </a>
         </p>
+
+        {!isSupabaseConfigured && (
+          <p className="text-[10px] text-center text-[var(--text-muted)] mt-4">
+            Demo: {DEMO_EMAIL} / {DEMO_PASSWORD}
+          </p>
+        )}
       </motion.div>
     </section>
     </>

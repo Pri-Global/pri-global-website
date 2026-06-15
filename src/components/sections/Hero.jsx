@@ -153,9 +153,9 @@ const HeroChatCard = memo(function HeroChatCard() {
               aria-hidden
             />
 
-            <div className="relative flex flex-col overflow-hidden rounded-[1.25rem] border border-[var(--border)] dark:border-white/10 bg-[var(--bg-card)]/98 dark:bg-[#0b0d12]/95 backdrop-blur-xl shadow-2xl shadow-navy/10 dark:shadow-black/50 min-h-[440px]">
+            <div className="relative flex flex-col overflow-hidden rounded-[1.25rem] glass-strong min-h-[440px]">
               {/* Window chrome — red/yellow minimize to bubble */}
-              <div className="flex items-center gap-3 px-4 py-2.5 border-b border-[var(--border)] dark:border-white/10 bg-[var(--bg-secondary)]/80 dark:bg-[#12151c]/90">
+              <div className="flex items-center gap-3 px-4 py-2.5 glass-header-accent">
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
@@ -186,7 +186,7 @@ const HeroChatCard = memo(function HeroChatCard() {
               </div>
 
         {/* Agent bar */}
-        <div className="px-4 py-3 border-b border-[var(--border)] dark:border-white/10 bg-gradient-to-r from-royal/8 via-transparent to-violet-500/5 dark:from-royal/15 dark:to-violet-500/10">
+        <div className="px-4 py-3 border-b border-white/20 dark:border-white/10 glass-header-accent">
           <div className="flex items-center gap-3">
             <div className="relative shrink-0">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-royal to-[#4169E1] flex items-center justify-center shadow-lg shadow-royal/25">
@@ -228,8 +228,8 @@ const HeroChatCard = memo(function HeroChatCard() {
                 <div
                   className={`px-3.5 py-2.5 text-sm leading-relaxed ${
                     msg.role === "user"
-                      ? "bg-gradient-to-br from-royal to-[#3358cc] text-white rounded-2xl rounded-br-md shadow-md shadow-royal/20"
-                      : "bg-[var(--bg-card)] dark:bg-white/[0.06] border border-[var(--border)] dark:border-white/10 text-[var(--text-primary)] rounded-2xl rounded-bl-md"
+                      ? "glass-btn-accent rounded-2xl rounded-br-md text-white"
+                      : "glass-subtle text-[var(--text-primary)] rounded-2xl rounded-bl-md border-l-[3px] border-l-royal/50"
                   }`}
                 >
                   {msg.content}
@@ -270,7 +270,7 @@ const HeroChatCard = memo(function HeroChatCard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 + i * 0.07, duration: 0.3 }}
                 onClick={() => sendMessage(prompt)}
-                className="text-[11px] px-3 py-1.5 rounded-full border border-[var(--border)] dark:border-white/10 bg-[var(--bg-card)] dark:bg-white/[0.04] text-[var(--text-secondary)] hover:border-royal/50 hover:text-royal dark:hover:text-royaldark transition-colors"
+                className="text-[11px] px-3 py-1.5 rounded-full glass-subtle text-[var(--text-secondary)] hover:border-l-[3px] hover:border-l-royal hover:pl-[calc(0.75rem-3px)] transition-all"
               >
                 {prompt}
               </motion.button>
@@ -279,8 +279,8 @@ const HeroChatCard = memo(function HeroChatCard() {
         )}
 
         {/* Composer */}
-        <div className="p-3 border-t border-[var(--border)] dark:border-white/10 bg-[var(--bg-secondary)]/50 dark:bg-[#12151c]/80">
-          <div className="flex items-end gap-2 rounded-xl border border-[var(--border)] dark:border-white/10 bg-[var(--bg-card)] dark:bg-[#0f1218] px-3 py-2 shadow-inner focus-within:border-royal/40 dark:focus-within:border-royaldark/50 transition-colors">
+        <div className="p-3 border-t border-white/20 dark:border-white/10 glass-subtle">
+          <div className="flex items-end gap-2 rounded-xl glass-input px-3 py-2 focus-within:border-royal/40 dark:focus-within:border-royaldark/50 transition-colors">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -292,7 +292,7 @@ const HeroChatCard = memo(function HeroChatCard() {
               type="button"
               onClick={() => sendMessage()}
               disabled={!input.trim() || loading}
-              className="w-8 h-8 rounded-lg bg-gradient-to-br from-royal to-[#3358cc] flex items-center justify-center text-white shadow-md shadow-royal/25 hover:opacity-90 transition-opacity disabled:opacity-35 disabled:pointer-events-none shrink-0"
+              className="w-8 h-8 rounded-lg glass-btn-accent flex items-center justify-center text-white disabled:opacity-35 disabled:pointer-events-none shrink-0"
               aria-label="Send message"
             >
               <Send size={14} />
@@ -337,7 +337,7 @@ export default function Hero() {
           <div>
             <motion.div
               {...fadeUp(0.1)}
-              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-royal/10 dark:bg-royaldark/15 border border-royal/20 dark:border-royaldark/30 mb-6"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle mb-6"
             >
               <AnimatedIcon Icon={Sparkles} size={14} className="text-royal dark:text-royaldark" />
               <span className="text-xs font-semibold text-royal dark:text-royaldark tracking-wide uppercase">
@@ -372,13 +372,13 @@ export default function Hero() {
             </motion.p>
 
             <motion.div {...fadeUp(0.65)} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-              <Button to="/services" size="lg" className="w-full sm:w-auto">
+              <Button to="/services" variant="glass-accent" size="lg" className="w-full sm:w-auto">
                 Explore our services <ArrowRight size={18} />
               </Button>
-              <Button to="/get-pricing" variant="secondary" size="lg" className="w-full sm:w-auto">
+              <Button to="/get-pricing" variant="glass" size="lg" className="w-full sm:w-auto">
                 Get Pricing
               </Button>
-              <Button to="/ai-innovation#demo" variant="ghost" size="lg" className="w-full sm:w-auto">
+              <Button to="/ai-innovation#demo" variant="glass" size="lg" className="w-full sm:w-auto">
                 See Demo
               </Button>
             </motion.div>

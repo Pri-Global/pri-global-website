@@ -7,10 +7,18 @@ import Button from "../../components/ui/Button";
 import CandidateCareersNav from "../../components/portal/CandidateCareersNav";
 import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
-
-// DEMO — Replace with real auth in production
-const DEMO_EMAIL = "candidate@example.com";
-const DEMO_PASSWORD = "Candidate2025!";
+import {
+  CANDIDATE_DEMO,
+  matchCandidateDemo,
+} from "../../data/portalDemoCredentials";
+import {
+  isSupabaseConfigured,
+  signInWithSupabase,
+  resetSupabasePassword,
+  formatAuthError,
+  candidateSessionFromUser,
+  hasPortalAccess,
+} from "../../lib/portalSupabaseAuth";
 
 export default function CandidateLogin() {
   const navigate = useNavigate();
@@ -19,30 +27,87 @@ export default function CandidateLogin() {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
   const [shaking, setShaking] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   if (isLoggedIn(AUTH_KEYS.candidate)) {
     return <Navigate to="/candidate-dashboard" replace />;
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-    const normalized = email.trim().toLowerCase();
-    if (normalized === DEMO_EMAIL && password === DEMO_PASSWORD) {
-      writeAuth(AUTH_KEYS.candidate, {
-        loggedIn: true,
-        email: normalized,
-        name: "Alex Johnson",
-        role: "candidate",
-        loginTime: Date.now(),
-        remember,
-      });
-      navigate("/candidate-dashboard");
-      return;
-    }
-    setError("Invalid credentials. New to PRI Global? Create an account.");
+  const fail = (message) => {
+    setError(message);
     setShaking(true);
     setTimeout(() => setShaking(false), 600);
+  };
+
+  const completeDemoLogin = (normalized) => {
+    const demoSession = matchCandidateDemo(normalized, password);
+    if (!demoSession) return false;
+
+    writeAuth(AUTH_KEYS.candidate, {
+      ...demoSession,
+      loginTime: Date.now(),
+      remember,
+    });
+    navigate("/candidate-dashboard");
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSubmitting(true);
+    const normalized = email.trim().toLowerCase();
+
+    if (isSupabaseConfigured) {
+      const result = await signInWithSupabase(normalized, password);
+      if (result.notConfigured) {
+        setSubmitting(false);
+        if (completeDemoLogin(normalized)) return;
+        fail("Candidate login is not configured yet.");
+        return;
+      }
+      if (result.ok) {
+        if (!hasPortalAccess(result.user, "candidate")) {
+          setSubmitting(false);
+          fail("This account is not registered for the Candidate Portal.");
+          return;
+        }
+        writeAuth(AUTH_KEYS.candidate, candidateSessionFromUser(result.user, remember));
+        setSubmitting(false);
+        navigate("/candidate-dashboard");
+        return;
+      }
+
+      setSubmitting(false);
+      if (completeDemoLogin(normalized)) return;
+      fail(formatAuthError(result.error));
+      return;
+    }
+
+    setSubmitting(false);
+    if (completeDemoLogin(normalized)) return;
+    fail("Invalid credentials. New to PRI Global? Create an account.");
+  };
+
+  const handleForgotPassword = async () => {
+    const normalized = email.trim().toLowerCase();
+    if (!normalized) {
+      fail("Enter your email address first.");
+      return;
+    }
+    if (!isSupabaseConfigured) {
+      fail("Password reset is not available in demo mode.");
+      return;
+    }
+    setSubmitting(true);
+    const result = await resetSupabasePassword(normalized, "/candidate-login");
+    setSubmitting(false);
+    if (!result.ok) {
+      fail(result.error);
+      return;
+    }
+    setError("");
+    alert(`Password reset link sent to ${normalized}. Check your inbox.`);
   };
 
   return (
@@ -66,7 +131,7 @@ export default function CandidateLogin() {
             <BrandLogo size="xl" className="mb-5" />
             <h1 className="font-heading text-2xl font-bold text-[var(--text-primary)]">Candidate Portal</h1>
             <p className="text-sm text-[var(--text-secondary)] mt-2 text-center leading-relaxed">
-              Access your job applications, profile, and career opportunities.
+              Sign in to track applications, messages, and job opportunities.
             </p>
           </div>
 
@@ -78,10 +143,15 @@ export default function CandidateLogin() {
               Remember me
             </label>
             {error && <p className="text-sm text-red-600 dark:text-red-400" role="alert">{error}</p>}
-            <Button type="submit" className="w-full !bg-emerald-600 hover:!bg-emerald-700">
-              Sign In →
+            <Button type="submit" className="w-full !bg-emerald-600 hover:!bg-emerald-700" disabled={submitting}>
+              {submitting ? "Signing in..." : "Sign In →"}
             </Button>
-            <button type="button" className="w-full text-center text-xs text-[var(--text-muted)] hover:text-emerald-600 transition-colors">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              disabled={submitting}
+              className="w-full text-center text-xs text-[var(--text-muted)] hover:text-emerald-600 transition-colors disabled:opacity-50"
+            >
               Forgot password?
             </button>
           </form>
@@ -96,8 +166,8 @@ export default function CandidateLogin() {
             Create an Account →
           </Button>
 
-          <p className="text-[10px] text-center text-[var(--text-muted)] mt-6">
-            Demo: {DEMO_EMAIL} / {DEMO_PASSWORD}
+          <p className="text-[10px] text-center text-[var(--text-muted)] mt-6 leading-relaxed">
+            Demo: {CANDIDATE_DEMO.email} / {CANDIDATE_DEMO.password}
           </p>
         </motion.div>
 

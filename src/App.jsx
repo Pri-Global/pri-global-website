@@ -38,6 +38,7 @@ import JobSeekerFAQ from "./pages/JobSeekerFAQ";
 import WorkingAtPRI from "./pages/WorkingAtPRI";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedPortalRoute from "./components/portal/ProtectedPortalRoute";
+import CandidatePortalLayout from "./components/portal/CandidatePortalLayout";
 import { AUTH_KEYS } from "./hooks/usePortalAuth";
 import DarkModeToast from "./components/ui/DarkModeToast";
 import BrandLogo from "./components/ui/BrandLogo";
@@ -54,13 +55,30 @@ function ScrollProgress() {
   );
 }
 
-/* ── Initial page loader ─────────────────────────────────────── */
+/* ── Initial page loader (once per browser tab session) ───────── */
+const SESSION_LOADED_KEY = "pri-app-loaded";
+
 function PageLoader() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(() => {
+    try {
+      return !sessionStorage.getItem(SESSION_LOADED_KEY);
+    } catch {
+      return true;
+    }
+  });
+
   useEffect(() => {
-    const t = setTimeout(() => setVisible(false), 900);
+    if (!visible) return undefined;
+    const t = setTimeout(() => {
+      setVisible(false);
+      try {
+        sessionStorage.setItem(SESSION_LOADED_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+    }, 900);
     return () => clearTimeout(t);
-  }, []);
+  }, [visible]);
 
   return (
     <AnimatePresence>
@@ -95,7 +113,25 @@ const pageVariants = {
   exit:    { opacity: 0, y: -12, transition: { duration: 0.22, ease: "easeIn" } },
 };
 
-function PW({ children }) {
+/* Portal routes skip page transitions so sidebar navigation stays responsive. */
+const PORTAL_ROUTE_PREFIXES = [
+  "/employee-dashboard",
+  "/candidate-dashboard",
+  "/candidate-profile",
+  "/candidate-jobs",
+  "/customer-dashboard",
+];
+
+function isPortalRoute(pathname) {
+  return PORTAL_ROUTE_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+}
+
+function PW({ children, animate = true }) {
+  if (!animate) {
+    return children;
+  }
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
       {children}
@@ -103,12 +139,10 @@ function PW({ children }) {
   );
 }
 
-/* ── Routes wrapped with AnimatePresence ─────────────────────── */
-function AnimatedRoutes() {
-  const location = useLocation();
+/* ── Routes ──────────────────────────────────────────────────── */
+function AppRoutes() {
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+    <Routes>
         <Route path="/"                element={<PW><Home /></PW>} />
         <Route path="/services"        element={<PW><Services /></PW>} />
         <Route path="/talent-solutions" element={<PW><TalentSolutions /></PW>} />
@@ -122,7 +156,7 @@ function AnimatedRoutes() {
         <Route
           path="/employee-dashboard"
           element={
-            <PW>
+            <PW animate={false}>
               <ProtectedRoute>
                 <EmployeeDashboard />
               </ProtectedRoute>
@@ -131,33 +165,17 @@ function AnimatedRoutes() {
         />
         <Route path="/candidate-login" element={<PW><CandidateLogin /></PW>} />
         <Route path="/candidate-register" element={<PW><CandidateRegister /></PW>} />
-        <Route
-          path="/candidate-dashboard"
-          element={
-            <PW>
-              <ProtectedPortalRoute authKey={AUTH_KEYS.candidate} redirectTo="/candidate-login">
-                <CandidateDashboard />
-              </ProtectedPortalRoute>
-            </PW>
-          }
-        />
-        <Route
-          path="/candidate-profile"
-          element={
-            <PW>
-              <ProtectedPortalRoute authKey={AUTH_KEYS.candidate} redirectTo="/candidate-login">
-                <CandidateProfile />
-              </ProtectedPortalRoute>
-            </PW>
-          }
-        />
-        <Route path="/candidate-jobs" element={<PW><CandidateJobs /></PW>} />
+        <Route element={<CandidatePortalLayout />}>
+          <Route path="candidate-dashboard" element={<CandidateDashboard />} />
+          <Route path="candidate-profile" element={<CandidateProfile />} />
+          <Route path="candidate-jobs" element={<CandidateJobs />} />
+        </Route>
         <Route path="/customer-login" element={<PW><CustomerLogin /></PW>} />
         <Route path="/customer-register" element={<PW><CustomerRegister /></PW>} />
         <Route
           path="/customer-dashboard"
           element={
-            <PW>
+            <PW animate={false}>
               <ProtectedPortalRoute authKey={AUTH_KEYS.customer} redirectTo="/customer-login">
                 <CustomerDashboard />
               </ProtectedPortalRoute>
@@ -176,12 +194,14 @@ function AnimatedRoutes() {
         <Route path="/why-pri-global" element={<PW><WhyPRI /></PW>} />
         <Route path="*" element={<PW><NotFound /></PW>} />
       </Routes>
-    </AnimatePresence>
   );
 }
 
 /* ── App ─────────────────────────────────────────────────────── */
 export default function App() {
+  const location = useLocation();
+  const portalRoute = isPortalRoute(location.pathname);
+
   return (
     <div className="min-h-screen flex flex-col">
       <PageLoader />
@@ -189,7 +209,13 @@ export default function App() {
       <ScrollToTop />
       <Navbar />
       <main className="flex-1">
-        <AnimatedRoutes />
+        {portalRoute ? (
+          <AppRoutes />
+        ) : (
+          <AnimatePresence mode="wait">
+            <AppRoutes key={location.pathname} />
+          </AnimatePresence>
+        )}
       </main>
       <Footer />
       <CookieBanner />

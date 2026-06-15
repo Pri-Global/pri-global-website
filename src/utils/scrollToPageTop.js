@@ -1,13 +1,5 @@
-/** Force window to the very top — no hash anchors, no restored scroll position. */
+/** Force window to the very top — no restored scroll position. */
 export function scrollToPageTop() {
-  if (window.location.hash) {
-    window.history.replaceState(
-      null,
-      "",
-      window.location.pathname + window.location.search
-    );
-  }
-
   const run = () => {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Bookmark, ExternalLink, RefreshCw, Search } from "lucide-react";
 import Button from "../ui/Button";
 import { useJobListings } from "../../hooks/useJobListings";
@@ -75,9 +74,8 @@ export default function JobSearchList({ session }) {
         )}
 
         {jobs.map((job) => (
-          <motion.article
+          <article
             key={job.id}
-            layout
             className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-5 hover:shadow-md transition-shadow"
           >
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -124,7 +122,7 @@ export default function JobSearchList({ session }) {
                 )}
               </div>
             </div>
-          </motion.article>
+          </article>
         ))}
       </div>
     </>

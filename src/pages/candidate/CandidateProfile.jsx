@@ -1,24 +1,21 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import SEO from "../../components/SEO";
-import PortalLayout from "../../components/portal/PortalLayout";
 import Button from "../../components/ui/Button";
 import { AUTH_KEYS, usePortalAuth, readStorage, writeStorage, getInitials } from "../../hooks/usePortalAuth";
-import { CANDIDATE_NAV } from "../../data/portalNav";
 import { EXPERIENCE_OPTIONS, SKILL_OPTIONS } from "../../data/portalDemoData";
 import { inputClass, labelClass } from "../../components/portal/portalStyles";
 
 const ACCENT = "#22c55e";
 
 const defaultProfile = {
-  firstName: "Alex", lastName: "Johnson", email: "candidate@example.com", phone: "",
+  firstName: "Alex", lastName: "Johnson", email: "candidate@priglobal.com", phone: "",
   location: "St. Louis, MO", linkedin: "", experience: "5-10", skillSet: "Software Engineering",
   topSkills: "React, TypeScript, AWS", employmentStatus: "actively", workTypes: ["Contract"],
   remotePref: "flexible", name: "Alex Johnson",
 };
 
 export default function CandidateProfile() {
-  const { session, logout } = usePortalAuth(AUTH_KEYS.candidate, "/candidate-login");
+  const { session } = usePortalAuth(AUTH_KEYS.candidate, "/candidate-login");
   const [form, setForm] = useState(defaultProfile);
   const [saved, setSaved] = useState(false);
 
@@ -43,56 +40,67 @@ export default function CandidateProfile() {
   return (
     <>
       <SEO title="Candidate Profile" description="Edit your PRI Global candidate profile." url="/candidate-profile" noindex />
-      <PortalLayout
-        portalLabel="Candidate Portal"
-        accentColor={ACCENT}
-        userName={form.name || session?.name}
-        userSubtitle="Manage your professional profile"
-        navItems={CANDIDATE_NAV}
-        profileLink="/candidate-profile"
-        onLogout={logout}
-      >
-        <motion.form initial={{ opacity: 0 }} animate={{ opacity: 1 }} onSubmit={save} className="max-w-2xl space-y-6">
-          <div className="flex flex-col sm:flex-row items-center gap-6 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]">
-            <div className="w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white" style={{ backgroundColor: ACCENT }}>
-              {initials}
-            </div>
-            <div>
-              <Button type="button" variant="secondary" size="sm">Upload Photo</Button>
-              <p className="text-xs text-[var(--text-muted)] mt-2">Frontend demo only — no upload</p>
-            </div>
+      <form onSubmit={save} className="max-w-2xl space-y-6">
+        <div className="flex flex-col sm:flex-row items-center gap-6 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]">
+          <div className="w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white" style={{ backgroundColor: ACCENT }}>
+            {initials}
           </div>
+          <div>
+            <Button type="button" variant="secondary" size="sm">Upload Photo</Button>
+            <p className="text-xs text-[var(--text-muted)] mt-2">Frontend demo only — no upload</p>
+          </div>
+        </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div><label className={labelClass}>First Name</label><input value={form.firstName} onChange={(e) => update("firstName", e.target.value)} className={inputClass} /></div>
-            <div><label className={labelClass}>Last Name</label><input value={form.lastName} onChange={(e) => update("lastName", e.target.value)} className={inputClass} /></div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div><label className={labelClass}>First Name</label><input value={form.firstName} onChange={(e) => update("firstName", e.target.value)} className={inputClass} /></div>
+          <div><label className={labelClass}>Last Name</label><input value={form.lastName} onChange={(e) => update("lastName", e.target.value)} className={inputClass} /></div>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div><label className={labelClass}>Email</label><input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} className={inputClass} /></div>
+          <div><label className={labelClass}>Phone</label><input value={form.phone} onChange={(e) => update("phone", e.target.value)} className={inputClass} /></div>
+        </div>
+        <div><label className={labelClass}>Location</label><input value={form.location} onChange={(e) => update("location", e.target.value)} className={inputClass} /></div>
+        <div><label className={labelClass}>LinkedIn</label><input value={form.linkedin} onChange={(e) => update("linkedin", e.target.value)} className={inputClass} /></div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div><label className={labelClass}>Experience</label>
+            <select value={form.experience} onChange={(e) => update("experience", e.target.value)} className={inputClass}>
+              {EXPERIENCE_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
           </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div><label className={labelClass}>Email</label><input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} className={inputClass} /></div>
-            <div><label className={labelClass}>Phone</label><input value={form.phone} onChange={(e) => update("phone", e.target.value)} className={inputClass} /></div>
+          <div><label className={labelClass}>Skill Set</label>
+            <select value={form.skillSet} onChange={(e) => update("skillSet", e.target.value)} className={inputClass}>
+              {SKILL_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
           </div>
-          <div><label className={labelClass}>Location</label><input value={form.location} onChange={(e) => update("location", e.target.value)} className={inputClass} /></div>
-          <div><label className={labelClass}>LinkedIn</label><input value={form.linkedin} onChange={(e) => update("linkedin", e.target.value)} className={inputClass} /></div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div><label className={labelClass}>Experience</label>
-              <select value={form.experience} onChange={(e) => update("experience", e.target.value)} className={inputClass}>
-                {EXPERIENCE_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
-              </select>
-            </div>
-            <div><label className={labelClass}>Skill Set</label>
-              <select value={form.skillSet} onChange={(e) => update("skillSet", e.target.value)} className={inputClass}>
-                {SKILL_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
-              </select>
-            </div>
-          </div>
-          <div><label className={labelClass}>Top Skills</label><input value={form.topSkills} onChange={(e) => update("topSkills", e.target.value)} className={inputClass} /></div>
+        </div>
+        <div><label className={labelClass}>Top Skills</label><input value={form.topSkills} onChange={(e) => update("topSkills", e.target.value)} className={inputClass} /></div>
 
-          <div className="flex items-center gap-4">
-            <Button type="submit" className="!bg-emerald-600 hover:!bg-emerald-700">Save Changes</Button>
-            {saved && <span className="text-sm text-emerald-600">Profile saved!</span>}
-          </div>
-        </motion.form>
-      </PortalLayout>
+        <div className="flex items-center gap-4">
+          <Button type="submit" className="!bg-emerald-600 hover:!bg-emerald-700">Save Changes</Button>
+          {saved && <span className="text-sm text-emerald-600">Profile saved!</span>}
+        </div>
+      </form>
+
+      <section id="settings" className="max-w-2xl mt-12 pt-10 border-t border-[var(--border)] scroll-mt-24">
+        <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-4">Account Settings</h2>
+        <div className="space-y-4 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]">
+          <label className="flex items-center justify-between gap-4 cursor-pointer">
+            <span className="text-sm text-[var(--text-secondary)]">Email notifications for new messages</span>
+            <input type="checkbox" defaultChecked className="w-4 h-4 accent-emerald-600" />
+          </label>
+          <label className="flex items-center justify-between gap-4 cursor-pointer">
+            <span className="text-sm text-[var(--text-secondary)]">Job alert emails for saved searches</span>
+            <input type="checkbox" defaultChecked className="w-4 h-4 accent-emerald-600" />
+          </label>
+          <label className="flex items-center justify-between gap-4 cursor-pointer">
+            <span className="text-sm text-[var(--text-secondary)]">Profile visible to PRI recruiters</span>
+            <input type="checkbox" defaultChecked className="w-4 h-4 accent-emerald-600" />
+          </label>
+          <Button type="button" variant="secondary" size="sm" className="mt-2">
+            Change Password
+          </Button>
+        </div>
+      </section>
     </>
   );
 }

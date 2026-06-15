@@ -13,6 +13,7 @@ import {
   getEmployeeSession,
   clearEmployeeSession,
 } from "../ProtectedRoute";
+import { signOutSupabase } from "../../lib/portalSupabaseAuth";
 
 /**
  * DEMO ONLY — detects which portal session is active in localStorage.
@@ -108,8 +109,9 @@ export default function PortalMenu() {
     };
   }, [open, refreshAuth]);
 
-  const signOutAll = () => {
+  const signOutAll = async () => {
     // DEMO — clears all portal localStorage sessions
+    await signOutSupabase();
     clearEmployeeSession();
     localStorage.removeItem(AUTH_KEYS.candidate);
     localStorage.removeItem(AUTH_KEYS.customer);
@@ -164,7 +166,7 @@ export default function PortalMenu() {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             style={{ transformOrigin: "top right" }}
-            className="absolute right-0 top-full mt-2 w-[260px] bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl shadow-xl p-2"
+            className="absolute right-0 top-full mt-2 w-[260px] glass-strong rounded-2xl shadow-2xl overflow-hidden p-2"
           >
             {/* Header */}
             <div className="px-2 py-2">
@@ -188,8 +190,7 @@ export default function PortalMenu() {
                       {sessionEmail}
                     </p>
                     <span
-                      className="inline-block mt-1 text-[10px] font-medium px-2 py-0.5 rounded-full text-white"
-                      style={{ backgroundColor: activeMeta?.color ?? "#22c55e" }}
+                      className="inline-block mt-1 text-[10px] font-medium px-2 py-0.5 rounded-full text-[#22c55e] border border-[#22c55e]/30 bg-[#22c55e]/15 backdrop-blur-sm"
                     >
                       {activeMeta?.badgeLabel}
                     </span>
@@ -212,7 +213,7 @@ export default function PortalMenu() {
                     key={portal.id}
                     to={to}
                     onClick={handleLinkClick}
-                    className="flex items-center gap-3 px-2 py-2.5 rounded-[10px] transition-colors duration-150 ease-in-out hover:bg-[var(--bg-secondary)] group"
+                    className="flex items-center gap-3 px-2 py-2.5 rounded-[10px] transition-colors duration-150 ease-in-out hover:bg-royal/[0.06] dark:hover:bg-white/[0.04] group"
                   >
                     <Icon
                       size={20}
@@ -225,7 +226,7 @@ export default function PortalMenu() {
                           {portal.label}
                         </span>
                         {isActive && (
-                          <span className="text-[10px] font-medium text-[#22c55e]">
+                          <span className="text-[10px] font-medium text-[#22c55e] bg-[#22c55e]/15 border border-[#22c55e]/30 px-1.5 py-0.5 rounded-full backdrop-blur-sm">
                             ● Active
                           </span>
                         )}

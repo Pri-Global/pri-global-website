@@ -22,9 +22,8 @@ function ServiceCard({ svc }) {
       whileHover={{ y: -8, transition: { type: "spring", stiffness: 280, damping: 18 } }}
       className="group relative bg-[var(--bg-card)] border border-[var(--border)] rounded-xl3 p-6
                  flex flex-col overflow-hidden
-                 hover:shadow-lg hover:shadow-navy/8 dark:hover:shadow-black/30
-                 hover:border-royal/30 dark:hover:border-royaldark/30
-                 transition-shadow transition-colors duration-300"
+                 transition-all duration-300
+                 hover:glass hover:shadow-xl hover:-translate-y-2"
     >
       {/* Top accent line appears on hover */}
       <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full
@@ -36,10 +35,11 @@ function ServiceCard({ svc }) {
         whileHover={{ scale: 1.14, rotate: 4 }}
         transition={{ type: "spring", stiffness: 400, damping: 14 }}
         className="w-11 h-11 rounded-xl bg-royal/10 dark:bg-royaldark/15
-                   flex items-center justify-center mb-4 shrink-0"
+                   group-hover:glass-btn-accent
+                   flex items-center justify-center mb-4 shrink-0 transition-all duration-300"
       >
         {Icon && (
-          <AnimatedIcon Icon={Icon} size={22} className="text-royal dark:text-royaldark" />
+          <AnimatedIcon Icon={Icon} size={22} className="text-royal dark:text-royaldark group-hover:text-white transition-colors duration-300" />
         )}
       </motion.div>
 

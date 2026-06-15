@@ -42,52 +42,86 @@ export default function EmployeeLogin() {
     setError("");
     setSubmitting(true);
     const normalized = email.trim().toLowerCase();
+    const finish = () => setSubmitting(false);
 
-    if (!isSupabaseConfigured || !supabase) {
-      setSubmitting(false);
-      if (normalized === DEMO_EMAIL && password === DEMO_PASSWORD) {
-        setEmployeeSession({
-          loggedIn: true,
-          email: normalized,
-          loginTime: Date.now(),
-          remember,
-        });
-        navigate("/employee-dashboard");
+    if (isSupabaseConfigured && supabase) {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: normalized,
+        password,
+      });
+
+      if (authError) {
+        finish();
+        const msg = authError.message.toLowerCase();
+        if (msg.includes("confirm") || msg.includes("verified")) {
+          fail(
+            "Please verify your email first — check your inbox for the confirmation link from Supabase."
+          );
+        } else if (msg.includes("invalid") || msg.includes("credentials")) {
+          fail(
+            "Email or password incorrect. In Supabase: Authentication → Users — confirm your user exists, is confirmed, and the password matches."
+          );
+        } else {
+          fail(authError.message);
+        }
         return;
       }
-      fail("Invalid credentials. Please contact IT if you need assistance.");
+
+      if (!data.user?.email) {
+        finish();
+        fail("Sign-in failed. Please try again or contact IT.");
+        return;
+      }
+
+      setEmployeeSession({
+        loggedIn: true,
+        email: data.user.email,
+        loginTime: Date.now(),
+        remember,
+      });
+      finish();
+      navigate("/employee-dashboard");
       return;
     }
 
-    const { data, error: authError } = await supabase.auth.signInWithPassword({
-      email: normalized,
-      password,
+    // Fallback only when Supabase env vars are missing (local / staging)
+    if (normalized === DEMO_EMAIL && password === DEMO_PASSWORD) {
+      setEmployeeSession({
+        loggedIn: true,
+        email: normalized,
+        loginTime: Date.now(),
+        remember,
+      });
+      finish();
+      navigate("/employee-dashboard");
+      return;
+    }
+
+    finish();
+    fail("Employee login is not configured. Ask IT to set Supabase keys in Vercel.");
+  };
+
+  const handleForgotPassword = async () => {
+    const normalized = email.trim().toLowerCase();
+    if (!normalized) {
+      fail("Enter your email address first.");
+      return;
+    }
+    if (!isSupabaseConfigured || !supabase) {
+      fail("Password reset is not available. Contact IT at 636.256.7172.");
+      return;
+    }
+    setSubmitting(true);
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(normalized, {
+      redirectTo: `${window.location.origin}/employee-login`,
     });
-
-    if (authError) {
-      setSubmitting(false);
-      fail(
-        authError.message.toLowerCase().includes("confirm")
-          ? "Please verify your email address before signing in."
-          : "Invalid credentials. Please contact IT if you need assistance."
-      );
+    setSubmitting(false);
+    if (resetError) {
+      fail(resetError.message);
       return;
     }
-
-    if (!data.user?.email_confirmed_at) {
-      await supabase.auth.signOut();
-      setSubmitting(false);
-      fail("Please verify your email address before signing in.");
-      return;
-    }
-
-    setEmployeeSession({
-      loggedIn: true,
-      email: data.user.email,
-      loginTime: Date.now(),
-      remember,
-    });
-    navigate("/employee-dashboard");
+    setError("");
+    alert(`Password reset link sent to ${normalized}. Check your inbox.`);
   };
 
   return (
@@ -163,7 +197,9 @@ export default function EmployeeLogin() {
 
           <button
             type="button"
-            className="w-full text-center text-xs text-[var(--text-muted)] hover:text-royal transition-colors"
+            onClick={handleForgotPassword}
+            disabled={submitting}
+            className="w-full text-center text-xs text-[var(--text-muted)] hover:text-royal transition-colors disabled:opacity-50"
           >
             Forgot password?
           </button>

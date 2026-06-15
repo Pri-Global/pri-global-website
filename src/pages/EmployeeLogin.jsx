@@ -7,6 +7,10 @@ import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
 import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 
+// DEMO — used when Supabase env vars are not set (e.g. preview / staging)
+const DEMO_EMAIL = "employee@priglobal.com";
+const DEMO_PASSWORD = "PRI2025!";
+
 const shake = {
   shake: {
     x: [0, -12, 12, -10, 10, -6, 6, 0],
@@ -41,7 +45,17 @@ export default function EmployeeLogin() {
 
     if (!isSupabaseConfigured || !supabase) {
       setSubmitting(false);
-      fail("Employee login is not configured yet. Please contact IT at 636.256.7172.");
+      if (normalized === DEMO_EMAIL && password === DEMO_PASSWORD) {
+        setEmployeeSession({
+          loggedIn: true,
+          email: normalized,
+          loginTime: Date.now(),
+          remember,
+        });
+        navigate("/employee-dashboard");
+        return;
+      }
+      fail("Invalid credentials. Please contact IT if you need assistance.");
       return;
     }
 

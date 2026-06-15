@@ -5,7 +5,7 @@ import Button from "../components/ui/Button";
 import BrandLogo from "../components/ui/BrandLogo";
 import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
-import { supabase } from "../lib/supabaseClient";
+import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 
 const shake = {
   shake: {
@@ -38,6 +38,12 @@ export default function EmployeeLogin() {
     setError("");
     setSubmitting(true);
     const normalized = email.trim().toLowerCase();
+
+    if (!isSupabaseConfigured || !supabase) {
+      setSubmitting(false);
+      fail("Employee login is not configured yet. Please contact IT at 636.256.7172.");
+      return;
+    }
 
     const { data, error: authError } = await supabase.auth.signInWithPassword({
       email: normalized,

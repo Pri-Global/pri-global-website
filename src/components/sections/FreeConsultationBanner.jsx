@@ -27,8 +27,8 @@ export default function FreeConsultationBanner() {
                 Not sure where to start? Let&apos;s talk.
               </h2>
               <p className="text-sm text-[var(--text-secondary)] max-w-xl leading-relaxed">
-                Book a no-obligation call with our team — staffing, managed services, cloud, or
-                PR1SM.AI. Custom proposal within 24 business hours.
+                Book a no-obligation call — staffing, SOW delivery, managed services, or PR1SM.AI.
+                Custom proposal within 24 business hours.
               </p>
             </div>
           </div>

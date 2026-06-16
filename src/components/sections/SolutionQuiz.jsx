@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Server, Database, BrainCircuit, Zap, ArrowLeft } from "lucide-react";
+import { Users, Server, Database, BrainCircuit, Zap, ArrowLeft, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import { BOOKING_URL } from "../../constants/links";
@@ -56,7 +56,7 @@ function getRecommendation(answers) {
   if (answers.length < questions.length) return "overview";
 
   const [q1, q2, q3, q4] = answers;
-  const scores = { staffing: 0, managed: 0, prism: 0, pods: 0, overview: 0 };
+  const scores = { staffing: 0, managed: 0, prism: 0, pods: 0, sow: 0, overview: 0 };
 
   const add = (key, pts) => {
     scores[key] += pts;
@@ -64,7 +64,10 @@ function getRecommendation(answers) {
 
   // Q1 — primary intent
   if (q1 === "A") add("staffing", 4);
-  if (q1 === "B") add("managed", 4);
+  if (q1 === "B") {
+    add("managed", 3);
+    add("sow", 1);
+  }
   if (q1 === "C") add("prism", 4);
   if (q1 === "D") {
     add("pods", 3);
@@ -103,6 +106,7 @@ function getRecommendation(answers) {
   if (q4 === "A") {
     add("staffing", 2);
     add("pods", 2);
+    add("sow", 1);
   }
   if (q4 === "B") add("overview", 1);
   if (q4 === "C") {
@@ -110,6 +114,8 @@ function getRecommendation(answers) {
     add("prism", 1);
   }
   if (q4 === "D") add("overview", 2);
+
+  if (q2 === "D" && (q1 === "B" || q3 === "B")) add("sow", 2);
 
   const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const top = ranked[0][1];
@@ -159,8 +165,17 @@ const results = {
     headline: "Managed IT & Infrastructure",
     description:
       "Reliable operations and resilient systems are your priority. Our managed services team keeps infrastructure secure, optimized, and always on — with 24/7 support.",
-    primary: { label: "Explore services", href: "/services", external: false },
+    primary: { label: "Explore managed services", href: "/services", external: false },
     secondary: { label: "Get a free assessment", href: "/get-pricing", external: false },
+  },
+  sow: {
+    badge: "Your match",
+    icon: FileText,
+    headline: "SOW & Project Delivery",
+    description:
+      "You need a dedicated team against defined scope and milestones. PRI Global delivers statement-of-work programs for enterprise clients — including long-running Fortune 500 partnerships.",
+    primary: { label: "Explore SOW delivery", href: "/talent-solutions#sow-delivery", external: false },
+    secondary: { label: "Talk to an expert", href: "/get-pricing", external: false },
   },
   overview: {
     badge: "Your match",

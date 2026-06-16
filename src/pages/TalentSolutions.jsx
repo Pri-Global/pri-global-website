@@ -1,4 +1,4 @@
-import { Users, Search, Briefcase, BarChart2, CheckCircle, ArrowRight } from "lucide-react";
+import { Users, Search, Briefcase, BarChart2, FileText, CheckCircle, ArrowRight } from "lucide-react";
 import SEO from "../components/SEO";
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
@@ -13,6 +13,12 @@ import VideoPlayer from "../components/ui/VideoPlayer";
 import { VIDEOS } from "../data/videos";
 
 const offerings = [
+  {
+    icon: FileText,
+    title: "SOW & Project Delivery",
+    description:
+      "Scoped statement-of-work engagements with dedicated teams — multi-month programs, milestone delivery, and accountable outcomes for enterprise clients.",
+  },
   {
     icon: Users,
     title: "IT Staff Augmentation",
@@ -54,7 +60,7 @@ export default function TalentSolutions() {
     <>
       <SEO
         title="IT Staffing & Talent Solutions"
-        description="Find top IT talent fast. PRI Global places specialized technology professionals across every discipline — contract, contract-to-hire, and direct placement. Shortlist in 5 days."
+        description="IT staffing, SOW project delivery, and workforce solutions from PRI Global. Contract, permanent, and statement-of-work teams — shortlists in 5 days. 26+ year Mastercard partnership."
         url="/talent-solutions"
       />
       {/* Hero */}
@@ -72,16 +78,16 @@ export default function TalentSolutions() {
                 The right people, in the right roles.
               </h1>
               <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-8">
-                Technology businesses succeed or fail on the strength of their people. We help you
-                attract, hire, and retain the technology talent you need—whether that's a single
-                specialist or an entire delivery team.
+                Staffing, SOW delivery, and workforce programs for clients — and clear paths to
+                ongoing project work for consultants. Whether you need one specialist or a full
+                delivery team, we move fast with rigor.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button to="/get-pricing" size="lg">
                   Talk to an expert <ArrowRight size={18} />
                 </Button>
                 <Button to="/careers" variant="secondary" size="lg">
-                  Looking for a role?
+                  Find a role
                 </Button>
               </div>
             </div>
@@ -93,6 +99,58 @@ export default function TalentSolutions() {
       </section>
 
       <TrustBar />
+
+      {/* SOW delivery */}
+      <section id="sow-delivery" className="py-16 md:py-20 bg-[var(--bg-secondary)] scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+            <div>
+              <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">
+                SOW &amp; project teams
+              </span>
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">
+                Statement-of-work delivery at enterprise scale
+              </h2>
+              <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                PRI Global runs ongoing SOW programs for Fortune 500 clients — assembling the right
+                mix of engineers, architects, and delivery leads against defined scope, timelines,
+                and outcomes. Our 26+ year Mastercard relationship is proof of long-term, high-trust
+                delivery.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Dedicated project teams aligned to your SOW milestones",
+                  "Blended staffing + delivery management under one partner",
+                  "Proven track record across financial services, healthcare, and technology",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                    <AnimatedIcon Icon={CheckCircle} size={16} className="text-royal dark:text-royaldark shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Button to="/get-pricing" size="lg">
+                Discuss an SOW engagement <ArrowRight size={18} />
+              </Button>
+            </div>
+            <Card className="p-8">
+              <p className="text-xs font-semibold uppercase tracking-widest text-royal dark:text-royaldark mb-3">
+                Client proof point
+              </p>
+              <p className="font-heading text-xl font-bold text-[var(--text-primary)] mb-3">
+                Mastercard
+              </p>
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed italic mb-4">
+                &ldquo;I had a target of hiring 20 engineers in 30 days… PRI Global worked
+                relentlessly to help me hire all 20 across three cities.&rdquo;
+              </p>
+              <p className="text-xs font-semibold text-royal dark:text-royaldark">
+                20 engineers · 30 days · 3 cities
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       {/* Offerings */}
       <section className="py-20">

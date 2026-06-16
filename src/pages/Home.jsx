@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from "react";
 import SEO from "../components/SEO";
 import Hero from "../components/sections/Hero";
 import ClientLogos from "../components/ui/ClientLogos";
+import MastercardPartnership from "../components/sections/MastercardPartnership";
 import TrustBar from "../components/sections/TrustBar";
 import FreeConsultationBanner from "../components/sections/FreeConsultationBanner";
 import CorePillars from "../components/sections/CorePillars";
@@ -30,13 +31,14 @@ export default function Home() {
     <>
       <SEO
         title="Technology That Moves Business Forward"
-        description="PRI Global delivers IT staffing, managed services, cybersecurity, cloud transformation, and AI solutions. 28+ years, 12,700+ placements, 96% client retention."
+        description="PRI Global: IT staffing, SOW delivery, managed services, and PR1SM.AI. 28+ years in business, 26+ year Mastercard partnership, 12,700+ placements."
         url="/"
       />
       <Hero />
       <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]">
         <ClientLogos label="Trusted by leading organizations" />
       </div>
+      <MastercardPartnership />
       <TrustBar />
       <Suspense fallback={SectionFallback}><Stats /></Suspense>
       <FreeConsultationBanner />

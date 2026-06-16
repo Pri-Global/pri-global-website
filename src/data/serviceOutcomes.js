@@ -5,7 +5,7 @@ export const serviceOutcomes = [
     label: "Hire & Scale",
     headline: "Get the right talent, faster",
     description:
-      "Contract, permanent, and executive placement — plus PRI AI Pods™ when you need a ready-built AI team instead of a long hiring cycle.",
+      "Contract, permanent, and executive placement — plus SOW project teams and PRI AI Pods™ when you need delivery at speed.",
     serviceIds: ["it-staffing", "ai-services"],
     cta: { label: "Explore talent solutions", to: "/talent-solutions" },
   },

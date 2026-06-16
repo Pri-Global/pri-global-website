@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import Button from "../ui/Button";
 import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import { useInView } from "../../hooks/useInView";
@@ -26,13 +27,16 @@ export default function CallToAction() {
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-tight mb-6 max-w-2xl mx-auto">
               Let&apos;s build the right solution for your business.
             </h2>
-            <p className="text-white/60 text-lg max-w-lg mx-auto mb-10">
-              Tell us what you need — talent, managed services, or PR1SM.AI — and we&apos;ll
-              deliver a custom proposal within 24 business hours. No obligation.
+            <p className="text-white/60 text-lg max-w-xl mx-auto mb-10">
+              Staffing, SOW teams, managed services, or PR1SM.AI — tell us what you need and
+              we&apos;ll deliver a custom proposal within 24 business hours.
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
               <Button to="/get-pricing" variant="glass-accent" size="lg" className="pulse-cta w-full sm:w-auto">
-                Get Pricing <ArrowRight size={18} />
+                Talk to an expert <ArrowRight size={18} />
+              </Button>
+              <Button to="/careers" variant="glass" size="lg" className="text-white w-full sm:w-auto">
+                Find a role <ArrowRight size={18} />
               </Button>
               <Button
                 href={HUBSPOT_MEETING_URL}
@@ -42,9 +46,12 @@ export default function CallToAction() {
                 size="lg"
                 className="text-white w-full sm:w-auto"
               >
-                Book a Discovery Call <ArrowRight size={18} />
+                Book a call <ArrowRight size={18} />
               </Button>
             </div>
+            <p className="mt-8 text-sm text-white/50">
+              Established since 1997 · 26+ year Mastercard partnership · 12,700+ placements
+            </p>
           </div>
         </div>
       </div>

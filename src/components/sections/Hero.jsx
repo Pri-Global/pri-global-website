@@ -340,7 +340,7 @@ export default function Hero() {
             >
               <AnimatedIcon Icon={Sparkles} size={14} className="text-royal dark:text-royaldark" />
               <span className="text-xs font-semibold text-royal dark:text-royaldark tracking-wide uppercase">
-                Technology · Talent · AI Innovation
+                Staffing · SOW · Managed Services · PR1SM.AI
               </span>
             </motion.div>
 
@@ -365,42 +365,47 @@ export default function Hero() {
               {...fadeUp(0.5)}
               className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed mb-8 max-w-lg md:max-w-xl"
             >
-              PRI Global partners with ambitious organisations to deliver end-to-end technology
-              consulting, elite talent, and cutting-edge AI solutions — backed by 28+ years of
-              global expertise.
+              PRI Global delivers IT staffing, SOW project teams, managed services, and PR1SM.AI —
+              backed by 28+ years of trusted partnerships, including a 26+ year relationship with
+              Mastercard.
             </motion.p>
 
             <motion.div {...fadeUp(0.65)} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-              <Button to="/services" variant="glass-accent" size="lg" className="w-full sm:w-auto">
-                Explore our services <ArrowRight size={18} />
+              <Button to="/get-pricing" variant="glass-accent" size="lg" className="w-full sm:w-auto">
+                Talk to an expert <ArrowRight size={18} />
               </Button>
-              <Button to="/get-pricing" variant="glass" size="lg" className="w-full sm:w-auto">
-                Get Pricing
+              <Button to="/careers" variant="glass" size="lg" className="w-full sm:w-auto">
+                Find a role
               </Button>
             </motion.div>
 
-            <motion.p {...fadeUp(0.72)} className="mt-4">
+            <motion.div {...fadeUp(0.7)} className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-sm">
+              <Button to="/services" variant="ghost" size="sm" className="px-0 h-auto font-medium">
+                Explore services →
+              </Button>
               <a
                 href={HUBSPOT_MEETING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-royal dark:hover:text-royaldark hover:underline transition-colors"
+                className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal dark:hover:text-royaldark hover:underline transition-colors"
               >
                 <Calendar size={15} className="shrink-0" />
-                Or schedule a discovery call when you&apos;re ready →
+                Book a discovery call
               </a>
-            </motion.p>
+            </motion.div>
 
             <motion.div
               {...fadeUp(0.78)}
               className="mt-12 pt-8 border-t border-[var(--border)]"
             >
               <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Trusted by leading organizations across{" "}
+                Trusted by{" "}
+                <span className="font-medium text-[var(--text-secondary)]">Mastercard</span>
+                {", "}
                 <span className="font-medium text-[var(--text-secondary)]">
-                  Financial Services, Healthcare, Manufacturing, Retail, and the Public Sector
+                  Fortune 500 financial services, healthcare, and manufacturing leaders
                 </span>
-                {" "}— In business since 1997. Over 28 years of trusted services.
+                {" "}— established, innovative, and built for the next phase of growth.
               </p>
             </motion.div>
           </div>

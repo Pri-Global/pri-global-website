@@ -24,6 +24,7 @@ export const servicesDropdown = {
         { icon: Server, label: "Managed IT & Infrastructure", desc: "Reliable operations. Resilient systems.", to: "/services" },
         { icon: Shield, label: "Cybersecurity & Risk Management", desc: "Enterprise-grade protection and compliance", to: "/services" },
         { icon: Cloud, label: "Cloud & Digital Transformation", desc: "Modern platforms built for speed and scale", to: "/services" },
+        { icon: BrainCircuit, label: "AI Services & PRI AI Pods™", desc: "Stop hiring AI teams — start building with one", to: "/ai-services" },
       ],
     },
     {
@@ -45,6 +46,7 @@ export const servicesDropdown = {
 
 export const aiDropdown = {
   items: [
+    { icon: BrainCircuit, label: "PRI AI Pods™", desc: "Ready-built AI teams — Flex, Scale, Dedicated", to: "/ai-services" },
     { icon: BrainCircuit, label: "AI Innovation Overview", desc: "Intelligent systems built for your business", to: "/ai-innovation" },
     { icon: Calculator, label: "ROI Calculator", desc: "See your return before you commit", to: "/roi-calculator" },
   ],

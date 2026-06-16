@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Users,
-  Server,
-  Database,
-  BrainCircuit,
-  Check,
-  Zap,
-} from "lucide-react";
+import { Users, Server, Database, BrainCircuit, Zap, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedIcon from "../ui/AnimatedIcon";
+import { BOOKING_URL } from "../../constants/links";
 
 const STORAGE_KEY = "pri-quiz-result";
 
@@ -51,66 +45,131 @@ const questions = [
     options: [
       { id: "A", label: "Urgent — I need help within 30 days" },
       { id: "B", label: "Planning — within 3 months" },
-      { id: "C", label: "Strategic — 6-12 month initiative" },
+      { id: "C", label: "Strategic — 6–12 month initiative" },
       { id: "D", label: "Exploring — just researching options" },
     ],
   },
 ];
 
+/** Score all four answers — highest wins; ties favor Q1 intent. */
 function getRecommendation(answers) {
-  const q1 = answers[0];
-  const q3 = answers[2];
+  if (answers.length < questions.length) return "overview";
 
-  if (q1 === "C" || q1 === "D" || q3 === "C" || q3 === "D" || q3 === "E") return "prism";
-  if (q1 === "A" || q3 === "A") return "staffing";
-  if (q1 === "B" || q3 === "B") return "managed";
-  return "overview";
+  const [q1, q2, q3, q4] = answers;
+  const scores = { staffing: 0, managed: 0, prism: 0, pods: 0, overview: 0 };
+
+  const add = (key, pts) => {
+    scores[key] += pts;
+  };
+
+  // Q1 — primary intent
+  if (q1 === "A") add("staffing", 4);
+  if (q1 === "B") add("managed", 4);
+  if (q1 === "C") add("prism", 4);
+  if (q1 === "D") {
+    add("pods", 3);
+    add("prism", 2);
+  }
+
+  // Q2 — org size
+  if (q2 === "A") {
+    add("staffing", 1);
+    add("pods", 1);
+  }
+  if (q2 === "B") add("staffing", 1);
+  if (q2 === "C") {
+    add("managed", 1);
+    add("prism", 1);
+  }
+  if (q2 === "D") {
+    add("managed", 2);
+    add("prism", 1);
+  }
+
+  // Q3 — pain point
+  if (q3 === "A") add("staffing", 4);
+  if (q3 === "B") add("managed", 4);
+  if (q3 === "C") add("prism", 4);
+  if (q3 === "D") {
+    add("prism", 3);
+    add("managed", 1);
+  }
+  if (q3 === "E") {
+    add("pods", 3);
+    add("prism", 2);
+  }
+
+  // Q4 — timeline
+  if (q4 === "A") {
+    add("staffing", 2);
+    add("pods", 2);
+  }
+  if (q4 === "B") add("overview", 1);
+  if (q4 === "C") {
+    add("managed", 1);
+    add("prism", 1);
+  }
+  if (q4 === "D") add("overview", 2);
+
+  const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const top = ranked[0][1];
+  const winners = ranked.filter(([, v]) => v === top).map(([k]) => k);
+
+  if (winners.length === 1) return winners[0];
+
+  // Tie-break using Q1
+  const q1Map = { A: "staffing", B: "managed", C: "prism", D: "pods" };
+  const q1Pick = q1Map[q1];
+  if (q1Pick && winners.includes(q1Pick)) return q1Pick;
+
+  return winners[0] ?? "overview";
 }
 
 const results = {
   prism: {
-    badge: "YOUR MATCH",
+    badge: "Your match",
     icon: Zap,
-    headline: "PR1SM.AI — Your AI Intelligence Layer",
+    headline: "PR1SM.AI — Your Intelligence Layer",
     description:
-      "Based on your answers, your biggest opportunity is eliminating fragmented data and manual reporting. PR1SM.AI connects all your systems and gives you instant answers in plain English.",
-    primary: { label: "See PR1SM.AI in Action →", href: "https://www.pr1sm.ai", external: true },
-    secondary: {
-      label: "Talk to Liezl Moss →",
-      href: "mailto:liezl.moss@pr1sm.ai",
-      external: true,
-    },
+      "Your answers point to fragmented data and slow reporting. PR1SM.AI sits on top of your existing systems so teams can ask questions in plain English and get governed answers in seconds.",
+    primary: { label: "Explore PR1SM.AI", href: "/ai-innovation", external: false },
+    secondary: { label: "Book a strategy call", href: BOOKING_URL, external: true },
+  },
+  pods: {
+    badge: "Your match",
+    icon: BrainCircuit,
+    headline: "PRI AI Pods™ — Ready-Built AI Teams",
+    description:
+      "You need to move on AI fast without a long hiring cycle. PRI AI Pods™ deploy Flex, Scale, or Dedicated delivery teams in weeks — from POCs to enterprise programs.",
+    primary: { label: "Explore PRI AI Pods™", href: "/ai-services", external: false },
+    secondary: { label: "Get pricing", href: "/get-pricing", external: false },
   },
   staffing: {
-    badge: "YOUR MATCH",
+    badge: "Your match",
     icon: Users,
     headline: "IT Staffing & Talent Solutions",
     description:
-      "You need the right people, fast. PRI Global has placed 12,700+ IT professionals across every technology discipline. We source, vet, and deliver — typically within 5 business days.",
-    primary: { label: "Start Hiring →", href: "/talent-solutions", external: false },
-    secondary: { label: "Talk to Our Team →", href: "mailto:ajay@pr1sm.ai", external: true },
+      "You need the right people, fast. PRI Global has placed 12,700+ IT professionals across every discipline — typically a curated shortlist within 5 business days.",
+    primary: { label: "Start hiring", href: "/talent-solutions", external: false },
+    secondary: { label: "Talk to an expert", href: "/get-pricing", external: false },
   },
   managed: {
-    badge: "YOUR MATCH",
+    badge: "Your match",
     icon: Server,
     headline: "Managed IT & Infrastructure",
     description:
-      "Reliable operations and resilient systems — that's what we deliver. PRI Global's managed services team keeps your infrastructure secure, optimized, and always on.",
-    primary: { label: "Explore Managed Services →", href: "/services", external: false },
-    secondary: {
-      label: "Get a Free Assessment →",
-      href: "mailto:ajay@pr1sm.ai",
-      external: true,
-    },
+      "Reliable operations and resilient systems are your priority. Our managed services team keeps infrastructure secure, optimized, and always on — with 24/7 support.",
+    primary: { label: "Explore services", href: "/services", external: false },
+    secondary: { label: "Get a free assessment", href: "/get-pricing", external: false },
   },
   overview: {
-    badge: "YOUR MATCH",
+    badge: "Your match",
     icon: BrainCircuit,
     headline: "Full-Service Technology Partner",
     description:
-      "Your needs span multiple areas. PRI Global offers eight integrated service lines — from talent and managed IT to AI innovation with PR1SM.AI.",
-    primary: { label: "Explore Services →", href: "/services", external: false },
-    secondary: { label: "Talk to Our Team →", href: "mailto:ajay@pr1sm.ai", external: true },
+      "Your needs span multiple areas. PRI Global offers nine integrated lines — staffing, managed IT, cloud, cybersecurity, data, PRI AI Pods™, and PR1SM.AI.",
+    primary: { label: "Explore all services", href: "/services", external: false },
+    secondary: { label: "Talk to an expert", href: "/get-pricing", external: false },
   },
 };
 
@@ -139,8 +198,28 @@ function persistResult(recommendation) {
       JSON.stringify({ recommendation, date: new Date().toISOString() })
     );
   } catch {
-    /* private mode / quota — quiz still works without storage */
+    /* private mode */
   }
+}
+
+function ResultCta({ cta, variant = "primary" }) {
+  const base =
+    variant === "primary"
+      ? "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-royal text-white font-semibold text-sm hover:bg-[var(--accent-hover)] transition-colors"
+      : "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[var(--border)] text-[var(--text-primary)] font-medium text-sm hover:border-royal/40 transition-colors";
+
+  if (cta.external) {
+    return (
+      <a href={cta.href} target="_blank" rel="noopener noreferrer" className={base}>
+        {cta.label}
+      </a>
+    );
+  }
+  return (
+    <Link to={cta.href} className={base}>
+      {cta.label}
+    </Link>
+  );
 }
 
 export default function SolutionQuiz({ standalone = false }) {
@@ -149,7 +228,6 @@ export default function SolutionQuiz({ standalone = false }) {
   const [result, setResult] = useState(null);
   const [direction, setDirection] = useState(1);
 
-  /* Homepage: always start fresh. /quiz page may restore last result. */
   useEffect(() => {
     if (!standalone) return;
     const saved = loadSavedResult();
@@ -160,25 +238,37 @@ export default function SolutionQuiz({ standalone = false }) {
   }, [standalone]);
 
   const validResult = result && RESULT_KEYS.has(result) ? result : null;
-  const progress = validResult ? 100 : ((Math.min(step, questions.length - 1) + 1) / questions.length) * 100;
+  const progress = validResult
+    ? 100
+    : ((Math.min(step, questions.length - 1) + 1) / questions.length) * 100;
   const activeStep = Math.min(step, questions.length - 1);
   const q = questions[activeStep];
   const showQuestions = !validResult && step < questions.length;
 
   const selectAnswer = (optionId) => {
-    const next = [...answers, optionId];
-    setAnswers(next);
     setDirection(1);
+    const nextAnswers = [...answers, optionId];
+    const nextStep = step + 1;
 
-    if (step + 1 >= questions.length) {
-      const rec = getRecommendation(next);
-      if (!RESULT_KEYS.has(rec)) return;
-      setResult(rec);
-      persistResult(rec);
-      setStep(questions.length);
+    setAnswers(nextAnswers);
+
+    if (nextStep >= questions.length) {
+      const rec = getRecommendation(nextAnswers);
+      if (RESULT_KEYS.has(rec)) {
+        setResult(rec);
+        persistResult(rec);
+        setStep(questions.length);
+      }
     } else {
-      setStep(step + 1);
+      setStep(nextStep);
     }
+  };
+
+  const goBack = () => {
+    if (step <= 0 || validResult) return;
+    setDirection(-1);
+    setAnswers((prev) => prev.slice(0, -1));
+    setStep((s) => Math.max(0, s - 1));
   };
 
   const restart = () => {
@@ -195,6 +285,8 @@ export default function SolutionQuiz({ standalone = false }) {
 
   const rec = validResult ? results[validResult] : null;
   const RecIcon = rec?.icon;
+  const optionGridClass =
+    q?.options.length >= 5 ? "flex flex-col gap-3" : "grid sm:grid-cols-2 gap-3";
 
   return (
     <section
@@ -215,7 +307,7 @@ export default function SolutionQuiz({ standalone = false }) {
             Which PRI Global Solution Is Right for You?
           </h2>
           <p className="text-[var(--text-secondary)]">
-            Answer 4 quick questions and we'll point you in the right direction.
+            Answer 4 quick questions and we&apos;ll point you in the right direction.
           </p>
         </motion.div>
 
@@ -237,13 +329,24 @@ export default function SolutionQuiz({ standalone = false }) {
               exit={{ opacity: 0, x: direction * -40 }}
               transition={{ duration: 0.35 }}
             >
-              <p className="text-sm text-[var(--text-muted)] mb-2">
-                Question {activeStep + 1} of {questions.length}
-              </p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-sm text-[var(--text-muted)]">
+                  Question {activeStep + 1} of {questions.length}
+                </p>
+                {step > 0 && (
+                  <button
+                    type="button"
+                    onClick={goBack}
+                    className="inline-flex items-center gap-1 text-sm text-[var(--text-muted)] hover:text-royal transition-colors"
+                  >
+                    <ArrowLeft size={14} /> Back
+                  </button>
+                )}
+              </div>
               <h3 className="font-heading text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-6">
                 {q.text}
               </h3>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className={optionGridClass}>
                 {q.options.map((opt) => {
                   const Icon = opt.icon;
                   return (
@@ -251,10 +354,10 @@ export default function SolutionQuiz({ standalone = false }) {
                       key={opt.id}
                       type="button"
                       onClick={() => selectAnswer(opt.id)}
-                      className="group text-left bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-5 hover:border-royal hover:shadow-md hover:-translate-y-0.5 transition-all"
+                      className="group text-left w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-5 hover:border-royal dark:hover:border-royaldark hover:shadow-md hover:-translate-y-0.5 transition-all"
                     >
                       {Icon && (
-                        <div className="w-10 h-10 rounded-lg bg-royal/10 flex items-center justify-center mb-3">
+                        <div className="w-10 h-10 rounded-lg bg-royal/10 dark:bg-royaldark/15 flex items-center justify-center mb-3">
                           <AnimatedIcon Icon={Icon} size={20} className="text-royal dark:text-royaldark" />
                         </div>
                       )}
@@ -269,16 +372,16 @@ export default function SolutionQuiz({ standalone = false }) {
           ) : rec ? (
             <motion.div
               key="result"
-              initial={{ opacity: 0, scale: 0.92 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring", stiffness: 200, damping: 22 }}
-              className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 text-center"
+              className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 text-center"
             >
-              <span className="inline-block text-xs font-bold uppercase tracking-widest text-royal mb-4">
+              <span className="inline-block text-xs font-bold uppercase tracking-widest text-royal dark:text-royaldark mb-4">
                 {rec.badge}
               </span>
               {RecIcon && (
-                <div className="w-14 h-14 rounded-2xl bg-royal/10 flex items-center justify-center mx-auto mb-4">
+                <div className="w-14 h-14 rounded-2xl bg-royal/10 dark:bg-royaldark/15 flex items-center justify-center mx-auto mb-4">
                   <AnimatedIcon Icon={RecIcon} size={28} className="text-royal dark:text-royaldark" />
                 </div>
               )}
@@ -289,50 +392,31 @@ export default function SolutionQuiz({ standalone = false }) {
                 {rec.description}
               </p>
               <div className="flex flex-wrap gap-3 justify-center mb-6">
-                {rec.primary.external ? (
-                  <a
-                    href={rec.primary.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-royal text-white font-semibold text-sm"
-                  >
-                    {rec.primary.label}
-                  </a>
-                ) : (
-                  <Link
-                    to={rec.primary.href}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-royal text-white font-semibold text-sm"
-                  >
-                    {rec.primary.label}
-                  </Link>
-                )}
-                <a
-                  href={rec.secondary.href}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[var(--border)] text-[var(--text-primary)] font-medium text-sm"
-                >
-                  {rec.secondary.label}
-                </a>
+                <ResultCta cta={rec.primary} variant="primary" />
+                <ResultCta cta={rec.secondary} variant="secondary" />
               </div>
               <button
                 type="button"
                 onClick={restart}
-                className="text-sm text-[var(--text-muted)] hover:text-royal transition-colors"
+                className="text-sm text-[var(--text-muted)] hover:text-royal dark:hover:text-royaldark transition-colors"
               >
                 Not what you expected? Retake quiz
               </button>
 
-              <div className="mt-10 pt-8 border-t border-[var(--border)] grid sm:grid-cols-3 gap-4 text-left">
+              <div className="mt-10 pt-8 border-t border-[var(--border)] grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-left">
                 {Object.entries(results).map(([key, r]) => (
                   <div
                     key={key}
                     className={`p-4 rounded-xl border text-sm ${
-                      key === validResult ? "border-royal bg-royal/5" : "border-[var(--border-subtle)]"
+                      key === validResult
+                        ? "border-royal dark:border-royaldark bg-royal/5 dark:bg-royaldark/10"
+                        : "border-[var(--border-subtle)]"
                     }`}
                   >
-                    <p className="font-heading font-bold text-[var(--text-primary)] mb-1">
+                    <p className="font-heading font-bold text-[var(--text-primary)] mb-1 text-xs leading-snug">
                       {r.headline.split("—")[0].trim()}
                     </p>
-                    <p className="text-xs text-[var(--text-muted)] line-clamp-2">{r.description}</p>
+                    <p className="text-xs text-[var(--text-muted)] line-clamp-3">{r.description}</p>
                   </div>
                 ))}
               </div>

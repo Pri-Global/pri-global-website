@@ -78,6 +78,7 @@ export const testimonials = [
     category: "client",
     initials: "EV",
     rating: 5,
+    metric: "Supplier of the Year · multiple times",
   },
   {
     id: 9,
@@ -118,5 +119,6 @@ export const testimonials = [
     category: "client",
     initials: "MC",
     rating: 5,
+    metric: "20 engineers · 30 days · 3 cities",
   },
 ];

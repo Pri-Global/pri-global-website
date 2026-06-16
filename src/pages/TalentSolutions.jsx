@@ -8,6 +8,7 @@ import IllustrationPlaceholder from "../components/ui/IllustrationPlaceholder";
 import { useInView } from "../hooks/useInView";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import { motion } from "framer-motion";
+import TrustBar from "../components/sections/TrustBar";
 import VideoPlayer from "../components/ui/VideoPlayer";
 import { VIDEOS } from "../data/videos";
 
@@ -76,8 +77,8 @@ export default function TalentSolutions() {
                 specialist or an entire delivery team.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button to="/about" size="lg">
-                  Start hiring <ArrowRight size={18} />
+                <Button to="/get-pricing" size="lg">
+                  Talk to an expert <ArrowRight size={18} />
                 </Button>
                 <Button to="/careers" variant="secondary" size="lg">
                   Looking for a role?
@@ -90,6 +91,8 @@ export default function TalentSolutions() {
           </div>
         </div>
       </section>
+
+      <TrustBar />
 
       {/* Offerings */}
       <section className="py-20">

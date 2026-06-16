@@ -25,9 +25,9 @@ function SliderField({ label, value, min, max, step, onChange, display }) {
   );
 }
 
-function StatBar({ results }) {
+function StatBar({ results, compact = false }) {
   return (
-    <div className="grid grid-cols-3 gap-4 mb-10">
+    <div className={`grid grid-cols-3 gap-4 ${compact ? "mb-6" : "mb-10"}`}>
       {[
         {
           value: results.weeklyHoursSaved,
@@ -123,7 +123,7 @@ function LeadCapture({ employees, systems }) {
   );
 }
 
-export default function ROICalculator({ showPageHero = false }) {
+export default function ROICalculator({ showPageHero = false, compact = false }) {
   const [employees, setEmployees] = useState(25);
   const [hoursPerWeek, setHoursPerWeek] = useState(15);
   const [systems, setSystems] = useState(6);
@@ -177,7 +177,7 @@ export default function ROICalculator({ showPageHero = false }) {
   ];
 
   return (
-    <section className={`${showPageHero ? "" : "py-20 md:py-28"} bg-navy relative overflow-hidden`}>
+    <section className={`${showPageHero ? "" : compact ? "py-12 md:py-16" : "py-20 md:py-28"} bg-navy relative overflow-hidden`}>
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-32 right-0 w-96 h-96 bg-royaldark/10 rounded-full blur-[100px]" />
       </div>
@@ -209,7 +209,7 @@ export default function ROICalculator({ showPageHero = false }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
-            className="text-center max-w-2xl mx-auto mb-12"
+            className={`text-center max-w-2xl mx-auto ${compact ? "mb-8" : "mb-12"}`}
           >
             <span className="inline-block text-xs font-semibold text-royaldark uppercase tracking-widest mb-3">
               ROI Calculator
@@ -223,9 +223,9 @@ export default function ROICalculator({ showPageHero = false }) {
           </motion.div>
         )}
 
-        <StatBar results={results} />
+        <StatBar results={results} compact={compact} />
 
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+        <div className={`grid lg:grid-cols-2 ${compact ? "gap-8" : "gap-10 lg:gap-14"} items-start`}>
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}

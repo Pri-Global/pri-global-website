@@ -5,12 +5,14 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ui/ScrollToTopButton";
+import NewsScrollHint from "./components/ui/NewsScrollHint";
 import PriVaWidget from "./components/chatbot/PriVaWidget";
 import CookieBanner from "./components/ui/CookieBanner";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import TalentSolutions from "./pages/TalentSolutions";
 import AiInnovation from "./pages/AiInnovation";
+import AiServices from "./pages/AiServices";
 import Industries from "./pages/Industries";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
@@ -147,6 +149,7 @@ function AppRoutes() {
         <Route path="/services"        element={<PW><Services /></PW>} />
         <Route path="/talent-solutions" element={<PW><TalentSolutions /></PW>} />
         <Route path="/ai-innovation"   element={<PW><AiInnovation /></PW>} />
+        <Route path="/ai-services"     element={<PW><AiServices /></PW>} />
         <Route path="/industries"      element={<PW><Industries /></PW>} />
         <Route path="/about"           element={<PW><About /></PW>} />
         <Route path="/resources"       element={<PW><Resources /></PW>} />
@@ -220,6 +223,7 @@ export default function App() {
       <Footer />
       <CookieBanner />
       <ScrollToTopButton />
+      <NewsScrollHint />
       <DarkModeToast />
       <PriVaWidget />
     </div>

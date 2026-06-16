@@ -52,7 +52,7 @@ function ServiceCard({ svc }) {
 
       {/* Arrow slides right on hover */}
       <Link
-        to="/services"
+        to={svc.to ?? "/services"}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-royal dark:text-royaldark"
       >
         Learn more{" "}

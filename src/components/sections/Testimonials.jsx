@@ -58,6 +58,12 @@ function TestimonialCard({ t }) {
         {t.quote}
       </p>
 
+      {t.metric && (
+        <p className="text-xs font-semibold text-royal dark:text-royaldark mb-4 -mt-2">
+          {t.metric}
+        </p>
+      )}
+
       <div className="border-t border-[var(--border)] pt-5 shrink-0 mt-auto">
         <div className="flex items-center gap-3">
           <InitialsAvatar initials={t.initials} />

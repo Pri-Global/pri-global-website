@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Phone, ArrowRight, ArrowLeft, Calendar } from "lucide-react";
+import { Check, Phone, Mail, ArrowRight, ArrowLeft, Calendar } from "lucide-react";
 import Button from "../components/ui/Button";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import SEO from "../components/SEO";
@@ -160,23 +160,29 @@ export default function GetPricing() {
               ))}
             </ul>
             <div className="space-y-3 text-sm mb-8">
-              <a href="tel:6367791651" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                <AnimatedIcon Icon={Phone} size={14} className="text-royal" /> Ajay Patel — 636-779-1651
+              <a href="mailto:ajay@pr1sm.ai" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
+                <AnimatedIcon Icon={Mail} size={14} className="text-royal" /> Ajay Patel — ajay@pr1sm.ai
               </a>
-              <a href="tel:3147845854" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                <AnimatedIcon Icon={Phone} size={14} className="text-royal" /> Liezl Moss — 314-784-5854
+              <a href="mailto:liezl.moss@PR1SM.AI" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
+                <AnimatedIcon Icon={Mail} size={14} className="text-royal" /> Liezl Moss — liezl.moss@PR1SM.AI
               </a>
             </div>
             <div className="group p-5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)]">
-              <p className="text-sm font-medium text-[var(--text-primary)] mb-3">Prefer to talk now?</p>
+              <p className="text-sm font-medium text-[var(--text-primary)] mb-1">
+                Prefer a conversation?
+              </p>
+              <p className="text-xs text-[var(--text-muted)] mb-4 leading-relaxed">
+                Schedule a discovery call when it suits you — no obligation, at your own pace.
+              </p>
               <Button
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 size="md"
+                variant="secondary"
                 className="w-full sm:w-auto"
               >
-                <AnimatedIcon Icon={Calendar} size={16} className="text-white" /> Book a 15-min Call <ArrowRight size={16} />
+                <AnimatedIcon Icon={Calendar} size={16} className="text-royal" /> View available times <ArrowRight size={16} />
               </Button>
             </div>
           </motion.div>
@@ -403,7 +409,7 @@ export default function GetPricing() {
               size="lg"
               className="mx-auto"
             >
-              <AnimatedIcon Icon={Calendar} size={18} className="text-white" /> Book a Call <ArrowRight size={18} />
+              <AnimatedIcon Icon={Calendar} size={18} className="text-royal" /> Schedule a discovery call <ArrowRight size={18} />
             </Button>
           </div>
         </div>

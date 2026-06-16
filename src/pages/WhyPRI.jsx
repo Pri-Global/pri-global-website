@@ -46,9 +46,9 @@ const pillars = [
   },
   {
     icon: Layers,
-    title: "One Partner, Eight Capabilities",
+    title: "One Partner, Nine Capabilities",
     description:
-      "Staffing, managed services, cybersecurity, cloud, data, consulting, and AI — integrated under one roof, not stitched together from subcontractors.",
+      "Staffing, managed services, cybersecurity, cloud, data, consulting, network, and AI — including PRI AI Pods™ — integrated under one roof, not stitched together from subcontractors.",
   },
   {
     icon: BrainCircuit,
@@ -65,7 +65,7 @@ const comparisons = [
   { feature: "AI Platform", pri: "PR1SM.AI (proprietary)", vendor: "None" },
   { feature: "Client Retention", pri: "96%", vendor: "Industry avg: 70%" },
   { feature: "Response Time", pri: "Shortlist in 5 days", vendor: "2–4 weeks" },
-  { feature: "Service Breadth", pri: "8 integrated service lines", vendor: "1–2 specialties" },
+  { feature: "Service Breadth", pri: "9 integrated service lines", vendor: "1–2 specialties" },
   { feature: "Fortune 500 Experience", pri: true, vendor: false },
   { feature: "Dedicated Account Team", pri: true, vendor: false },
 ];

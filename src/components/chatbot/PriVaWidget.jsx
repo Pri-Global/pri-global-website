@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import usePriVa from "./usePriVa";
+import PriVaPrivacyNotice from "./PriVaPrivacyNotice";
 import BrandLogo, { PriMarkAvatar } from "../ui/BrandLogo";
 
 function MessageBubble({ message }) {
@@ -115,6 +116,10 @@ export default function PriVaWidget() {
                 ))}
               </div>
             )}
+
+            <div className="px-4 pt-2">
+              <PriVaPrivacyNotice />
+            </div>
 
             <div className="px-4 py-3 border-t border-white/20 dark:border-white/10 flex items-center gap-2 glass-subtle">
               <input

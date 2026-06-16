@@ -1,9 +1,13 @@
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import { services, iconMap } from "../data/services";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
 import CaseStudies from "../components/sections/CaseStudies";
+import ServiceOutcomes from "../components/sections/ServiceOutcomes";
+import TrustBar from "../components/sections/TrustBar";
+import TechnologyPartners from "../components/sections/TechnologyPartners";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import IllustrationPlaceholder from "../components/ui/IllustrationPlaceholder";
 import ClientLogos from "../components/ui/ClientLogos";
@@ -39,7 +43,7 @@ function ServiceDetail({ svc, index }) {
           {svc.title}
         </h3>
         <p className="text-[var(--text-secondary)] leading-relaxed mb-5">{svc.description}</p>
-        <ul className="grid sm:grid-cols-2 gap-2">
+        <ul className="grid sm:grid-cols-2 gap-2 mb-6">
           {svc.bullets.map((b) => (
             <li key={b} className="group flex items-start gap-2 text-sm text-[var(--text-secondary)]">
               <AnimatedIcon Icon={CheckCircle} size={16} className="text-royal dark:text-royaldark shrink-0 mt-0.5" />
@@ -47,6 +51,14 @@ function ServiceDetail({ svc, index }) {
             </li>
           ))}
         </ul>
+        {svc.to && (
+          <Link
+            to={svc.to}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-royal dark:text-royaldark hover:gap-2.5 transition-all"
+          >
+            Learn more <ArrowRight size={15} />
+          </Link>
+        )}
       </div>
     </div>
   );
@@ -57,7 +69,7 @@ export default function Services() {
     <>
       <SEO
         title="IT Services & Technology Solutions"
-        description="PRI Global offers 8 integrated technology services: IT Staffing, Managed IT, Cybersecurity, Cloud Transformation, Data Solutions, Business Transformation, IT Consulting, and Network Services."
+        description="PRI Global offers 9 integrated technology services: IT Staffing, Managed IT, Cybersecurity, Cloud Transformation, AI Services & PRI AI Pods™, Data Solutions, Business Transformation, IT Consulting, and Network Services."
         url="/services"
       />
       <section className="pt-24 sm:pt-32 pb-16 bg-[var(--bg-secondary)]">
@@ -66,7 +78,7 @@ export default function Services() {
             <SectionHeading
               label="Services"
               heading="Everything you need to compete and grow"
-              subheading="Eight integrated capability areas. One trusted partner. Outcomes that matter."
+              subheading="Nine integrated capability areas. One trusted partner. Outcomes that matter."
               align="left"
             />
             <div className="hidden lg:block">
@@ -76,12 +88,15 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Client logos marquee */}
+      <TrustBar />
+
       <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ClientLogos label="Clients we're proud to work with" />
         </div>
       </div>
+
+      <ServiceOutcomes />
 
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,6 +105,8 @@ export default function Services() {
           ))}
         </div>
       </section>
+
+      <TechnologyPartners />
 
       <CaseStudies />
       <CallToAction />

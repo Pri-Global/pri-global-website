@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import usePriVa from "../chatbot/usePriVa";
+import PriVaPrivacyNotice from "../chatbot/PriVaPrivacyNotice";
 import { VIDEOS } from "../../data/videos";
 
 /** Hero background loops only this intro — avoids long branding footage */
@@ -179,7 +180,7 @@ const HeroChatCard = memo(function HeroChatCard() {
                 <div className="flex-1 flex items-center justify-center gap-1.5 min-w-0">
                   <Sparkles size={12} className="text-royal dark:text-royaldark shrink-0" />
                   <span className="text-[11px] font-medium text-[var(--text-muted)] truncate">
-                    priva.priglobal.com — AI Chat
+                    priva.priglobal.com — Assistant
                   </span>
                 </div>
                 <div className="w-12" aria-hidden />
@@ -202,7 +203,7 @@ const HeroChatCard = memo(function HeroChatCard() {
                 </span>
               </div>
               <p className="text-xs text-[var(--text-muted)] mt-0.5">
-                PRI Global assistant · Ready to help
+                PRI Global assistant · Site guide
               </p>
             </div>
           </div>
@@ -298,9 +299,7 @@ const HeroChatCard = memo(function HeroChatCard() {
               <Send size={14} />
             </button>
           </div>
-          <p className="text-[10px] text-center text-[var(--text-muted)] mt-2">
-            AI assistant · Answers about PRI services, talent & PR1SM.AI
-          </p>
+          <PriVaPrivacyNotice className="text-center mt-2 px-1" />
         </div>
             </div>
           </motion.div>
@@ -378,9 +377,6 @@ export default function Hero() {
               <Button to="/get-pricing" variant="glass" size="lg" className="w-full sm:w-auto">
                 Get Pricing
               </Button>
-              <Button to="/ai-innovation#demo" variant="glass" size="lg" className="w-full sm:w-auto">
-                See Demo
-              </Button>
             </motion.div>
 
             <motion.p {...fadeUp(0.72)} className="mt-4">
@@ -391,7 +387,7 @@ export default function Hero() {
                 className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-royal dark:hover:text-royaldark hover:underline transition-colors"
               >
                 <Calendar size={15} className="shrink-0" />
-                Or book a 15-min discovery call →
+                Or schedule a discovery call when you&apos;re ready →
               </a>
             </motion.p>
 

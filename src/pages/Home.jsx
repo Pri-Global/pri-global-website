@@ -2,19 +2,22 @@ import { lazy, Suspense, useEffect } from "react";
 import SEO from "../components/SEO";
 import Hero from "../components/sections/Hero";
 import ClientLogos from "../components/ui/ClientLogos";
+import TrustBar from "../components/sections/TrustBar";
+import FreeConsultationBanner from "../components/sections/FreeConsultationBanner";
+import CorePillars from "../components/sections/CorePillars";
+import IndustriesPreview from "../components/sections/IndustriesPreview";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
 
-const Stats           = lazy(() => import("../components/sections/Stats"));
+const Stats              = lazy(() => import("../components/sections/Stats"));
 import SolutionQuiz from "../components/sections/SolutionQuiz";
-const ServicesSection = lazy(() => import("../components/sections/Services"));
+const ServicesSection    = lazy(() => import("../components/sections/Services"));
 const DoingBusinessVideo = lazy(() => import("../components/sections/DoingBusinessVideo"));
-const PrismAI         = lazy(() => import("../components/sections/PrismAI"));
-const ROICalculator   = lazy(() => import("../components/sections/ROICalculator"));
-const CaseStudies     = lazy(() => import("../components/sections/CaseStudies"));
-const Timeline        = lazy(() => import("../components/sections/Timeline"));
-const HowWeWork       = lazy(() => import("../components/sections/HowWeWork"));
-const Testimonials    = lazy(() => import("../components/sections/Testimonials"));
-const CallToAction    = lazy(() => import("../components/sections/CallToAction"));
+const PrismAI            = lazy(() => import("../components/sections/PrismAI"));
+import ExploreMore from "../components/sections/ExploreMore";
+import LeadershipSpotlight from "../components/sections/LeadershipSpotlight";
+const HowWeWork          = lazy(() => import("../components/sections/HowWeWork"));
+const Testimonials       = lazy(() => import("../components/sections/Testimonials"));
+const CallToAction       = lazy(() => import("../components/sections/CallToAction"));
 
 const SectionFallback = <div className="h-96" />;
 
@@ -34,14 +37,17 @@ export default function Home() {
       <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]">
         <ClientLogos label="Trusted by leading organizations" />
       </div>
+      <TrustBar />
       <Suspense fallback={SectionFallback}><Stats /></Suspense>
+      <FreeConsultationBanner />
+      <CorePillars />
       <SolutionQuiz />
       <Suspense fallback={SectionFallback}><ServicesSection /></Suspense>
+      <IndustriesPreview />
       <Suspense fallback={SectionFallback}><DoingBusinessVideo /></Suspense>
       <Suspense fallback={SectionFallback}><PrismAI /></Suspense>
-      <Suspense fallback={SectionFallback}><ROICalculator /></Suspense>
-      <Suspense fallback={SectionFallback}><CaseStudies limit={3} /></Suspense>
-      <Suspense fallback={SectionFallback}><Timeline condensed /></Suspense>
+      <ExploreMore />
+      <LeadershipSpotlight />
       <Suspense fallback={SectionFallback}><Testimonials /></Suspense>
       <Suspense fallback={SectionFallback}><HowWeWork /></Suspense>
       <Suspense fallback={SectionFallback}><CallToAction /></Suspense>

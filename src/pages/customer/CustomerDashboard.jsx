@@ -336,8 +336,8 @@ export default function CustomerDashboard() {
         userName={`Welcome, ${session?.company || "Client"}`}
         userSubtitle={
           isHiring
-            ? `Your dedicated recruiter: ${RECRUITER.name} | ${RECRUITER.phone}`
-            : "Your account manager: Liezl Moss | 314-784-5854"
+            ? `Your dedicated recruiter: ${RECRUITER.name}`
+            : "Your account manager: Liezl Moss"
         }
         navItems={nav}
         onLogout={logout}

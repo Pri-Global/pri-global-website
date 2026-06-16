@@ -7,6 +7,7 @@ import {
   TrendingUp,
   BarChart3,
   Wifi,
+  BrainCircuit,
 } from "lucide-react";
 
 export const services = [
@@ -68,6 +69,22 @@ export const services = [
       "DevOps, CI/CD & container platforms",
       "Legacy application modernisation",
       "FinOps & cloud cost optimisation",
+    ],
+  },
+  {
+    id: "ai-services",
+    icon: "BrainCircuit",
+    title: "AI Services",
+    slug: "ai-services",
+    to: "/ai-services",
+    tagline: "Stop trying to hire AI teams. Start building with one.",
+    description:
+      "PRI AI Pods™ are pre-built AI delivery teams — deploy in weeks, not months. From POCs and model development to full enterprise AI programs with predictable monthly investment.",
+    bullets: [
+      "PRI AI Pods™ — Flex, Scale & Dedicated tiers",
+      "AI strategy, model development & deployment",
+      "Data pipeline setup & ongoing optimization",
+      "Scale expertise without hiring risk",
     ],
   },
   {
@@ -141,4 +158,5 @@ export const iconMap = {
   TrendingUp,
   BarChart3,
   Wifi,
+  BrainCircuit,
 };

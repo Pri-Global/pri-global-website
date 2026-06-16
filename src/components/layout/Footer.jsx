@@ -11,6 +11,7 @@ const footerLinks = {
     { label: "Managed IT & Infrastructure", to: "/services" },
     { label: "Cybersecurity & Risk Management", to: "/services" },
     { label: "Cloud & Digital Transformation", to: "/services" },
+    { label: "AI Services & PRI AI Pods™", to: "/ai-services" },
     { label: "Data Solutions & Integration", to: "/services" },
     { label: "Network Services", to: "/services" },
   ],
@@ -23,6 +24,7 @@ const footerLinks = {
     { label: "Get Pricing", to: "/get-pricing" },
   ],
   "AI Innovation": [
+    { label: "PRI AI Pods™", to: "/ai-services" },
     { label: "PR1SM.AI Platform", to: "/ai-innovation" },
     { label: "ROI Calculator", to: "/roi-calculator" },
     { label: "Strategic IT Consulting", to: "/services" },
@@ -113,12 +115,6 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row flex-wrap gap-4 py-8 border-b border-white/10 text-sm text-white/50">
           <a href="tel:6362567172" className="group flex items-center gap-2 hover:text-white transition-colors">
             <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 636.256.7172 (PRI Global HQ)
-          </a>
-          <a href="tel:6367791651" className="group flex items-center gap-2 hover:text-white transition-colors">
-            <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 636-779-1651 (Ajay Patel · PR1SM.AI)
-          </a>
-          <a href="tel:3147845854" className="group flex items-center gap-2 hover:text-white transition-colors">
-            <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 314-784-5854 (Liezl Moss · Growth)
           </a>
           <a href="mailto:info@priglobal.com" className="flex items-center gap-2 hover:text-white transition-colors">
             info@priglobal.com

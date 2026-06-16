@@ -44,14 +44,6 @@ export default function CallToAction() {
               >
                 Book a Discovery Call <ArrowRight size={18} />
               </Button>
-              <Button
-                to="/ai-innovation#demo"
-                variant="glass"
-                size="lg"
-                className="text-white w-full sm:w-auto"
-              >
-                See Demo
-              </Button>
             </div>
           </div>
         </div>

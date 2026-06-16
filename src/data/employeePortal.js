@@ -83,14 +83,14 @@ export const EMPLOYEE_CONTACTS = [
     name: "Marla Dicandia",
     role: "CFO / HR · People Operations",
     email: "info@priglobal.com",
-    phone: "636.256.7172",
+    phone: null,
     topics: "Benefits, payroll, HR policies",
   },
   {
     name: "IT Support",
     role: "Technology & Access",
     email: "info@priglobal.com",
-    phone: "636.256.7172",
+    phone: null,
     topics: "Laptop, VPN, email, portal access",
   },
   {

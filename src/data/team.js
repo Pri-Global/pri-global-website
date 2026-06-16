@@ -8,7 +8,6 @@ export const priGlobalLeadership = [
     photo: "/team/ajay-patel.jpg",
     bio: "Ajay Patel is Chairman of PRI Global and Chairman & Founder of PR1SM.AI. A visionary thought leader, entrepreneur, and strategist with 30+ years of hands-on IT experience. Throughout his 24 years as CEO of PRI Global, he developed numerous long-lasting partnerships with Fortune 500 companies globally. Ajay holds a Bachelor of Science in Computer Science and attended Northwestern University's Kellogg School of Management.",
     photoUrl: "https://priglobal.com/wp-content/uploads/2023/07/Ajay-250px-Flipped-1-cropped.jpg",
-    phone: "636-779-1651",
     email: "ajay@pr1sm.ai",
     linkedin: "https://www.linkedin.com/in/ajaypatel3/",
     crossRole: true,
@@ -63,7 +62,6 @@ export const prismLeadership = [
     bio: "Visionary leader with 30+ years of IT industry experience and 24+ years as CEO, driving innovation, growth and delivering impactful solutions worldwide.",
     photoUrl: "https://priglobal.com/wp-content/uploads/2023/07/Ajay-250px-Flipped-1-cropped.jpg",
     photo: "/team/ajay-patel.jpg",
-    phone: "636-779-1651",
     email: "ajay@pr1sm.ai",
     address: "174 Clarkson Road, Ellisville, Missouri 63011",
     linkedin: "https://www.linkedin.com/in/ajaypatel3/",
@@ -109,7 +107,6 @@ export const prismLeadership = [
     bio: "Leads strategic growth initiatives and market expansion to accelerate PR1SM.AI's global impact.",
     photoUrl: null,
     photo: "/team/liezl-moss.jpg",
-    phone: "314-784-5854",
     email: "liezl.moss@PR1SM.AI",
     address: "174 Clarkson Road, Ellisville, Missouri 63011",
     linkedin: "https://www.linkedin.com/in/liezl-m-02481720/",
@@ -199,6 +196,20 @@ export const prismLeadership = [
     linkedin: "https://www.linkedin.com/in/elther-torculas-303b46288/",
     crossRole: false,
   },
+  {
+    id: "corneliu-s",
+    name: "Corneliu Secrieri",
+    title: "AI Engineer & Web Developer",
+    company: "PR1SM.AI",
+    initials: "CS",
+    bio: "AI engineer and web developer building intelligent platform features and modern digital experiences for PRI Global and PR1SM.AI.",
+    photoUrl: null,
+    photo: "/team/corneliu-s.jpg",
+    phone: null,
+    email: null,
+    linkedin: "https://www.linkedin.com/in/corneliu-s-b488a22b6/",
+    crossRole: false,
+  },
 ];
 
 export const INITIALS_COLORS = {
@@ -213,6 +224,7 @@ export const INITIALS_COLORS = {
   NK: "#ec4899",
   HC: "#10b981",
   ET: "#f97316",
+  CS: "#6366f1",
 };
 
 /** PR1SM.AI dark section — always use these for avatar fallbacks */
@@ -227,6 +239,7 @@ export const PRISM_INITIALS_COLORS = {
   NK: "#ec4899",
   HC: "#10b981",
   ET: "#f97316",
+  CS: "#6366f1",
 };
 
 export const PRISM_TEAM_ROW1_COUNT = 6;

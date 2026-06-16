@@ -4,7 +4,6 @@ export const RECRUITER = {
   name: "Karen Myers",
   title: "PRI Global Recruiter",
   photo: "/team/karen-myers.jpg",
-  phone: "636.256.7172",
 };
 
 export const RECRUITER_MESSAGE = `Hi Alex,

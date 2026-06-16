@@ -220,7 +220,6 @@ export default function About() {
                 initials: "AP",
                 name: "Ajay Patel",
                 title: "Chairman, PRI Global & Chairman & Founder, PR1SM.AI",
-                phone: "636-779-1651",
                 email: "ajay@pr1sm.ai",
                 address: "174 Clarkson Road, Ellisville, MO 63011",
               },
@@ -228,7 +227,6 @@ export default function About() {
                 initials: "KP",
                 name: "Keenan Patel",
                 title: "CEO, PRI Global",
-                phone: "636.256.7172",
                 email: "info@priglobal.com",
                 address: "174 Clarkson Road, Ellisville, MO 63011",
                 note: "PRI Global HQ",
@@ -256,9 +254,6 @@ export default function About() {
                   </div>
                 </div>
                 <div className="space-y-2.5 text-sm">
-                  <a href={`tel:${person.phone.replace(/-/g, "")}`} className="group/link flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                    <AnimatedIcon Icon={Phone} size={14} className="text-royal shrink-0" /> {person.phone}
-                  </a>
                   <a href={`mailto:${person.email}`} className="group/link flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
                     <AnimatedIcon Icon={Mail} size={14} className="text-royal shrink-0" /> {person.email}
                   </a>

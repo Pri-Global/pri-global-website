@@ -157,15 +157,20 @@ export default function CandidateLogin() {
             </button>
           </form>
 
-          <div className="flex items-center gap-3 my-6">
-            <div className="flex-1 h-px bg-[var(--border)]" />
-            <span className="text-xs text-[var(--text-muted)]">— or —</span>
-            <div className="flex-1 h-px bg-[var(--border)]" />
+          <div className="my-6 space-y-3">
+            <p className="text-sm font-medium text-[var(--text-primary)] text-center">
+              Don&apos;t have an account yet?
+            </p>
+            <Button to="/candidate-register?mode=resume" className="w-full !bg-emerald-600 hover:!bg-emerald-700">
+              Sign Up with Resume →
+            </Button>
+            <Link
+              to="/candidate-register?mode=manual"
+              className="block text-center text-sm text-[var(--text-secondary)] hover:text-emerald-600 transition-colors"
+            >
+              Sign up without a resume — fill out your details
+            </Link>
           </div>
-
-          <Button to="/candidate-register" variant="ghost" className="w-full">
-            Create an Account →
-          </Button>
 
           {isDemoLoginConfigured() && (
             <p className="text-[10px] text-center text-[var(--text-muted)] mt-6 leading-relaxed">

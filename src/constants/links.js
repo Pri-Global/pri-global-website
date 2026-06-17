@@ -6,6 +6,8 @@ export const HUBSPOT_MEETING_URL = BOOKING_URL;
 
 export const JOBDIVA_PORTAL_URL =
   "https://www2.jobdiva.com/portal/?a=74jdnww6u8rk6etus6fjb7z7jh2bqs0267mjowh28c4pbat3q8pogch40ecq88g5#/";
+/** JobDiva candidate registration — upload resume and create portal account */
+export const JOBDIVA_SIGNUP_URL = `${JOBDIVA_PORTAL_URL}signup`;
 export const WORKING_AT_PRI_URL = "/working-at-pri";
 export const JOB_SEEKER_FAQ_URL = "/job-seeker-faq";
 export const GLASSDOOR_URL = "https://www.glassdoor.com/Overview/Working-at-PRI-Global-EI_IE271415";

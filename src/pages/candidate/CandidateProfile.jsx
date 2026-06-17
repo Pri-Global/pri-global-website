@@ -45,10 +45,6 @@ export default function CandidateProfile() {
           <div className="w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold text-white" style={{ backgroundColor: ACCENT }}>
             {initials}
           </div>
-          <div>
-            <Button type="button" variant="secondary" size="sm">Upload Photo</Button>
-            <p className="text-xs text-[var(--text-muted)] mt-2">Frontend demo only — no upload</p>
-          </div>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
@@ -96,9 +92,6 @@ export default function CandidateProfile() {
             <span className="text-sm text-[var(--text-secondary)]">Profile visible to PRI recruiters</span>
             <input type="checkbox" defaultChecked className="w-4 h-4 accent-emerald-600" />
           </label>
-          <Button type="button" variant="secondary" size="sm" className="mt-2">
-            Change Password
-          </Button>
         </div>
       </section>
     </>

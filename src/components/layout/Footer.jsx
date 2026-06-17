@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { scrollToPageTop } from "../../utils/scrollToPageTop";
-import { ExternalLink, Globe, Code2, MapPin, Phone, Calendar } from "lucide-react";
+import { ExternalLink, Globe, MapPin, Phone, Calendar } from "lucide-react";
 import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import BrandLogo from "../ui/BrandLogo";
@@ -32,7 +32,6 @@ const footerLinks = {
 const socials = [
   { icon: ExternalLink, href: "https://www.linkedin.com/company/pri-global/", label: "LinkedIn" },
   { icon: Globe, href: "https://priglobal.com", label: "Website" },
-  { icon: Code2, href: "#", label: "GitHub" },
 ];
 
 export default function Footer() {

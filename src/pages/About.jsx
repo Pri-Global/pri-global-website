@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { MapPin, Phone, ExternalLink, Mail, Star } from "lucide-react";
 import SEO from "../components/SEO";
 import { GLASSDOOR_URL } from "../constants/links";
@@ -41,6 +42,22 @@ const values = [
 
 export default function About() {
   const [valuesRef, valuesInView] = useInView({ threshold: 0.05 });
+  const [contactForm, setContactForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  });
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    const name = `${contactForm.firstName} ${contactForm.lastName}`.trim();
+    const subject = encodeURIComponent(`Contact from ${name || "PRI Global website"}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${contactForm.email}\n\nMessage:\n${contactForm.message}`
+    );
+    window.location.href = `mailto:info@priglobal.com?subject=${subject}&body=${body}`;
+  };
 
   return (
     <>
@@ -346,7 +363,7 @@ export default function About() {
               </div>
             </div>
 
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4" onSubmit={handleContactSubmit}>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
@@ -354,6 +371,9 @@ export default function About() {
                   </label>
                   <input
                     type="text"
+                    required
+                    value={contactForm.firstName}
+                    onChange={(e) => setContactForm((f) => ({ ...f, firstName: e.target.value }))}
                     className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-royal/40"
                     placeholder="John"
                   />
@@ -364,6 +384,9 @@ export default function About() {
                   </label>
                   <input
                     type="text"
+                    required
+                    value={contactForm.lastName}
+                    onChange={(e) => setContactForm((f) => ({ ...f, lastName: e.target.value }))}
                     className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-royal/40"
                     placeholder="Smith"
                   />
@@ -375,6 +398,9 @@ export default function About() {
                 </label>
                 <input
                   type="email"
+                  required
+                  value={contactForm.email}
+                  onChange={(e) => setContactForm((f) => ({ ...f, email: e.target.value }))}
                   className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-royal/40"
                   placeholder="john@company.com"
                 />
@@ -385,6 +411,9 @@ export default function About() {
                 </label>
                 <textarea
                   rows={4}
+                  required
+                  value={contactForm.message}
+                  onChange={(e) => setContactForm((f) => ({ ...f, message: e.target.value }))}
                   className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-royal/40 resize-none"
                   placeholder="Tell us about your project or challenge..."
                 />

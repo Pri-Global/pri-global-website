@@ -62,8 +62,15 @@ export default function ClientLogos({ label = "Trusted by leading organizations"
               <img
                 src={logo.src}
                 alt={logo.alt}
-                className="max-h-8 w-auto object-contain"
-                style={{ filter: blueFilter }}
+                className="max-h-8 w-auto object-contain select-none"
+                style={{
+                  filter: blueFilter,
+                  WebkitUserDrag: "none",
+                  userSelect: "none",
+                }}
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                onContextMenu={(e) => e.preventDefault()}
                 loading="lazy"
                 decoding="async"
               />

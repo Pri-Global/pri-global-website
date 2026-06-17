@@ -3,7 +3,6 @@ import SEO from "../components/SEO";
 import Hero from "../components/sections/Hero";
 import ClientLogos from "../components/ui/ClientLogos";
 import MastercardPartnership from "../components/sections/MastercardPartnership";
-import TrustBar from "../components/sections/TrustBar";
 import FreeConsultationBanner from "../components/sections/FreeConsultationBanner";
 import CorePillars from "../components/sections/CorePillars";
 import IndustriesPreview from "../components/sections/IndustriesPreview";
@@ -39,7 +38,6 @@ export default function Home() {
         <ClientLogos label="Trusted by leading organizations" />
       </div>
       <MastercardPartnership />
-      <TrustBar />
       <Suspense fallback={SectionFallback}><Stats /></Suspense>
       <FreeConsultationBanner />
       <CorePillars />

@@ -352,11 +352,31 @@ export default function Hero() {
             >
               {h1Lines.map((line, li) => (
                 <span key={li} className={`block ${line.className}`}>
-                  {line.words.map((word, wi) => (
-                    <motion.span key={wi} variants={wordItem} className="inline-block mr-[0.22em]">
-                      {word}
-                    </motion.span>
-                  ))}
+                  {line.words.map((word, wi) => {
+                    const isMove = word.toLowerCase().replace(/[^a-z]/g, "") === "moves";
+                    return (
+                      <motion.span
+                        key={wi}
+                        variants={wordItem}
+                        className={`inline-block mr-[0.22em] ${isMove ? "cursor-pointer" : ""}`}
+                        whileHover={
+                          isMove
+                            ? {
+                                x: 12,
+                                transition: {
+                                  duration: 0.5,
+                                  ease: "easeInOut",
+                                  repeat: Infinity,
+                                  repeatType: "reverse",
+                                },
+                              }
+                            : undefined
+                        }
+                      >
+                        {word}
+                      </motion.span>
+                    );
+                  })}
                 </span>
               ))}
             </motion.h1>

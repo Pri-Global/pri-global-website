@@ -4,16 +4,15 @@ import { ExternalLink, Globe, Code2, MapPin, Phone, Calendar } from "lucide-reac
 import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import BrandLogo from "../ui/BrandLogo";
+import officeLobby from "../../assets/images/pri-office-lobby.png";
 
 const footerLinks = {
   Services: [
     { label: "IT Staffing & Talent Solutions", to: "/talent-solutions" },
-    { label: "Managed IT & Infrastructure", to: "/services" },
-    { label: "Cybersecurity & Risk Management", to: "/services" },
-    { label: "Cloud & Digital Transformation", to: "/services" },
     { label: "AI Services & PRI AI Pods™", to: "/ai-services" },
-    { label: "Data Solutions & Integration", to: "/services" },
-    { label: "Network Services", to: "/services" },
+    { label: "PR1SM.AI Platform", to: "/ai-innovation" },
+    { label: "Managed IT & Infrastructure", to: "/services" },
+    { label: "View all services", to: "/services" },
   ],
   Company: [
     { label: "About Us", to: "/about" },
@@ -21,15 +20,6 @@ const footerLinks = {
     { label: "Industries", to: "/industries" },
     { label: "Resources", to: "/resources" },
     { label: "Careers", to: "/careers" },
-    { label: "Get Pricing", to: "/get-pricing" },
-  ],
-  "AI Innovation": [
-    { label: "PRI AI Pods™", to: "/ai-services" },
-    { label: "PR1SM.AI Platform", to: "/ai-innovation" },
-    { label: "ROI Calculator", to: "/roi-calculator" },
-    { label: "Strategic IT Consulting", to: "/services" },
-    { label: "Business Transformation", to: "/services" },
-    { label: "AI Strategy", to: "/ai-innovation" },
   ],
   Portals: [
     { label: "Candidate Portal", to: "/candidate-login" },
@@ -59,10 +49,23 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-navy text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+    <footer className="relative bg-navy text-white overflow-hidden">
+      {/* Subtle office photo backdrop */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        <img
+          src={officeLobby}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-25"
+          style={{ objectPosition: "center 100%" }}
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/70 to-navy/90" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
         {/* Top grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-8 border-b border-white/10">
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-flex items-center mb-5" onClick={onLogoClick}>
@@ -112,7 +115,7 @@ export default function Footer() {
         </div>
 
         {/* Contact strip */}
-        <div className="flex flex-col md:flex-row flex-wrap gap-4 py-8 border-b border-white/10 text-sm text-white/50">
+        <div className="flex flex-col md:flex-row flex-wrap gap-4 py-6 border-b border-white/10 text-sm text-white/50">
           <a href="tel:6362567172" className="group flex items-center gap-2 hover:text-white transition-colors">
             <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 636.256.7172 (PRI Global HQ)
           </a>
@@ -133,7 +136,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
           <span className="text-center sm:text-left">© 2026 PRI Global (PRI India Private Services Limited). All rights reserved.</span>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             <Link to="/get-pricing" onClick={scrollToPageTop} className="hover:text-white/70 transition-colors">Get Pricing</Link>

@@ -11,7 +11,7 @@ const partners = [
 export default function TechnologyPartners({ compact = false }) {
   return (
     <section className={compact ? "py-10" : "py-14 md:py-16 bg-[var(--bg-secondary)]"}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {!compact && (
           <SectionHeading
             label="Technology ecosystem"

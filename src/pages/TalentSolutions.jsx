@@ -60,15 +60,24 @@ export default function TalentSolutions() {
     <>
       <SEO
         title="IT Staffing & Talent Solutions"
-        description="IT staffing, SOW project delivery, and workforce solutions from PRI Global. Contract, permanent, and statement-of-work teams — shortlists in 5 days. 26+ year Mastercard partnership."
+        description="Contract, permanent, and SOW IT teams from PRI Global — shortlists in 5 days. 26-year Mastercard partnership and 12,700+ placements. Request talent today."
+        keywords="IT staffing, talent solutions, contract-to-hire, SOW delivery, IT recruitment, PRI Global"
         url="/talent-solutions"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Talent Solutions", url: "/talent-solutions" },
+        ]}
+        service={{
+          name: "IT Staffing & Talent Solutions",
+          description: "IT staffing, SOW project delivery, and workforce solutions with shortlists in 5 days.",
+        }}
       />
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-20 bg-[var(--bg-secondary)] relative overflow-hidden">
+      <section className="page-hero pb-20 bg-[var(--bg-secondary)] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-96 h-96 bg-royal/5 rounded-full blur-[100px]" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="site-container relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-4">
@@ -102,7 +111,7 @@ export default function TalentSolutions() {
 
       {/* SOW delivery */}
       <section id="sow-delivery" className="py-16 md:py-20 bg-[var(--bg-secondary)] scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             <div>
               <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">
@@ -154,7 +163,7 @@ export default function TalentSolutions() {
 
       {/* Offerings */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="What we offer"
             heading="Talent services built for technology"
@@ -189,7 +198,7 @@ export default function TalentSolutions() {
 
       {/* Process */}
       <section className="py-20 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="Our Process"
             heading="Hire faster, hire smarter"
@@ -219,7 +228,7 @@ export default function TalentSolutions() {
       </section>
 
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="Our Team"
             heading="The People Behind the Placements"
@@ -239,7 +248,7 @@ export default function TalentSolutions() {
       </section>
 
       <section className="py-20 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="In Action"
             heading="See Our Process in Action"
@@ -274,7 +283,7 @@ export default function TalentSolutions() {
 
       {/* Stats banner */}
       <section className="py-16 bg-navy">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
             {[
               { num: "12,700+", label: "IT resources successfully placed" },

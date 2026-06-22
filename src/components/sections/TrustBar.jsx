@@ -12,7 +12,7 @@ const items = [
 export default function TrustBar() {
   return (
     <section className="py-8 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}

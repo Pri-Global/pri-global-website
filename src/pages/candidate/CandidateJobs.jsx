@@ -10,9 +10,15 @@ export default function CandidateJobs() {
   return (
     <>
       <SEO
-        title="Job Search"
-        description={authed ? "Search IT jobs at PRI Global." : "Search live open IT positions at PRI Global."}
+        title="IT Job Search — Open Positions"
+        description="Search live open IT positions at PRI Global — contract, contract-to-hire, and direct hire roles across technology disciplines. Find your next role today."
+        keywords="IT jobs, technology careers, contract IT jobs, PRI Global job search"
         url="/candidate-jobs"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Careers", url: "/careers" },
+          { name: "Job Search", url: "/candidate-jobs" },
+        ]}
         noindex={authed}
       />
       <div className="mb-6">

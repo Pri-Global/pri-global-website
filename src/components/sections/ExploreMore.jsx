@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, BrainCircuit, Calculator, Layers, Briefcase, Users } from "lucide-react";
+import { ArrowRight, BrainCircuit, Calculator, Layers, Briefcase, Users, Sparkles } from "lucide-react";
 import SectionHeading from "../ui/SectionHeading";
 import AnimatedIcon from "../ui/AnimatedIcon";
 
@@ -30,6 +30,12 @@ const links = [
     to: "/services",
   },
   {
+    icon: Sparkles,
+    title: "Solution Finder Quiz",
+    description: "Answer 4 questions to find the right PRI Global service for your needs.",
+    to: "/quiz",
+  },
+  {
     icon: Briefcase,
     title: "Case Studies",
     description: "Real client outcomes across manufacturing, healthcare, and more.",
@@ -40,8 +46,8 @@ const links = [
 
 export default function ExploreMore() {
   return (
-    <section className="py-12 md:py-16 bg-[var(--bg-primary)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="section-y bg-[var(--bg-primary)]">
+      <div className="site-container">
         <SectionHeading
           label="Explore"
           heading="Go deeper when you're ready"
@@ -49,7 +55,7 @@ export default function ExploreMore() {
           className="mb-8 md:mb-10"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 xl:gap-6">
           {links.map((item, i) => (
             <motion.div
               key={item.title}

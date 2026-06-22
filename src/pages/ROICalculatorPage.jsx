@@ -12,8 +12,14 @@ export default function ROICalculatorPage() {
     <>
       <SEO
         title="PR1SM.AI ROI Calculator"
-        description="Calculate your potential savings with PR1SM.AI. See how much fragmented data is costing your business and your estimated return on investment."
+        description="Calculate your potential savings with PR1SM.AI. See how fragmented data costs your business and estimate your ROI. Try the free calculator now."
+        keywords="PR1SM.AI ROI, AI savings calculator, data fragmentation cost, PRI Global ROI"
         url="/roi-calculator"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "PR1SM.AI", url: "/ai-innovation" },
+          { name: "ROI Calculator", url: "/roi-calculator" },
+        ]}
       />
       <div className="pt-24 sm:pt-28">
         <ROICalculator showPageHero />

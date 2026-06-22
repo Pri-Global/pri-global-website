@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Lock } from "lucide-react";
 import SEO from "../components/SEO";
+import { notifyCookieBannerChange } from "../hooks/useCookieBannerVisible";
 
 const STORAGE_KEY = "pri-cookie-consent";
 
@@ -31,7 +31,6 @@ function Toggle({ enabled, onChange, locked = false }) {
 }
 
 export default function CookieSettings() {
-  const navigate = useNavigate();
   const [prefs, setPrefs] = useState({ analytics: false, marketing: false });
   const [saved, setSaved] = useState(false);
 
@@ -49,7 +48,7 @@ export default function CookieSettings() {
     const final = { essential: true, ...prefs, ...overrides, consentGiven: true, consentDate: new Date().toISOString() };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(final));
     setSaved(true);
-    setTimeout(() => navigate("/"), 1500);
+    notifyCookieBannerChange(false);
   }
 
   return (

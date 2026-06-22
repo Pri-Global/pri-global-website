@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { scrollToPageTop } from "../../utils/scrollToPageTop";
-import { ExternalLink, Globe, MapPin, Phone, Calendar } from "lucide-react";
+import { ExternalLink, MapPin, Phone, Calendar } from "lucide-react";
 import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import BrandLogo from "../ui/BrandLogo";
@@ -16,6 +16,7 @@ const footerLinks = {
   ],
   Company: [
     { label: "About Us", to: "/about" },
+    { label: "Contact", to: "/contact" },
     { label: "Why PRI Global", to: "/why-pri-global" },
     { label: "Industries", to: "/industries" },
     { label: "Resources", to: "/resources" },
@@ -27,11 +28,15 @@ const footerLinks = {
     { label: "Employee Portal", to: "/employee-login" },
     { label: "Job Search", to: "/candidate-jobs" },
   ],
+  Tools: [
+    { label: "Get Pricing", to: "/get-pricing" },
+    { label: "Solution Finder Quiz", to: "/quiz" },
+    { label: "PR1SM.AI ROI Calculator", to: "/roi-calculator" },
+  ],
 };
 
 const socials = [
   { icon: ExternalLink, href: "https://www.linkedin.com/company/pri-global/", label: "LinkedIn" },
-  { icon: Globe, href: "https://priglobal.com", label: "Website" },
 ];
 
 export default function Footer() {
@@ -62,11 +67,11 @@ export default function Footer() {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/70 to-navy/90" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+      <div className="relative z-10 site-container pt-12 xl:pt-14 pb-6 xl:pb-8">
         {/* Top grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-8 border-b border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 xl:gap-12 2xl:gap-14 pb-8 xl:pb-10 border-b border-white/10">
           {/* Brand column */}
-          <div className="lg:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-2">
             <Link to="/" className="inline-flex items-center mb-5" onClick={onLogoClick}>
               <BrandLogo size="xl" variant="onDark" />
             </Link>

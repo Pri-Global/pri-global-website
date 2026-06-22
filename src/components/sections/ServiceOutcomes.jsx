@@ -10,7 +10,7 @@ const serviceById = Object.fromEntries(services.map((s) => [s.id, s]));
 export default function ServiceOutcomes() {
   return (
     <section className="py-14 md:py-18 bg-[var(--bg-primary)] border-b border-[var(--border-subtle)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <SectionHeading
           label="How we help"
           heading="Start with the outcome you need"

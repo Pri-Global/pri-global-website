@@ -135,14 +135,19 @@ export default function WhyPRI() {
     <>
       <SEO
         title="Why PRI Global"
-        description="28+ years, 12,700+ placements, 96% client retention, and PR1SM.AI. See why leading organizations choose PRI Global over typical IT vendors."
+        description="28+ years, 12,700+ placements, 96% client retention, and PR1SM.AI innovation. See why leading organizations choose PRI Global. Compare us to typical IT vendors."
+        keywords="why PRI Global, IT vendor comparison, technology partner, client retention, PRI Global advantages"
         url="/why-pri-global"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Why PRI Global", url: "/why-pri-global" },
+        ]}
       />
 
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-16 md:pb-20 bg-[var(--bg-secondary)] relative overflow-hidden">
+      <section className="page-hero pb-16 md:pb-20 bg-[var(--bg-secondary)] relative overflow-hidden">
         <div className="absolute -top-40 -left-40 w-[480px] h-[480px] bg-royal/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="site-container relative">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -204,7 +209,7 @@ export default function WhyPRI() {
 
       {/* Stats */}
       <section className="py-14 md:py-16 bg-navy">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -246,7 +251,7 @@ export default function WhyPRI() {
 
       {/* Pillars */}
       <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="What Sets Us Apart"
             heading="Four reasons clients stay — and grow — with PRI"
@@ -281,7 +286,7 @@ export default function WhyPRI() {
 
       {/* Comparison */}
       <section className="py-16 md:py-24 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
             <div className="lg:col-span-2 lg:sticky lg:top-28">
               <SectionHeading

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Mail } from "lucide-react";
 import SEO from "../components/SEO";
+import Breadcrumbs from "../components/ui/Breadcrumbs";
 import CandidateCareersNav from "../components/portal/CandidateCareersNav";
 import Button from "../components/ui/Button";
 import { JOB_SEEKER_FAQ_ITEMS } from "../data/jobSeekerFaq";
@@ -55,12 +56,26 @@ export default function JobSeekerFAQ() {
     <>
       <SEO
         title="Job Seeker FAQ"
-        description="Answers to frequently asked questions about working for PRI Global — benefits, vacation, visa sponsorship, referrals, and career growth."
+        description="Answers about benefits, vacation, visa sponsorship, referrals, and career growth at PRI Global. Can't find your answer? Contact our recruiting team today."
+        keywords="PRI Global jobs FAQ, IT staffing benefits, job seeker questions, career at PRI Global"
         url="/job-seeker-faq"
+        faq={JOB_SEEKER_FAQ_ITEMS}
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Careers", url: "/careers" },
+          { name: "Job Seeker FAQ", url: "/job-seeker-faq" },
+        ]}
       />
 
-      <section className="pt-24 sm:pt-32 pb-16 md:pb-20 bg-[var(--bg-secondary)]">
+      <section className="page-hero pb-16 md:pb-20 bg-[var(--bg-secondary)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Careers", url: "/careers" },
+              { name: "Job Seeker FAQ", url: "/job-seeker-faq" },
+            ]}
+          />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

@@ -90,8 +90,10 @@ const sections = [
           <li>Opt out of certain data uses</li>
         </ul>
         <p className="text-[var(--text-secondary)] leading-relaxed mt-3 text-sm">
-          To exercise these rights, contact us at{" "}
-          <a href="https://priglobal.com/contact" target="_blank" rel="noopener noreferrer" className="text-royal hover:underline">priglobal.com/contact</a>.
+          To exercise these rights, contact us via our{" "}
+          <Link to="/contact" className="text-royal hover:underline">contact form</Link>{" "}
+          or email{" "}
+          <a href="mailto:info@priglobal.com" className="text-royal hover:underline">info@priglobal.com</a>.
         </p>
       </>
     ),
@@ -136,9 +138,9 @@ const sections = [
         <p>174 Clarkson Road, Ellisville, MO 63011, USA</p>
         <p>Phone: 636.256.7172</p>
         <p>
-          <a href="https://priglobal.com/contact" target="_blank" rel="noopener noreferrer" className="text-royal hover:underline">
-            priglobal.com/contact
-          </a>
+          <Link to="/contact" className="text-royal hover:underline">Contact form</Link>
+          {" · "}
+          <a href="mailto:info@priglobal.com" className="text-royal hover:underline">info@priglobal.com</a>
         </p>
       </div>
     ),
@@ -148,7 +150,7 @@ const sections = [
 export default function PrivacyPolicy() {
   return (
     <>
-    <SEO title="Privacy Policy" description="PRI Global privacy policy — how we collect, use, and protect your data. CCPA compliant." url="/privacy-policy" />
+    <SEO title="Privacy Policy" description="PRI Global privacy policy — how we collect, use, and protect your data. CCPA compliant. Review our data practices and contact us with questions." keywords="PRI Global privacy policy, data protection, CCPA" url="/privacy-policy" breadcrumbs={[{ name: "Home", url: "/" }, { name: "Privacy Policy", url: "/privacy-policy" }]} />
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}

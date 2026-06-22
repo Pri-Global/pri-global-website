@@ -7,9 +7,10 @@ import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
 import {
   EMPLOYEE_DEMO,
-  isDemoLoginConfigured,
   matchEmployeeDemo,
 } from "../data/portalDemoCredentials";
+import { showDevDemoCredentials } from "../utils/portalEnv";
+import PortalPreviewBanner from "../components/portal/PortalPreviewBanner";
 import {
   isSupabaseConfigured,
   signInWithSupabase,
@@ -34,6 +35,7 @@ export default function EmployeeLogin() {
   const [error, setError] = useState("");
   const [shaking, setShaking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [resetNotice, setResetNotice] = useState("");
 
   if (getEmployeeSession()?.loggedIn) {
     return <Navigate to="/employee-dashboard" replace />;
@@ -105,7 +107,7 @@ export default function EmployeeLogin() {
       return;
     }
     setError("");
-    alert(`Password reset link sent to ${normalized}. Check your inbox.`);
+    setResetNotice(`Password reset link sent to ${normalized}. Check your inbox.`);
   };
 
   return (
@@ -126,6 +128,8 @@ export default function EmployeeLogin() {
             Sign in with your PRI Global account
           </p>
         </div>
+
+        <PortalPreviewBanner compact className="mb-6" />
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -169,6 +173,12 @@ export default function EmployeeLogin() {
             Remember me
           </label>
 
+          {resetNotice && (
+            <p className="text-sm text-emerald-600 dark:text-emerald-400" role="status">
+              {resetNotice}
+            </p>
+          )}
+
           {error && (
             <p className="text-sm text-red-600 dark:text-red-400" role="alert">
               {error}
@@ -198,7 +208,7 @@ export default function EmployeeLogin() {
           </a>
         </p>
 
-        {!isSupabaseConfigured && isDemoLoginConfigured() && (
+        {!isSupabaseConfigured && showDevDemoCredentials() && (
           <p className="text-[10px] text-center text-[var(--text-muted)] mt-4">
             Local demo email: {EMPLOYEE_DEMO.email}
           </p>

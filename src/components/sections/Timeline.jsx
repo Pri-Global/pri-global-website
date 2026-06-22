@@ -98,7 +98,7 @@ export default function Timeline({ condensed = false }) {
       id="timeline"
       className={`${condensed ? "py-16" : "py-20 md:py-28"} bg-[var(--bg-primary)]`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

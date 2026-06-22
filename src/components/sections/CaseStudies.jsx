@@ -233,7 +233,7 @@ export default function CaseStudies({
         animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="site-container relative">
         {showHeader && (
           <SectionHeading
             label="Success Stories"

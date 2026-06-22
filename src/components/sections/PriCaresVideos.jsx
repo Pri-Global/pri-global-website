@@ -12,7 +12,7 @@ const caresVideos = [
 export default function PriCaresVideos() {
   return (
     <section id="pri-cares" className="py-20 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <SectionHeading
           label="PRI Cares"
           heading="Giving Back to the Communities We Serve"

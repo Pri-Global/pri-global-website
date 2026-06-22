@@ -8,9 +8,10 @@ import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
 import {
   CLIENT_DEMO_ACCOUNTS,
-  isDemoLoginConfigured,
   matchClientDemo,
 } from "../../data/portalDemoCredentials";
+import { showDevDemoCredentials } from "../../utils/portalEnv";
+import PortalPreviewBanner from "../../components/portal/PortalPreviewBanner";
 import {
   isSupabaseConfigured,
   signInWithSupabase,
@@ -28,6 +29,7 @@ export default function CustomerLogin() {
   const [error, setError] = useState("");
   const [shaking, setShaking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [resetNotice, setResetNotice] = useState("");
 
   if (isLoggedIn(AUTH_KEYS.customer)) {
     return <Navigate to="/customer-dashboard" replace />;
@@ -106,7 +108,7 @@ export default function CustomerLogin() {
       return;
     }
     setError("");
-    alert(`Password reset link sent to ${normalized}. Check your inbox.`);
+    setResetNotice(`Password reset link sent to ${normalized}. Check your inbox.`);
   };
 
   const accent = tab === "hiring" ? "#1A56DB" : "#f59e0b";
@@ -141,10 +143,17 @@ export default function CustomerLogin() {
             ))}
           </div>
 
+          <PortalPreviewBanner compact className="mb-6" />
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputClass} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputClass} />
-            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+            {resetNotice && (
+              <p className="text-sm text-emerald-600 dark:text-emerald-400" role="status">
+                {resetNotice}
+              </p>
+            )}
+            {error && <p className="text-sm text-red-600 dark:text-red-400" role="alert">{error}</p>}
             <Button type="submit" className="w-full" style={{ backgroundColor: accent }} disabled={submitting}>
               {submitting ? "Signing in..." : "Sign In →"}
             </Button>
@@ -158,7 +167,7 @@ export default function CustomerLogin() {
             </button>
           </form>
 
-          {isDemoLoginConfigured() && (
+          {showDevDemoCredentials() && (
             <div className="mt-6 space-y-2 text-[10px] text-center text-[var(--text-muted)] leading-relaxed">
               <p>Local demo — Hiring: {CLIENT_DEMO_ACCOUNTS.hiring.email}</p>
               <p>Local demo — Services: {CLIENT_DEMO_ACCOUNTS.services.email}</p>

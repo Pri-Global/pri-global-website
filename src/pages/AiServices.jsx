@@ -96,8 +96,17 @@ export default function AiServices() {
     <>
       <SEO
         title="AI Services & PRI AI Pods™"
-        description="Stop trying to hire AI teams — start building with one. PRI AI Pods™ deliver ready-built AI delivery teams in weeks: Flex, Scale, and Dedicated engagement models."
+        description="Ready-built AI delivery teams in weeks — Flex, Scale, and Dedicated models. Stop hiring AI teams from scratch. Explore PRI AI Pods™ and start building today."
+        keywords="AI services, PRI AI Pods, AI delivery teams, enterprise AI, machine learning teams, PRI Global"
         url="/ai-services"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "AI Services", url: "/ai-services" },
+        ]}
+        service={{
+          name: "AI Services & PRI AI Pods™",
+          description: "Ready-built AI delivery teams with Flex, Scale, and Dedicated engagement models.",
+        }}
       />
 
       {/* Hero */}
@@ -106,7 +115,7 @@ export default function AiServices() {
           <div className="absolute -top-32 right-0 w-[480px] h-[480px] bg-royaldark/20 rounded-full blur-[100px]" />
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-royal/10 rounded-full blur-[80px]" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+        <div className="site-container relative text-center">
           <span className="inline-block text-xs font-semibold text-royaldark uppercase tracking-widest mb-4">
             {aiPodsHero.eyebrow}
           </span>
@@ -132,7 +141,7 @@ export default function AiServices() {
 
       {/* Problem + Solution */}
       <section className="py-16 md:py-20 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8">
               <h2 className="font-heading text-2xl font-bold text-[var(--text-primary)] mb-4">
@@ -168,7 +177,7 @@ export default function AiServices() {
 
       {/* Outcomes */}
       <section className="py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="Outcomes"
             heading={aiPodsOutcomes.title}
@@ -198,7 +207,7 @@ export default function AiServices() {
 
       {/* Pod tiers */}
       <section className="py-16 md:py-24 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="Pod options"
             heading="Choose the right level of AI support"
@@ -215,7 +224,7 @@ export default function AiServices() {
 
       {/* PR1SM cross-link */}
       <section className="py-14 border-y border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 rounded-2xl bg-navy p-8 md:p-10">
             <div className="max-w-xl">
               <p className="text-xs font-semibold uppercase tracking-widest text-royaldark mb-2">

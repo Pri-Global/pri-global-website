@@ -12,7 +12,8 @@ import {
   BookOpen,
   Building2,
   Target,
-  Newspaper,
+  Sparkles,
+  Mail,
 } from "lucide-react";
 
 export const servicesDropdown = {
@@ -54,14 +55,15 @@ export const aiDropdown = {
 
 export const resourcesDropdown = {
   items: [
-    { icon: BookOpen, label: "Resources Overview", desc: "News, insights, and company updates", to: "/resources" },
-    { icon: Newspaper, label: "News & Updates", desc: "Latest from PRI Global", to: "/resources" },
+    { icon: BookOpen, label: "Resources & News", desc: "News, case studies, and insights", to: "/resources" },
+    { icon: Sparkles, label: "Solution Finder Quiz", desc: "Find the right PRI service in 4 questions", to: "/quiz" },
   ],
 };
 
 export const companyDropdown = {
   items: [
     { icon: Building2, label: "About Us", desc: "Our story, team, and values", to: "/about" },
+    { icon: Mail, label: "Contact", desc: "Get in touch with our team", to: "/contact" },
     { icon: Target, label: "Why PRI Global", desc: "Discover what sets us apart", to: "/why-pri-global" },
     { icon: Briefcase, label: "Industries", desc: "Sectors we serve worldwide", to: "/industries" },
     { icon: Users, label: "Careers", desc: "Join our growing team", to: "/careers" },

@@ -9,7 +9,7 @@ export default function CallToAction() {
 
   return (
     <section className="py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div
           ref={ref}
           className={`relative rounded-xl3 bg-navy overflow-hidden px-8 py-14 md:px-16 md:py-20 text-center ${

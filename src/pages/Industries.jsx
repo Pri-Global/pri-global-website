@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { industries } from "../data/industries";
 import SEO from "../components/SEO";
+import Breadcrumbs from "../components/ui/Breadcrumbs";
 import SectionHeading from "../components/ui/SectionHeading";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import CallToAction from "../components/sections/CallToAction";
@@ -31,15 +32,27 @@ export default function Industries() {
     <>
       <SEO
         title="Industries We Serve"
-        description="PRI Global serves Financial Services, Manufacturing, Healthcare, Consumer Packaged Goods, Public Sector, and Retail industries with specialized IT solutions."
+        description="Specialized IT solutions for financial services, manufacturing, healthcare, retail, and public sector. PRI Global brings 28+ years of domain expertise. Talk to us today."
+        keywords="financial services IT, healthcare technology, manufacturing IT, retail technology, public sector IT, PRI Global industries"
         url="/industries"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Industries", url: "/industries" },
+        ]}
       />
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-16 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="page-hero pb-16 bg-[var(--bg-secondary)]">
+        <div className="site-container">
+          <Breadcrumbs
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Industries", url: "/industries" },
+            ]}
+          />
           <SectionHeading
+            as="h1"
             label="Industries"
-            heading="Deep expertise across key sectors"
+            heading="Industries We Serve"
             subheading="We don't just understand technology—we understand how it applies within your industry. Our consultants bring real domain knowledge to every engagement."
             align="left"
           />
@@ -48,7 +61,7 @@ export default function Industries() {
 
       {/* Industry grid */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div ref={ref} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {industries.map((ind, i) => {
               const Icon = ICON_MAP[ind.icon] || Landmark;
@@ -63,7 +76,9 @@ export default function Industries() {
                   <div className="relative h-[180px] overflow-hidden bg-[var(--bg-tertiary)]">
                     <img
                       src={ind.image}
-                      alt={ind.title}
+                      alt={`${ind.title} IT solutions by PRI Global`}
+                      width={400}
+                      height={180}
                       className="w-full h-full object-cover transition-opacity duration-500 opacity-0"
                       loading="lazy"
                       decoding="async"
@@ -106,7 +121,7 @@ export default function Industries() {
 
       {/* Strip */}
       <section className="py-16 bg-navy">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="site-container text-center">
           <h2 className="font-heading text-3xl font-bold text-white mb-4">
             Don&apos;t see your industry?
           </h2>

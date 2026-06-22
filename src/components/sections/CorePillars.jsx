@@ -57,7 +57,7 @@ const pillars = [
 export default function CorePillars() {
   return (
     <section className="py-20 md:py-28 bg-[var(--bg-secondary)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <SectionHeading
           label="What we deliver"
           heading="Staffing. SOW. Managed services. AI."

@@ -27,7 +27,7 @@ function DropdownLink({ item, onClose }) {
   );
 
   const className =
-    "flex items-start gap-3 p-3 rounded-lg hover:bg-royal/5 dark:hover:bg-royaldark/10 transition-colors group";
+    "flex items-start gap-3 p-3 rounded-lg hover:bg-royal/5 dark:hover:bg-royaldark/10 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal/40";
 
   if (item.external) {
     return (
@@ -36,6 +36,7 @@ function DropdownLink({ item, onClose }) {
         target="_blank"
         rel="noopener noreferrer"
         className={className}
+        role="menuitem"
         onClick={onClose}
       >
         {inner}
@@ -44,7 +45,12 @@ function DropdownLink({ item, onClose }) {
   }
 
   return (
-    <Link to={item.to} className={className} onClick={() => { onClose(); scrollToPageTop(); }}>
+    <Link
+      to={item.to}
+      className={className}
+      role="menuitem"
+      onClick={() => { onClose(); scrollToPageTop(); }}
+    >
       {inner}
     </Link>
   );
@@ -62,16 +68,54 @@ export default function MegaDropdown({
   triggerClassName = "",
 }) {
   const ref = useRef(null);
+  const triggerRef = useRef(null);
+  const menuRef = useRef(null);
+  const menuId = `${label.replace(/\s+/g, "-").toLowerCase()}-menu`;
 
   useEffect(() => {
-    if (!isOpen) return;
-    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    if (!isOpen) return undefined;
+
     const onClick = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
-    document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onClick);
+
+    const menu = menuRef.current;
+    const getItems = () => (menu ? [...menu.querySelectorAll('[role="menuitem"]')] : []);
+
+    const onKeyDown = (e) => {
+      const items = getItems();
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        triggerRef.current?.focus();
+        return;
+      }
+
+      if (!items.length) return;
+
+      const idx = items.indexOf(document.activeElement);
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        items[(idx + 1) % items.length]?.focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        items[(idx <= 0 ? items.length : idx) - 1]?.focus();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        items[0]?.focus();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        items[items.length - 1]?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    requestAnimationFrame(() => getItems()[0]?.focus());
+
     return () => {
-      document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [isOpen, onClose]);
 
@@ -83,10 +127,13 @@ export default function MegaDropdown({
       onMouseLeave={onClose}
     >
       <button
+        ref={triggerRef}
         type="button"
         onClick={onToggle}
-        className={`relative flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)] ${triggerClassName}`}
+        className={`relative flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--border-subtle)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal/40 ${triggerClassName}`}
         aria-expanded={isOpen}
+        aria-haspopup="true"
+        aria-controls={isOpen ? menuId : undefined}
       >
         {label}
         {badge}
@@ -94,6 +141,7 @@ export default function MegaDropdown({
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
           className="inline-flex"
+          aria-hidden
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
         </motion.span>
@@ -102,6 +150,7 @@ export default function MegaDropdown({
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={menuRef}
             initial={{ opacity: 0, scale: 0.95, y: 4 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 4 }}
@@ -110,6 +159,9 @@ export default function MegaDropdown({
             className={`absolute top-full left-0 mt-2 z-50 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] dark:bg-[#16181e] shadow-xl p-6 ${
               wide ? "w-[480px]" : "w-80"
             }`}
+            id={menuId}
+            role="menu"
+            aria-label={label}
           >
             {children}
           </motion.div>
@@ -149,8 +201,9 @@ export function DropdownColumns({ columns, cta, onClose }) {
       {cta && (
         <Link
           to={cta.to}
+          role="menuitem"
           onClick={() => { onClose(); scrollToPageTop(); }}
-          className="mt-5 block p-4 rounded-xl bg-royal/8 dark:bg-royaldark/12 border border-royal/20 hover:border-royal/40 transition-colors"
+          className="mt-5 block p-4 rounded-xl bg-royal/8 dark:bg-royaldark/12 border border-royal/20 hover:border-royal/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal/40"
         >
           <p className="font-heading font-semibold text-sm text-[var(--text-primary)]">{cta.title}</p>
           <p className="text-xs text-royal dark:text-royaldark mt-1">{cta.action}</p>

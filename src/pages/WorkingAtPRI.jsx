@@ -25,12 +25,18 @@ export default function WorkingAtPRI() {
   return (
     <>
       <SEO
-        title="Working at PRI"
-        description="Experience industry-leading rewards, challenges, and benefits at PRI Global. Learning programs, EAP, referral bonuses, and an innovative St. Louis headquarters."
+        title="Working at PRI Global"
+        description="Industry-leading rewards, learning programs, EAP, referral bonuses, and an innovative St. Louis headquarters. Discover what makes PRI Global a great place to work."
+        keywords="working at PRI Global, employee benefits, St Louis headquarters, IT company culture"
         url="/working-at-pri"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Careers", url: "/careers" },
+          { name: "Working at PRI", url: "/working-at-pri" },
+        ]}
       />
 
-      <section className="pt-24 sm:pt-32 pb-16 bg-[var(--bg-secondary)]">
+      <section className="page-hero pb-16 bg-[var(--bg-secondary)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="inline-block text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-3">

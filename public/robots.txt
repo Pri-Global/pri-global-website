@@ -3,9 +3,13 @@ Allow: /
 Disallow: /employee-login
 Disallow: /employee-dashboard
 Disallow: /candidate-login
+Disallow: /candidate-register
 Disallow: /candidate-dashboard
 Disallow: /candidate-profile
 Disallow: /customer-login
+Disallow: /customer-register
 Disallow: /customer-dashboard
 Disallow: /cookie-settings
+Disallow: /legal
+
 Sitemap: https://pri-global.vercel.app/sitemap.xml

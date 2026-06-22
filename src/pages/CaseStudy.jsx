@@ -23,7 +23,8 @@ import CaseStudyImage from "../components/caseStudies/CaseStudyImage";
 import CaseStudyMetric from "../components/caseStudies/CaseStudyMetric";
 import { formatNewsDate } from "../utils/formatNewsDate";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
-import SEO from "../components/SEO";
+import SEO, { BASE_URL } from "../components/SEO";
+import Breadcrumbs from "../components/ui/Breadcrumbs";
 import Button from "../components/ui/Button";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 
@@ -75,10 +76,26 @@ export default function CaseStudy() {
   return (
     <>
     <SEO
-      title={study.title}
-      description={study.summary || study.excerpt || `Case study: ${study.title} — PRI Global success story.`}
+      title={study.title.length > 46 ? study.title.slice(0, 43) + "…" : study.title}
+      description={
+        (study.summary || study.excerpt || `Case study: ${study.title} — PRI Global success story.`).slice(0, 155)
+      }
+      keywords={`${study.industry} case study, PRI Global, IT solutions, technology consulting`}
+      image={study.imageUrl ? `${BASE_URL}${study.imageUrl}` : undefined}
       url={`/case-studies/${slug}`}
       type="article"
+      breadcrumbs={[
+        { name: "Home", url: "/" },
+        { name: "Resources", url: "/resources" },
+        { name: "Case Studies", url: "/resources" },
+        { name: study.title, url: `/case-studies/${slug}` },
+      ]}
+      article={{
+        title: study.title,
+        description: study.summary || study.excerpt,
+        datePublished: study.date,
+        dateModified: study.date,
+      }}
     />
     <article className="pb-24 md:pb-28">
       <section className="pt-28 md:pt-32 pb-12 relative overflow-hidden">
@@ -88,6 +105,14 @@ export default function CaseStudy() {
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <Breadcrumbs
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Resources", url: "/resources" },
+              { name: "Case Studies", url: "/resources" },
+              { name: study.title, url: `/case-studies/${slug}` },
+            ]}
+          />
           <motion.div {...fadeUp(0)}>
             <Link
               to="/resources"

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Users, Server, Database, BrainCircuit, Zap, ArrowLeft, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedIcon from "../ui/AnimatedIcon";
+import Breadcrumbs from "../ui/Breadcrumbs";
 import { BOOKING_URL } from "../../constants/links";
 
 const STORAGE_KEY = "pri-quiz-result";
@@ -237,7 +238,7 @@ function ResultCta({ cta, variant = "primary" }) {
   );
 }
 
-export default function SolutionQuiz({ standalone = false }) {
+export default function SolutionQuiz({ standalone = false, showBreadcrumbs = false }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
@@ -309,6 +310,14 @@ export default function SolutionQuiz({ standalone = false }) {
       className={`${standalone ? "pt-28 pb-20" : "py-20 md:py-28"} bg-[var(--bg-secondary)]`}
     >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {showBreadcrumbs && (
+          <Breadcrumbs
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Solution Finder", url: "/quiz" },
+            ]}
+          />
+        )}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -318,9 +327,15 @@ export default function SolutionQuiz({ standalone = false }) {
           <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">
             Find Your Fit
           </span>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
-            Which PRI Global Solution Is Right for You?
-          </h2>
+          {standalone ? (
+            <h1 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
+              Which PRI Global Solution Is Right for You?
+            </h1>
+          ) : (
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
+              Which PRI Global Solution Is Right for You?
+            </h2>
+          )}
           <p className="text-[var(--text-secondary)]">
             Answer 4 quick questions and we&apos;ll point you in the right direction.
           </p>

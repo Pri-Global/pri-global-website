@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import LiveCounter from "../ui/LiveCounter";
 import { calcROI } from "../../utils/roiCalc";
+import { submitLeadEmail } from "../../utils/submitLeadEmail";
 
 function SliderField({ label, value, min, max, step, onChange, display }) {
   return (
@@ -72,15 +73,25 @@ function LeadCapture({ employees, systems }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
+  const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`ROI Analysis Request — ${company || "PRI Global"}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\nEmployees: ${employees}\nDisconnected systems: ${systems}\n\nPlease send me a personalized PR1SM.AI ROI analysis.`
-    );
-    window.location.href = `mailto:liezl.moss@PR1SM.AI?subject=${subject}&body=${body}`;
+    const subject = `ROI Analysis Request — ${company || "PRI Global"}`;
+    const body =
+      `Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\nEmployees: ${employees}\nDisconnected systems: ${systems}\n\nPlease send me a personalized PR1SM.AI ROI analysis.`;
+
+    await submitLeadEmail({ to: "liezl.moss@PR1SM.AI", subject, body });
+    setSent(true);
   };
+
+  if (sent) {
+    return (
+      <p className="mt-8 pt-8 border-t border-white/10 text-sm text-emerald-300 text-center" role="status">
+        Request prepared — check your email app or paste from clipboard to liezl.moss@PR1SM.AI.
+      </p>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 pt-8 border-t border-white/10 space-y-4">
@@ -88,7 +99,9 @@ function LeadCapture({ employees, systems }) {
         Want a personalized ROI analysis from our team?
       </p>
       <div className="grid sm:grid-cols-3 gap-3">
+        <label className="sr-only" htmlFor="roi-lead-name">Name</label>
         <input
+          id="roi-lead-name"
           type="text"
           required
           placeholder="Name"
@@ -96,7 +109,9 @@ function LeadCapture({ employees, systems }) {
           onChange={(e) => setName(e.target.value)}
           className="px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-royaldark"
         />
+        <label className="sr-only" htmlFor="roi-lead-email">Email</label>
         <input
+          id="roi-lead-email"
           type="email"
           required
           placeholder="Email"
@@ -104,7 +119,9 @@ function LeadCapture({ employees, systems }) {
           onChange={(e) => setEmail(e.target.value)}
           className="px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-royaldark"
         />
+        <label className="sr-only" htmlFor="roi-lead-company">Company</label>
         <input
+          id="roi-lead-company"
           type="text"
           required
           placeholder="Company"
@@ -115,7 +132,7 @@ function LeadCapture({ employees, systems }) {
       </div>
       <button
         type="submit"
-        className="w-full px-6 py-3 rounded-xl bg-royaldark text-white font-semibold text-sm hover:bg-royaldark/80 transition-colors"
+        className="w-full px-6 py-3 rounded-xl bg-royaldark text-white font-semibold text-sm hover:bg-royaldark/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
       >
         Send Me My Analysis
       </button>
@@ -182,7 +199,7 @@ export default function ROICalculator({ showPageHero = false, compact = false })
         <div className="absolute -top-32 right-0 w-96 h-96 bg-royaldark/10 rounded-full blur-[100px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="site-container relative">
         {showPageHero && (
           <motion.div
             initial={{ opacity: 0, y: 24 }}

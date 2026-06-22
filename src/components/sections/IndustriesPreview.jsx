@@ -26,7 +26,7 @@ const ICON_MAP = {
 export default function IndustriesPreview() {
   return (
     <section className="py-20 md:py-28 bg-[var(--bg-primary)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
           <SectionHeading
             label="Industries"

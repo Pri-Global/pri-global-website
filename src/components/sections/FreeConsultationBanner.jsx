@@ -7,7 +7,7 @@ import { HUBSPOT_MEETING_URL } from "../../constants/links";
 export default function FreeConsultationBanner() {
   return (
     <section className="py-10 md:py-12 bg-[var(--bg-primary)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -30,7 +30,7 @@ export default function NotFound() {
 
   return (
     <>
-      <SEO title="404 — Page Not Found" description="The page you are looking for does not exist." noindex />
+      <SEO title="404 — Page Not Found" description="The page you are looking for does not exist on PRI Global. Return to our homepage or explore our IT services." url="/404" noindex />
 
       <section className="relative min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-24 overflow-hidden">
         <motion.span

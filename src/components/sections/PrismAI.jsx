@@ -82,7 +82,7 @@ export default function PrismAI() {
       {/* Dot grid overlay */}
       <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="site-container relative">
         <div ref={ref} className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* ── Left: Text ──────────────────────────────────── */}

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useCookieBannerVisible } from "../../hooks/useCookieBannerVisible";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import usePriVa from "./usePriVa";
@@ -25,6 +26,7 @@ function MessageBubble({ message }) {
 
 export default function PriVaWidget() {
   const [open, setOpen] = useState(false);
+  const cookieBannerVisible = useCookieBannerVisible();
   const { messages, input, setInput, loading, sendMessage } = usePriVa();
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
@@ -53,7 +55,11 @@ export default function PriVaWidget() {
   };
 
   return (
-    <div className="lg:hidden fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div
+      className={`lg:hidden fixed right-6 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-300 ${
+        cookieBannerVisible ? "bottom-36" : "bottom-6"
+      }`}
+    >
       <AnimatePresence>
         {open && (
           <motion.div
@@ -128,6 +134,7 @@ export default function PriVaWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKey}
                 placeholder="Ask me anything..."
+                aria-label="Message PriVa"
                 className="flex-1 text-sm glass-input rounded-xl px-3 py-2 bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none"
               />
               <button

@@ -1,6 +1,7 @@
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
+import Breadcrumbs from "../components/ui/Breadcrumbs";
 import { services, iconMap } from "../data/services";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
@@ -69,15 +70,32 @@ export default function Services() {
     <>
       <SEO
         title="IT Services & Technology Solutions"
-        description="PRI Global offers 9 integrated technology services: IT Staffing, Managed IT, Cybersecurity, Cloud Transformation, AI Services & PRI AI Pods™, Data Solutions, Business Transformation, IT Consulting, and Network Services."
+        description="Nine integrated IT services from PRI Global: staffing, managed IT, cybersecurity, cloud, AI Pods™, data, and consulting. Get a custom proposal in 24 hours."
+        keywords="IT services, managed IT, cybersecurity, cloud transformation, AI services, technology consulting, PRI Global"
         url="/services"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+        ]}
+        service={{
+          name: "IT Services & Technology Solutions",
+          description:
+            "Nine integrated technology services including IT staffing, managed IT, cybersecurity, cloud transformation, and AI services.",
+        }}
       />
-      <section className="pt-24 sm:pt-32 pb-16 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="page-hero pb-16 bg-[var(--bg-secondary)]">
+        <div className="site-container">
+          <Breadcrumbs
+            items={[
+              { name: "Home", url: "/" },
+              { name: "Services", url: "/services" },
+            ]}
+          />
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <SectionHeading
+              as="h1"
               label="Services"
-              heading="Everything you need to compete and grow"
+              heading="IT Services & Technology Solutions"
               subheading="Nine integrated capability areas. One trusted partner. Outcomes that matter."
               align="left"
             />
@@ -91,7 +109,7 @@ export default function Services() {
       <TrustBar />
 
       <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <ClientLogos label="Clients we're proud to work with" />
         </div>
       </div>
@@ -99,7 +117,7 @@ export default function Services() {
       <ServiceOutcomes />
 
       <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           {services.map((svc, i) => (
             <ServiceDetail key={svc.id} svc={svc} index={i} />
           ))}

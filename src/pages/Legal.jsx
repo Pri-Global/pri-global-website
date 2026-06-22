@@ -24,7 +24,7 @@ const sections = [
   },
   {
     title: "Contact",
-    body: "For legal inquiries: 636.256.7172 | priglobal.com/contact",
+    body: "For legal inquiries, call 636.256.7172 or email info@priglobal.com.",
   },
 ];
 

@@ -64,7 +64,9 @@ export default function CaseStudyImage({
           )}
           <motion.img
             src={study.imageUrl}
-            alt={study.title}
+            alt={`${study.title} — ${study.industry} case study by PRI Global`}
+            width={320}
+            height={320}
             initial={animate ? { opacity: 0, scale: 0.92 } : false}
             animate={loaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}

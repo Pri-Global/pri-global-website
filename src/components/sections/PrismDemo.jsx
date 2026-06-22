@@ -49,7 +49,7 @@ export default function PrismDemo({ compact = false }) {
 
   return (
     <section id="demo" className={compact ? "py-16" : "py-20 md:py-28 bg-[var(--bg-secondary)]"}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {!compact && (
           <motion.div
             initial={{ opacity: 0, y: 24 }}

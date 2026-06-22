@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LogOut, Menu, X } from "lucide-react";
 import BrandLogo from "../ui/BrandLogo";
+import PortalPreviewBanner from "./PortalPreviewBanner";
 import { getInitials } from "../../hooks/usePortalAuth";
 import { scrollToHash } from "../../utils/scrollToHash";
 
@@ -166,9 +167,10 @@ export default function PortalLayout({
           </div>
         </div>
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden">
+        <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden" role="region" aria-label="Portal content">
+          <PortalPreviewBanner className="mb-6" />
           {children}
-        </main>
+        </div>
       </div>
 
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--bg-primary)] border-t border-[var(--border)] flex justify-around py-2 px-1 safe-area-pb">

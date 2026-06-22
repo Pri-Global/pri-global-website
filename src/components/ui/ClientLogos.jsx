@@ -5,7 +5,6 @@ import hershey          from "../../assets/partners/HersheyCo.svg.png";
 import bayer            from "../../assets/partners/Logo_Bayer.svg";
 import lucidMotors      from "../../assets/partners/Lucid_Motors_logo.svg.png";
 import lumen            from "../../assets/partners/Lumen_Technologies_logo.svg.png";
-import mastercard       from "../../assets/partners/Mastercard-logo.svg";
 import mercy            from "../../assets/partners/Mercy-Hospital-Logo.png";
 import meta             from "../../assets/partners/Meta_Platforms_Inc._logo_(cropped).svg.png";
 import schnucks         from "../../assets/partners/Schnuck's_Logo.PNG";
@@ -22,7 +21,6 @@ const logos = [
   { src: bayer,           alt: "Bayer" },
   { src: lucidMotors,     alt: "Lucid Motors" },
   { src: lumen,           alt: "Lumen Technologies" },
-  { src: mastercard,      alt: "Mastercard" },
   { src: mercy,           alt: "Mercy Hospital" },
   { src: meta,            alt: "Meta" },
   { src: schnucks,        alt: "Schnucks" },

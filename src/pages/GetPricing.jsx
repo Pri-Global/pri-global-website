@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId, cloneElement, isValidElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Phone, Mail, ArrowRight, ArrowLeft, Calendar } from "lucide-react";
 import Button from "../components/ui/Button";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
+import ClientLogos from "../components/ui/ClientLogos";
 import SEO from "../components/SEO";
 import { BOOKING_URL } from "../constants/links";
 import { scrollToPageTop } from "../utils/scrollToPageTop";
+import { submitLeadEmail } from "../utils/submitLeadEmail";
 
 const TRUST_POINTS = [
   "No obligation — just a conversation",
@@ -60,6 +62,7 @@ export default function GetPricing() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [copiedFallback, setCopiedFallback] = useState(false);
 
   useEffect(() => {
     scrollToPageTop();
@@ -79,15 +82,24 @@ export default function GetPricing() {
   const step1Valid =
     form.firstName && form.lastName && form.company && form.jobTitle && form.email && form.phone;
 
-  const handleSubmit = (e) => {
+  const step2Valid = form.services.length > 0 && form.timeline;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!step2Valid) return;
+
     const name = `${form.firstName} ${form.lastName}`;
-    const services = form.services.join(", ") || "Not specified";
-    const subject = encodeURIComponent(`Pricing Request from ${form.company}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nCompany: ${form.company}\nJob Title: ${form.jobTitle}\nEmail: ${form.email}\nPhone: ${form.phone}\nCompany Size: ${form.companySize || "Not specified"}\nServices: ${services}\nTimeline: ${form.timeline || "Not specified"}\nBudget: ${form.budget || "Not specified"}\n\nMessage:\n${form.message || "—"}`
-    );
-    window.location.href = `mailto:ajay@pr1sm.ai,liezl.moss@PR1SM.AI?subject=${subject}&body=${body}`;
+    const services = form.services.join(", ");
+    const subject = `Pricing Request from ${form.company}`;
+    const body =
+      `Name: ${name}\nCompany: ${form.company}\nJob Title: ${form.jobTitle}\nEmail: ${form.email}\nPhone: ${form.phone}\nCompany Size: ${form.companySize || "Not specified"}\nServices: ${services}\nTimeline: ${form.timeline}\nBudget: ${form.budget || "Not specified"}\n\nMessage:\n${form.message || "—"}`;
+
+    const { copied } = await submitLeadEmail({
+      to: "ajay@pr1sm.ai,liezl.moss@PR1SM.AI",
+      subject,
+      body,
+    });
+    setCopiedFallback(copied);
     setSubmitted(true);
   };
 
@@ -95,9 +107,14 @@ export default function GetPricing() {
     return (
       <>
       <SEO
-        title="Get Pricing — Custom IT Solutions Proposal"
-        description="Request a custom pricing proposal from PRI Global. IT staffing, managed services, or PR1SM.AI — we respond within 24 business hours."
+        title="Get Pricing — IT Solutions Proposal"
+        description="Request a custom pricing proposal from PRI Global for IT staffing, managed services, or PR1SM.AI. We respond within 24 business hours. Get your quote today."
+        keywords="IT pricing, custom IT proposal, PRI Global quote, managed services pricing, staffing rates"
         url="/get-pricing"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Get Pricing", url: "/get-pricing" },
+        ]}
       />
       <section className="min-h-[70vh] flex items-center justify-center pt-28 pb-20 px-4">
         <motion.div
@@ -111,9 +128,26 @@ export default function GetPricing() {
           <h1 className="font-heading text-3xl font-bold text-[var(--text-primary)] mb-4">
             Thank you, {form.firstName}!
           </h1>
-          <p className="text-[var(--text-secondary)] mb-8">
-            We&apos;ll be in touch within 24 hours. In the meantime, explore PR1SM.AI →
+          <p className="text-[var(--text-secondary)] mb-4">
+            We&apos;ll be in touch within 24 hours.
           </p>
+          {copiedFallback && (
+            <p className="text-sm text-[var(--text-muted)] mb-6 max-w-md mx-auto">
+              Your request details were copied to your clipboard. If your email app didn&apos;t open,
+              paste them into an email to ajay@pr1sm.ai or{" "}
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="text-royal hover:underline">
+                book a call directly
+              </a>.
+            </p>
+          )}
+          {!copiedFallback && (
+            <p className="text-sm text-[var(--text-muted)] mb-6">
+              Prefer to talk now?{" "}
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="text-royal hover:underline">
+                Schedule a discovery call
+              </a>.
+            </p>
+          )}
           <div className="flex flex-wrap justify-center gap-4">
             <Button to="/ai-innovation" size="lg">
               Explore PR1SM.AI <ArrowRight size={18} />
@@ -131,12 +165,17 @@ export default function GetPricing() {
   return (
     <>
     <SEO
-      title="Get Pricing — Custom IT Solutions Proposal"
-      description="Request a custom pricing proposal from PRI Global. IT staffing, managed services, or PR1SM.AI — we respond within 24 business hours."
+      title="Get Pricing — IT Solutions Proposal"
+      description="Request a custom pricing proposal from PRI Global for IT staffing, managed services, or PR1SM.AI. We respond within 24 business hours. Get your quote today."
+      keywords="IT pricing, custom IT proposal, PRI Global quote, managed services pricing, staffing rates"
       url="/get-pricing"
+      breadcrumbs={[
+        { name: "Home", url: "/" },
+        { name: "Get Pricing", url: "/get-pricing" },
+      ]}
     />
     <section className="pt-28 pb-20 md:pt-32 md:pb-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -159,7 +198,8 @@ export default function GetPricing() {
                 </li>
               ))}
             </ul>
-            <div className="space-y-3 text-sm mb-8">
+            <ClientLogos label="Trusted by leading organizations" />
+            <div className="space-y-3 text-sm mb-8 mt-8">
               <a href="mailto:ajay@pr1sm.ai" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
                 <AnimatedIcon Icon={Mail} size={14} className="text-royal" /> Ajay Patel — ajay@pr1sm.ai
               </a>
@@ -318,7 +358,7 @@ export default function GetPricing() {
                       exit={{ opacity: 0, x: -20 }}
                       className="space-y-5"
                     >
-                      <Field label="Service Interest">
+                      <Field label="Service Interest" required>
                         <div className="grid sm:grid-cols-2 gap-2">
                           {SERVICES.map((svc) => (
                             <label
@@ -336,7 +376,7 @@ export default function GetPricing() {
                           ))}
                         </div>
                       </Field>
-                      <Field label="Timeline">
+                      <Field label="Timeline" required>
                         <div className="space-y-2">
                           {TIMELINES.map((t) => (
                             <label key={t} className="flex items-center gap-2 text-sm cursor-pointer">
@@ -382,7 +422,7 @@ export default function GetPricing() {
                         >
                           <ArrowLeft size={16} /> Back
                         </button>
-                        <Button type="submit" size="md">
+                        <Button type="submit" size="md" disabled={!step2Valid}>
                           Submit Request <ArrowRight size={16} />
                         </Button>
                       </div>
@@ -422,14 +462,18 @@ export default function GetPricing() {
 const inputClass =
   "w-full px-4 py-2.5 rounded-lg bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-primary)] text-sm focus:outline-none focus:border-royal/50 focus:ring-1 focus:ring-royal/20";
 
-function Field({ label, required, children }) {
+function Field({ label, required, id, children }) {
+  const autoId = useId();
+  const fieldId = id || autoId;
+  const control = isValidElement(children) ? cloneElement(children, { id: fieldId }) : children;
+
   return (
     <div>
-      <label className="block text-sm font-medium text-[var(--text-primary)] mb-1.5">
+      <label htmlFor={fieldId} className="block text-sm font-medium text-[var(--text-primary)] mb-1.5">
         {label}
         {required && <span className="text-royal ml-0.5">*</span>}
       </label>
-      {children}
+      {control}
     </div>
   );
 }

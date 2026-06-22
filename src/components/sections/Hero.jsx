@@ -1,6 +1,6 @@
 import { memo, useRef, useEffect, useState } from "react";
-import { ArrowRight, Sparkles, Send, Calendar, Bot, MessageCircle } from "lucide-react";
-import { HUBSPOT_MEETING_URL } from "../../constants/links";
+import { Link } from "react-router-dom";
+import { ArrowRight, Sparkles, Send, Bot, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import AnimatedIcon from "../ui/AnimatedIcon";
@@ -311,15 +311,18 @@ const HeroChatCard = memo(function HeroChatCard() {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex items-center page-hero pb-16 xl:pb-20 2xl:pb-24 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
         <HeroBackgroundVideo />
         {/* Mobile: static background (saves bandwidth) */}
         <img
           src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80"
-          alt=""
+          alt="Global technology network visualization — PRI Global IT services"
+          width={1920}
+          height={1080}
           className="md:hidden absolute inset-0 w-full h-full object-cover opacity-[0.08]"
           loading="eager"
+          fetchPriority="high"
           decoding="async"
         />
         {/* Readability overlays — lighter in dark mode so video shows through */}
@@ -331,8 +334,8 @@ export default function Hero() {
         <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-navy/4 dark:bg-royaldark/5 blur-[90px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="site-container relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 items-center">
           <div>
             <motion.div
               {...fadeUp(0.1)}
@@ -348,7 +351,7 @@ export default function Hero() {
               variants={wordContainer}
               initial="initial"
               animate="animate"
-              className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.08] mb-6 overflow-hidden drop-shadow-sm"
+              className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[4.5rem] 2xl:text-8xl font-bold leading-[1.08] mb-6 xl:mb-8 overflow-hidden drop-shadow-sm"
             >
               {h1Lines.map((line, li) => (
                 <span key={li} className={`block ${line.className}`}>
@@ -383,7 +386,7 @@ export default function Hero() {
 
             <motion.p
               {...fadeUp(0.5)}
-              className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed mb-8 max-w-lg md:max-w-xl"
+              className="text-lg md:text-xl xl:text-2xl text-[var(--text-secondary)] leading-relaxed mb-8 xl:mb-10 max-w-lg md:max-w-xl xl:max-w-2xl"
             >
               PRI Global delivers IT staffing, SOW project teams, managed services, and PR1SM.AI —
               backed by 28+ years of trusted partnerships, including a 26+ year relationship with
@@ -394,25 +397,20 @@ export default function Hero() {
               <Button to="/get-pricing" variant="glass-accent" size="lg" className="w-full sm:w-auto">
                 Talk to an expert <ArrowRight size={18} />
               </Button>
-              <Button to="/careers" variant="glass" size="lg" className="w-full sm:w-auto">
-                Find a role
+              <Button to="/services" variant="glass" size="lg" className="w-full sm:w-auto">
+                Explore services
               </Button>
             </motion.div>
 
-            <motion.div {...fadeUp(0.7)} className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-sm">
-              <Button to="/services" variant="ghost" size="sm" className="px-0 h-auto font-medium">
-                Explore services →
-              </Button>
-              <a
-                href={HUBSPOT_MEETING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal dark:hover:text-royaldark hover:underline transition-colors"
+            <motion.p {...fadeUp(0.72)} className="mt-4 text-sm text-[var(--text-muted)]">
+              Looking for work?{" "}
+              <Link
+                to="/candidate-jobs"
+                className="font-medium text-royal dark:text-royaldark hover:underline"
               >
-                <Calendar size={15} className="shrink-0" />
-                Book a discovery call
-              </a>
-            </motion.div>
+                Browse open roles →
+              </Link>
+            </motion.p>
 
             <motion.div
               {...fadeUp(0.78)}

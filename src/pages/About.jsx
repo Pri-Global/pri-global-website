@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MapPin, Phone, ExternalLink, Mail, Star } from "lucide-react";
 import SEO from "../components/SEO";
+import Breadcrumbs from "../components/ui/Breadcrumbs";
 import { GLASSDOOR_URL } from "../constants/links";
 import { motion } from "framer-motion";
 import SectionHeading from "../components/ui/SectionHeading";
@@ -14,6 +15,7 @@ import PriGlobalLeaderRow from "../components/team/PriGlobalLeaderRow";
 import PrismTeamSection from "../components/team/PrismTeamSection";
 import PrismLeadershipDivider from "../components/team/PrismLeadershipDivider";
 import VideoSection from "../components/sections/VideoSection";
+import { submitLeadEmail } from "../utils/submitLeadEmail";
 import { VIDEOS } from "../data/videos";
 
 const values = [
@@ -48,30 +50,49 @@ export default function About() {
     email: "",
     message: "",
   });
+  const [contactSent, setContactSent] = useState(false);
+  const [contactCopied, setContactCopied] = useState(false);
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
     const name = `${contactForm.firstName} ${contactForm.lastName}`.trim();
-    const subject = encodeURIComponent(`Contact from ${name || "PRI Global website"}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${contactForm.email}\n\nMessage:\n${contactForm.message}`
-    );
-    window.location.href = `mailto:info@priglobal.com?subject=${subject}&body=${body}`;
+    const subject = `Contact from ${name || "PRI Global website"}`;
+    const body = `Name: ${name}\nEmail: ${contactForm.email}\n\nMessage:\n${contactForm.message}`;
+
+    const { copied } = await submitLeadEmail({
+      to: "info@priglobal.com",
+      subject,
+      body,
+    });
+    setContactCopied(copied);
+    setContactSent(true);
   };
 
   return (
     <>
       <SEO
-        title="About PRI Global — 28 Years of Technology Excellence"
-        description="Founded in 1997 in Ellisville, Missouri. PRI Global operates across USA, India, Philippines, and Canada. Meet our leadership team and learn our story."
+        title="About PRI Global — Since 1997"
+        description="Founded in Ellisville, Missouri in 1997. PRI Global operates across the USA, India, Philippines, and Canada with 12,700+ placements. Meet our leadership team today."
+        keywords="about PRI Global, technology consulting company, IT staffing company, Ellisville Missouri, PRI leadership"
         url="/about"
+        localBusiness
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "About", url: "/about" },
+        ]}
       />
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-20 relative overflow-hidden">
+      <section className="page-hero pb-20 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-royal/6 rounded-full blur-[120px]" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="site-container relative">
+          <Breadcrumbs
+            items={[
+              { name: "Home", url: "/" },
+              { name: "About", url: "/about" },
+            ]}
+          />
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-4">
@@ -108,7 +129,7 @@ export default function About() {
 
       {/* PRI Global Leadership */}
       <section className="py-24 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -149,7 +170,7 @@ export default function About() {
 
       {/* PR1SM.AI Team — always dark brand section */}
       <section className="py-24 bg-[#0d1628]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -183,7 +204,7 @@ export default function About() {
 
       {/* Values */}
       <section className="py-20 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading label="Our Values" heading="What drives us" className="mb-8" />
           <p className="text-sm text-[var(--text-secondary)] max-w-2xl mb-10 leading-relaxed border-l-2 border-royal pl-4">
             We built dark mode not as an afterthought — but as the primary experience for executives
@@ -226,7 +247,7 @@ export default function About() {
 
       {/* Talk to Our Leaders */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="text-center mb-10">
             <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">Direct Contact</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Talk to Our Leaders</h2>
@@ -286,7 +307,7 @@ export default function About() {
 
       {/* World map */}
       <section className="py-16 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="mb-6 text-center">
             <span className="text-xs font-semibold text-royal uppercase tracking-widest">
               Our Global Presence
@@ -314,7 +335,7 @@ export default function About() {
 
       {/* Contact */}
       <section id="contact" className="py-20 scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
               <SectionHeading
@@ -364,12 +385,19 @@ export default function About() {
             </div>
 
             <form className="space-y-4" onSubmit={handleContactSubmit}>
+              {contactSent && (
+                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-sm text-emerald-700 dark:text-emerald-400" role="status">
+                  Thank you — your message is ready to send.
+                  {contactCopied && " Details were copied to your clipboard if your email app did not open."}
+                </div>
+              )}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
+                  <label htmlFor="contact-first-name" className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
                     First name
                   </label>
                   <input
+                    id="contact-first-name"
                     type="text"
                     required
                     value={contactForm.firstName}
@@ -379,10 +407,11 @@ export default function About() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
+                  <label htmlFor="contact-last-name" className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
                     Last name
                   </label>
                   <input
+                    id="contact-last-name"
                     type="text"
                     required
                     value={contactForm.lastName}
@@ -393,10 +422,11 @@ export default function About() {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
+                <label htmlFor="contact-email" className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
                   Work email
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   required
                   value={contactForm.email}
@@ -406,10 +436,11 @@ export default function About() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
+                <label htmlFor="contact-message" className="block text-xs font-medium text-[var(--text-secondary)] mb-1.5">
                   Message
                 </label>
                 <textarea
+                  id="contact-message"
                   rows={4}
                   required
                   value={contactForm.message}

@@ -7,6 +7,8 @@ import Button from "../../components/ui/Button";
 import AnimatedIcon from "../../components/ui/AnimatedIcon";
 import { INDUSTRY_OPTIONS } from "../../data/portalDemoData";
 import { inputClass, labelClass } from "../../components/portal/portalStyles";
+import { submitLeadEmail } from "../../utils/submitLeadEmail";
+import PortalPreviewBanner from "../../components/portal/PortalPreviewBanner";
 
 const SERVICE_CARDS = [
   { id: "talent", title: "I need IT Talent", sub: "Find and hire specialized IT professionals", icon: Users },
@@ -32,12 +34,27 @@ export default function CustomerRegister() {
     interests: f.interests.includes(id) ? f.interests.filter((x) => x !== id) : [...f.interests, id],
   }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const body = encodeURIComponent(
-      `Company: ${form.company}\nIndustry: ${form.industry}\nContact: ${form.firstName} ${form.lastName}\nEmail: ${form.email}\nInterests: ${form.interests.join(", ")}\nUrgency: ${form.urgency}`
-    );
-    window.location.href = `mailto:liezl.moss@PR1SM.AI?subject=${encodeURIComponent("Client Portal Access Request")}&body=${body}`;
+    const body = [
+      `Company: ${form.company}`,
+      `Industry: ${form.industry}`,
+      `Company size: ${form.size}`,
+      `Website: ${form.website}`,
+      `Contact: ${form.firstName} ${form.lastName}`,
+      `Title: ${form.jobTitle}`,
+      `Email: ${form.email}`,
+      `Phone: ${form.phone}`,
+      `Heard about us: ${form.heard}`,
+      `Interests: ${form.interests.join(", ") || "—"}`,
+      `Urgency: ${form.urgency}`,
+    ].join("\n");
+
+    await submitLeadEmail({
+      to: "liezl.moss@PR1SM.AI",
+      subject: "Client Portal Access Request",
+      body,
+    });
     setDone(true);
   };
 
@@ -60,6 +77,7 @@ export default function CustomerRegister() {
       <section className="min-h-[calc(100vh-4rem)] py-24 px-4 bg-[var(--bg-secondary)]">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8"><BrandLogo size="lg" className="mx-auto mb-4" /><h1 className="font-heading text-2xl font-bold">Request Client Access</h1></div>
+          <PortalPreviewBanner compact className="mb-6" />
           <div className="h-1.5 bg-[var(--border)] rounded-full mb-8"><motion.div className="h-full bg-royal rounded-full" animate={{ width: `${(step / 3) * 100}%` }} /></div>
 
           <form onSubmit={step === 3 ? submit : (e) => e.preventDefault()} className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6 sm:p-8">

@@ -87,7 +87,7 @@ export default function Testimonials() {
 
   return (
     <section className="py-20 md:py-28 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <SectionHeading
           label="Client Stories"
           heading="Let our clients tell the story"

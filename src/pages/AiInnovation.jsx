@@ -101,9 +101,18 @@ export default function AiInnovation() {
   return (
     <>
       <SEO
-        title="AI Innovation & PR1SM.AI Platform"
-        description="PRI Global's AI services and PR1SM.AI — your AI intelligence layer. Talk to your data. Get answers instantly. Enterprise-grade, secure, no rip-and-replace."
+        title="AI Innovation & PR1SM.AI"
+        description="PR1SM.AI is your enterprise AI intelligence layer — talk to your data, get answers instantly. Secure, no rip-and-replace. Schedule a PR1SM.AI demo today."
+        keywords="PR1SM.AI, AI innovation, enterprise AI platform, conversational AI, PRI Global AI"
         url="/ai-innovation"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "PR1SM.AI", url: "/ai-innovation" },
+        ]}
+        service={{
+          name: "AI Innovation & PR1SM.AI Platform",
+          description: "Enterprise AI intelligence layer for conversational data access and insights.",
+        }}
       />
       {/* ── SECTION 1: Hero ──────────────────────────────────────────────────── */}
       <section className="pt-24 sm:pt-28 pb-10 md:pb-12 bg-navy relative overflow-hidden">
@@ -111,7 +120,7 @@ export default function AiInnovation() {
           <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-royaldark/15 rounded-full blur-[120px]" />
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-royal/10 rounded-full blur-[80px]" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="site-container relative">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div>
               <span className="inline-block text-xs font-semibold text-royaldark uppercase tracking-widest mb-3">
@@ -161,7 +170,7 @@ export default function AiInnovation() {
 
       {/* ── SECTION 2: PR1SM.AI Platform ─────────────────────────────────────── */}
       <section className="py-10 md:py-14 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
 
           {/* Intro */}
           <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
@@ -319,7 +328,7 @@ export default function AiInnovation() {
 
       {/* ── SECTION 3: AI Services Grid ──────────────────────────────────────── */}
       <section className="py-10 md:py-14 bg-[var(--bg-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <SectionHeading
             label="Capabilities"
             heading="What we build with AI"
@@ -355,7 +364,7 @@ export default function AiInnovation() {
 
       {/* ── SECTION 4: Technology Partners ───────────────────────────────────── */}
       <section className="py-10 md:py-14 bg-[var(--bg-primary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="text-center mb-8">
             <span className="inline-block text-xs font-semibold text-royal uppercase tracking-widest mb-3">
               Technology Partners
@@ -397,7 +406,7 @@ export default function AiInnovation() {
           <div className="absolute -top-32 -right-32 w-[400px] h-[400px] bg-royaldark/15 rounded-full blur-[100px]" />
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-royal/10 rounded-full blur-[80px]" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+        <div className="site-container relative text-center">
           <span className="inline-block text-xs font-semibold text-royaldark uppercase tracking-widest mb-4">
             Get Started
           </span>

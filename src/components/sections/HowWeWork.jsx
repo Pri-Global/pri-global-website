@@ -78,7 +78,7 @@ function StepCard({ step, index }) {
 export default function HowWeWork() {
   return (
     <section className="py-20 md:py-28 bg-[var(--bg-secondary)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

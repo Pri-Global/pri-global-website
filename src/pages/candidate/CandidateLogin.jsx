@@ -9,9 +9,10 @@ import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
 import {
   CANDIDATE_DEMO,
-  isDemoLoginConfigured,
   matchCandidateDemo,
 } from "../../data/portalDemoCredentials";
+import { showDevDemoCredentials } from "../../utils/portalEnv";
+import PortalPreviewBanner from "../../components/portal/PortalPreviewBanner";
 import {
   isSupabaseConfigured,
   signInWithSupabase,
@@ -29,6 +30,7 @@ export default function CandidateLogin() {
   const [error, setError] = useState("");
   const [shaking, setShaking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [resetNotice, setResetNotice] = useState("");
 
   if (isLoggedIn(AUTH_KEYS.candidate)) {
     return <Navigate to="/candidate-dashboard" replace />;
@@ -108,7 +110,7 @@ export default function CandidateLogin() {
       return;
     }
     setError("");
-    alert(`Password reset link sent to ${normalized}. Check your inbox.`);
+    setResetNotice(`Password reset link sent to ${normalized}. Check your inbox.`);
   };
 
   return (
@@ -136,13 +138,22 @@ export default function CandidateLogin() {
             </p>
           </div>
 
+          <PortalPreviewBanner compact className="mb-6" />
+
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputClass} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputClass} />
+            <label htmlFor="candidate-login-email" className="sr-only">Email</label>
+            <input id="candidate-login-email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputClass} autoComplete="email" />
+            <label htmlFor="candidate-login-password" className="sr-only">Password</label>
+            <input id="candidate-login-password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputClass} autoComplete="current-password" />
             <label className="flex items-center gap-2 text-sm text-[var(--text-secondary)] cursor-pointer">
               <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="accent-emerald-500" />
               Remember me
             </label>
+            {resetNotice && (
+              <p className="text-sm text-emerald-600 dark:text-emerald-400" role="status">
+                {resetNotice}
+              </p>
+            )}
             {error && <p className="text-sm text-red-600 dark:text-red-400" role="alert">{error}</p>}
             <Button type="submit" className="w-full !bg-emerald-600 hover:!bg-emerald-700" disabled={submitting}>
               {submitting ? "Signing in..." : "Sign In →"}
@@ -172,7 +183,7 @@ export default function CandidateLogin() {
             </Link>
           </div>
 
-          {isDemoLoginConfigured() && (
+          {showDevDemoCredentials() && (
             <p className="text-[10px] text-center text-[var(--text-muted)] mt-6 leading-relaxed">
               Local demo email: {CANDIDATE_DEMO.email}
             </p>

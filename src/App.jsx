@@ -1,10 +1,11 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { useState, useEffect } from "react";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ui/ScrollToTopButton";
+import SkipLink from "./components/ui/SkipLink";
 import NewsScrollHint from "./components/ui/NewsScrollHint";
 import PriVaWidget from "./components/chatbot/PriVaWidget";
 import CookieBanner from "./components/ui/CookieBanner";
@@ -43,6 +44,7 @@ import ProtectedPortalRoute from "./components/portal/ProtectedPortalRoute";
 import CandidatePortalLayout from "./components/portal/CandidatePortalLayout";
 import { AUTH_KEYS } from "./hooks/usePortalAuth";
 import DarkModeToast from "./components/ui/DarkModeToast";
+import { useReducedMotion } from "./hooks/useReducedMotion";
 import BrandLogo from "./components/ui/BrandLogo";
 
 /* ── Scroll progress bar ─────────────────────────────────────── */
@@ -78,7 +80,7 @@ function PageLoader() {
       } catch {
         /* ignore */
       }
-    }, 900);
+    }, 400);
     return () => clearTimeout(t);
   }, [visible]);
 
@@ -124,14 +126,27 @@ const PORTAL_ROUTE_PREFIXES = [
   "/customer-dashboard",
 ];
 
+const PORTAL_SHELL_PREFIXES = [
+  "/employee-dashboard",
+  "/candidate-dashboard",
+  "/candidate-profile",
+  "/customer-dashboard",
+];
+
+function isPortalShell(pathname) {
+  return PORTAL_SHELL_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+}
+
 function isPortalRoute(pathname) {
   return PORTAL_ROUTE_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
 }
 
-function PW({ children, animate = true }) {
-  if (!animate) {
+function PW({ children, animate = true, reducedMotion = false }) {
+  if (!animate || reducedMotion) {
     return children;
   }
   return (
@@ -142,60 +157,58 @@ function PW({ children, animate = true }) {
 }
 
 /* ── Routes ──────────────────────────────────────────────────── */
-function AppRoutes() {
+function AppRoutes({ reducedMotion = false }) {
+  const pw = (children, animate = true) => (
+    <PW animate={animate} reducedMotion={reducedMotion}>{children}</PW>
+  );
+
   return (
     <Routes>
-        <Route path="/"                element={<PW><Home /></PW>} />
-        <Route path="/services"        element={<PW><Services /></PW>} />
-        <Route path="/talent-solutions" element={<PW><TalentSolutions /></PW>} />
-        <Route path="/ai-innovation"   element={<PW><AiInnovation /></PW>} />
-        <Route path="/ai-services"     element={<PW><AiServices /></PW>} />
-        <Route path="/industries"      element={<PW><Industries /></PW>} />
-        <Route path="/about"           element={<PW><About /></PW>} />
-        <Route path="/resources"       element={<PW><Resources /></PW>} />
-        <Route path="/resources/:slug" element={<PW><Resources /></PW>} />
-        <Route path="/case-studies/:slug" element={<PW><CaseStudy /></PW>} />
-        <Route path="/employee-login" element={<PW><EmployeeLogin /></PW>} />
+        <Route path="/"                element={pw(<Home />)} />
+        <Route path="/services"        element={pw(<Services />)} />
+        <Route path="/talent-solutions" element={pw(<TalentSolutions />)} />
+        <Route path="/ai-innovation"   element={pw(<AiInnovation />)} />
+        <Route path="/ai-services"     element={pw(<AiServices />)} />
+        <Route path="/industries"      element={pw(<Industries />)} />
+        <Route path="/about"           element={pw(<About />)} />
+        <Route path="/contact"         element={<Navigate to="/about#contact" replace />} />
+        <Route path="/resources"       element={pw(<Resources />)} />
+        <Route path="/resources/:slug" element={pw(<Resources />)} />
+        <Route path="/case-studies/:slug" element={pw(<CaseStudy />)} />
+        <Route path="/employee-login" element={pw(<EmployeeLogin />)} />
         <Route
           path="/employee-dashboard"
-          element={
-            <PW animate={false}>
-              <ProtectedRoute>
-                <EmployeeDashboard />
-              </ProtectedRoute>
-            </PW>
-          }
+          element={pw(<ProtectedRoute><EmployeeDashboard /></ProtectedRoute>, false)}
         />
-        <Route path="/candidate-login" element={<PW><CandidateLogin /></PW>} />
-        <Route path="/candidate-register" element={<PW><CandidateRegister /></PW>} />
+        <Route path="/candidate-login" element={pw(<CandidateLogin />)} />
+        <Route path="/candidate-register" element={pw(<CandidateRegister />)} />
         <Route element={<CandidatePortalLayout />}>
           <Route path="candidate-dashboard" element={<CandidateDashboard />} />
           <Route path="candidate-profile" element={<CandidateProfile />} />
           <Route path="candidate-jobs" element={<CandidateJobs />} />
         </Route>
-        <Route path="/customer-login" element={<PW><CustomerLogin /></PW>} />
-        <Route path="/customer-register" element={<PW><CustomerRegister /></PW>} />
+        <Route path="/customer-login" element={pw(<CustomerLogin />)} />
+        <Route path="/customer-register" element={pw(<CustomerRegister />)} />
         <Route
           path="/customer-dashboard"
-          element={
-            <PW animate={false}>
-              <ProtectedPortalRoute authKey={AUTH_KEYS.customer} redirectTo="/customer-login">
-                <CustomerDashboard />
-              </ProtectedPortalRoute>
-            </PW>
-          }
+          element={pw(
+            <ProtectedPortalRoute authKey={AUTH_KEYS.customer} redirectTo="/customer-login">
+              <CustomerDashboard />
+            </ProtectedPortalRoute>,
+            false
+          )}
         />
-        <Route path="/careers"         element={<PW><Careers /></PW>} />
-        <Route path="/job-seeker-faq"  element={<PW><JobSeekerFAQ /></PW>} />
-        <Route path="/working-at-pri"  element={<PW><WorkingAtPRI /></PW>} />
-        <Route path="/legal"           element={<PW><Legal /></PW>} />
-        <Route path="/privacy-policy"  element={<PW><PrivacyPolicy /></PW>} />
-        <Route path="/cookie-settings" element={<PW><CookieSettings /></PW>} />
-        <Route path="/quiz" element={<PW><Quiz /></PW>} />
-        <Route path="/get-pricing" element={<PW><GetPricing /></PW>} />
-        <Route path="/roi-calculator" element={<PW><ROICalculatorPage /></PW>} />
-        <Route path="/why-pri-global" element={<PW><WhyPRI /></PW>} />
-        <Route path="*" element={<PW><NotFound /></PW>} />
+        <Route path="/careers"         element={pw(<Careers />)} />
+        <Route path="/job-seeker-faq"  element={pw(<JobSeekerFAQ />)} />
+        <Route path="/working-at-pri"  element={pw(<WorkingAtPRI />)} />
+        <Route path="/legal"           element={pw(<Legal />)} />
+        <Route path="/privacy-policy"  element={pw(<PrivacyPolicy />)} />
+        <Route path="/cookie-settings" element={pw(<CookieSettings />)} />
+        <Route path="/quiz" element={pw(<Quiz />)} />
+        <Route path="/get-pricing" element={pw(<GetPricing />)} />
+        <Route path="/roi-calculator" element={pw(<ROICalculatorPage />)} />
+        <Route path="/why-pri-global" element={pw(<WhyPRI />)} />
+        <Route path="*" element={pw(<NotFound />)} />
       </Routes>
   );
 }
@@ -204,23 +217,26 @@ function AppRoutes() {
 export default function App() {
   const location = useLocation();
   const portalRoute = isPortalRoute(location.pathname);
+  const portalShell = isPortalShell(location.pathname);
+  const reducedMotion = useReducedMotion();
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SkipLink />
       <PageLoader />
       <ScrollProgress />
       <ScrollToTop />
-      <Navbar />
-      <main className="flex-1">
-        {portalRoute ? (
-          <AppRoutes />
+      <Navbar minimal={portalShell} />
+      <main id="main-content" className="flex-1" tabIndex={-1}>
+        {portalRoute || reducedMotion ? (
+          <AppRoutes reducedMotion={reducedMotion} />
         ) : (
           <AnimatePresence mode="wait">
-            <AppRoutes key={location.pathname} />
+            <AppRoutes key={location.pathname} reducedMotion={reducedMotion} />
           </AnimatePresence>
         )}
       </main>
-      <Footer />
+      {!portalShell && <Footer />}
       <CookieBanner />
       <ScrollToTopButton />
       <NewsScrollHint />

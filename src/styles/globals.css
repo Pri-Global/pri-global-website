@@ -323,7 +323,7 @@ img.logo-wipe-lr:hover {
     --bg-card: #16181e;
     --text-primary: #F2F0EB;
     --text-secondary: #8890a0;
-    --text-muted: #4a5060;
+    --text-muted: #6b7280;
     --accent: #4169E1;
     --accent-hover: #3358cc;
     --border: #1e2028;
@@ -355,5 +355,33 @@ img.logo-wipe-lr:hover {
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+  }
+}
+
+@layer components {
+  .site-container {
+    @apply w-full max-w-7xl xl:max-w-[1320px] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12;
+  }
+
+  .site-container-narrow {
+    @apply w-full max-w-3xl xl:max-w-4xl 2xl:max-w-[42rem] mx-auto px-4 sm:px-6 md:px-8 lg:px-10;
+  }
+
+  .page-hero {
+    @apply pt-24 sm:pt-28 lg:pt-32 xl:pt-36 2xl:pt-40;
+  }
+
+  .section-y {
+    @apply py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-32;
+  }
+
+  .section-gap {
+    @apply gap-8 md:gap-10 lg:gap-12 xl:gap-14 2xl:gap-16;
+  }
+}
+
+@media (min-width: 1536px) {
+  .dot-grid {
+    background-size: 32px 32px;
   }
 }

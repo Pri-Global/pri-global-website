@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect } from "react";
 import SEO from "../components/SEO";
 import Hero from "../components/sections/Hero";
 import ClientLogos from "../components/ui/ClientLogos";
-import MastercardPartnership from "../components/sections/MastercardPartnership";
 import FreeConsultationBanner from "../components/sections/FreeConsultationBanner";
 import CorePillars from "../components/sections/CorePillars";
 import IndustriesPreview from "../components/sections/IndustriesPreview";
@@ -19,7 +18,9 @@ const HowWeWork          = lazy(() => import("../components/sections/HowWeWork")
 const Testimonials       = lazy(() => import("../components/sections/Testimonials"));
 const CallToAction       = lazy(() => import("../components/sections/CallToAction"));
 
-const SectionFallback = <div className="h-96" />;
+const SectionFallback = (
+  <div className="h-96 animate-pulse rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-subtle)]" aria-busy="true" aria-label="Loading section" />
+);
 
 export default function Home() {
   useEffect(() => {
@@ -29,15 +30,16 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Technology That Moves Business Forward"
-        description="PRI Global: IT staffing, SOW delivery, managed services, and PR1SM.AI. 28+ years in business, 26+ year Mastercard partnership, 12,700+ placements."
+        title="IT Staffing & AI Solutions"
+        description="PRI Global delivers IT staffing, managed services, and PR1SM.AI. 28+ years of trusted partnerships and 12,700+ placements. Request a consultation today."
+        keywords="IT staffing, talent solutions, PR1SM.AI, managed IT services, technology consulting, PRI Global"
         url="/"
+        includeWebSite
       />
       <Hero />
       <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]">
         <ClientLogos label="Trusted by leading organizations" />
       </div>
-      <MastercardPartnership />
       <Suspense fallback={SectionFallback}><Stats /></Suspense>
       <FreeConsultationBanner />
       <CorePillars />

@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import usePriVa from "../chatbot/usePriVa";
+import PriVaMessage from "../chatbot/PriVaMessage";
+import PriVaVoiceButton from "../chatbot/PriVaVoiceButton";
 import PriVaPrivacyNotice from "../chatbot/PriVaPrivacyNotice";
 import { VIDEOS } from "../../data/videos";
 
@@ -100,7 +102,7 @@ const quickPrompts = [
 
 const HeroChatCard = memo(function HeroChatCard() {
   const [minimized, setMinimized] = useState(false);
-  const { messages, input, setInput, loading, sendMessage } = usePriVa();
+  const { messages, input, setInput, loading, sendMessage, appendMessage } = usePriVa();
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -233,7 +235,7 @@ const HeroChatCard = memo(function HeroChatCard() {
                       : "glass-subtle text-[var(--text-primary)] rounded-2xl rounded-bl-md border-l-[3px] border-l-royal/50"
                   }`}
                 >
-                  {msg.content}
+                  {msg.role === "user" ? msg.content : <PriVaMessage content={msg.content} />}
                 </div>
               </div>
             </div>
@@ -288,6 +290,10 @@ const HeroChatCard = memo(function HeroChatCard() {
               onKeyDown={handleKey}
               placeholder="Message PriVa…"
               className="flex-1 text-sm bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none py-1"
+            />
+            <PriVaVoiceButton
+              className="shrink-0"
+              onTranscript={({ role, text }) => appendMessage(role, text)}
             />
             <button
               type="button"

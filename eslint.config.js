@@ -18,4 +18,12 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    // Server-side code (Vercel functions, Vite config, build scripts) runs in
+    // Node, so it uses Node globals (process, Buffer) rather than the browser.
+    files: ['vite.config.js', 'api/**/*.js', 'scripts/**/*.{js,mjs}'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 ])

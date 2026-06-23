@@ -3,6 +3,8 @@ import { useCookieBannerVisible } from "../../hooks/useCookieBannerVisible";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import usePriVa from "./usePriVa";
+import PriVaMessage from "./PriVaMessage";
+import PriVaVoiceButton from "./PriVaVoiceButton";
 import PriVaPrivacyNotice from "./PriVaPrivacyNotice";
 import BrandLogo, { PriMarkAvatar } from "../ui/BrandLogo";
 
@@ -18,7 +20,7 @@ function MessageBubble({ message }) {
             : "glass-subtle text-[var(--text-primary)] rounded-bl-sm border-l-[3px] border-l-royal/50"
         }`}
       >
-        {message.content}
+        {isUser ? message.content : <PriVaMessage content={message.content} />}
       </div>
     </div>
   );
@@ -27,7 +29,7 @@ function MessageBubble({ message }) {
 export default function PriVaWidget() {
   const [open, setOpen] = useState(false);
   const cookieBannerVisible = useCookieBannerVisible();
-  const { messages, input, setInput, loading, sendMessage } = usePriVa();
+  const { messages, input, setInput, loading, sendMessage, appendMessage } = usePriVa();
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -128,6 +130,9 @@ export default function PriVaWidget() {
             </div>
 
             <div className="px-4 py-3 border-t border-white/20 dark:border-white/10 flex items-center gap-2 glass-subtle">
+              <PriVaVoiceButton
+                onTranscript={({ role, text }) => appendMessage(role, text)}
+              />
               <input
                 ref={inputRef}
                 value={input}

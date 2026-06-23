@@ -124,7 +124,7 @@ export default function usePriVaVoice({ onTranscript } = {}) {
             type: "response.create",
             response: {
               instructions:
-                "Greet the visitor in one short, warm sentence as PriVa and ask how you can help with PRI Global.",
+                "In English, greet the visitor in one short, warm sentence as PriVa and ask how you can help with PRI Global.",
             },
           })
         );

@@ -59,7 +59,7 @@ export default function usePriVa() {
           {
             role: "assistant",
             content:
-              "I couldn't process that — please try again or email info@priglobal.com.",
+              "I couldn't process that — please try again or use /get-pricing to reach our team.",
           },
         ]);
       } finally {

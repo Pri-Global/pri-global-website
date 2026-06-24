@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEO from "../../components/SEO";
 import BrandLogo from "../../components/ui/BrandLogo";
@@ -9,10 +9,12 @@ import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
 import {
   CANDIDATE_DEMO,
+  getDemoPassword,
   matchCandidateDemo,
 } from "../../data/portalDemoCredentials";
 import { showDevDemoCredentials } from "../../utils/portalEnv";
 import PortalPreviewBanner from "../../components/portal/PortalPreviewBanner";
+import PortalDemoLoginHelp from "../../components/portal/PortalDemoLoginHelp";
 import {
   isSupabaseConfigured,
   signInWithSupabase,
@@ -31,15 +33,41 @@ export default function CandidateLogin() {
   const [shaking, setShaking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [resetNotice, setResetNotice] = useState("");
+  const authed = isLoggedIn(AUTH_KEYS.candidate);
 
-  if (isLoggedIn(AUTH_KEYS.candidate)) {
-    return <Navigate to="/candidate-dashboard" replace />;
+  useEffect(() => {
+    if (authed) {
+      navigate("/candidate-dashboard", { replace: true });
+    }
+  }, [authed, navigate]);
+
+  if (authed) {
+    return (
+      <>
+        <SEO
+          title="Candidate Portal"
+          description="PRI Global candidate portal — search IT jobs, track applications, and connect with recruiters."
+          url="/candidate-login"
+          noindex
+        />
+        <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-24 px-4 bg-[var(--bg-secondary)]">
+          <p className="text-sm text-[var(--text-muted)]">Opening your candidate dashboard…</p>
+        </section>
+      </>
+    );
   }
 
   const fail = (message) => {
     setError(message);
     setShaking(true);
     setTimeout(() => setShaking(false), 600);
+  };
+
+  const fillDemo = () => {
+    setEmail(CANDIDATE_DEMO.email);
+    setPassword(getDemoPassword());
+    setError("");
+    setResetNotice("");
   };
 
   const completeDemoLogin = (normalized) => {
@@ -126,7 +154,7 @@ export default function CandidateLogin() {
           <CandidateCareersNav />
         </div>
         <motion.div
-          animate={shaking ? "shake" : ""}
+          animate={shaking ? "shake" : undefined}
           variants={shakeVariants}
           className="w-full max-w-[440px] mx-auto bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-lg"
         >
@@ -139,6 +167,7 @@ export default function CandidateLogin() {
           </div>
 
           <PortalPreviewBanner compact className="mb-6" />
+          <PortalDemoLoginHelp demoEmail={CANDIDATE_DEMO.email} onFillDemo={fillDemo} className="mb-6" />
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <label htmlFor="candidate-login-email" className="sr-only">Email</label>
@@ -185,7 +214,7 @@ export default function CandidateLogin() {
 
           {showDevDemoCredentials() && (
             <p className="text-[10px] text-center text-[var(--text-muted)] mt-6 leading-relaxed">
-              Local demo email: {CANDIDATE_DEMO.email}
+              Local demo — password from <code className="text-[9px]">VITE_PORTAL_DEMO_PASSWORD</code>
             </p>
           )}
         </motion.div>

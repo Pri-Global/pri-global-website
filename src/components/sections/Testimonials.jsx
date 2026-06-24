@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { ArrowRight } from "lucide-react";
@@ -123,12 +124,12 @@ export default function Testimonials() {
             <p className="text-[var(--text-secondary)] text-sm md:text-base mb-5 leading-relaxed">
               Join 12,700+ IT professionals and hundreds of satisfied clients who trust PRI Global.
             </p>
-            <a
-              href="mailto:info@priglobal.com?subject=Testimonial%20Submission"
+            <Link
+              to="/about#contact"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-royal text-white text-sm font-semibold hover:bg-[var(--accent-hover)] transition-colors shadow-sm shadow-royal/20"
             >
               Share Your Experience <ArrowRight size={16} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

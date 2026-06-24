@@ -219,9 +219,9 @@ export default function EmployeeDashboard() {
                   <p className="text-xs text-violet-600 dark:text-violet-400 font-medium mt-0.5">{c.role}</p>
                   <p className="text-xs text-[var(--text-muted)] mt-2">{c.topics}</p>
                   <div className="flex flex-wrap gap-3 mt-3">
-                    <a href={`mailto:${c.email}`} className="inline-flex items-center gap-1 text-xs text-royal dark:text-royaldark hover:underline">
-                      <Mail size={12} /> Email
-                    </a>
+                    <Link to="/about#contact" className="inline-flex items-center gap-1 text-xs text-royal dark:text-royaldark hover:underline">
+                      <Mail size={12} /> Contact
+                    </Link>
                     {c.phone && (
                       <a href={`tel:${c.phone.replace(/\./g, "")}`} className="inline-flex items-center gap-1 text-xs text-royal dark:text-royaldark hover:underline">
                         <Phone size={12} /> {c.phone}

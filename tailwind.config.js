@@ -13,7 +13,10 @@ export default {
         // Dark Mode (Option C)
         charcoal: "#111318",
         charcoalborder: "#1e2028",
-        royaldark: "#4169E1",
+        cello: "#1e3a5f",
+        lochinvar: "#3B82F6",
+        "light-grey": "#E4E8F0",
+        ronchi: "#60A5FA",
       },
       fontFamily: {
         heading: ["Syne", "sans-serif"],

@@ -119,7 +119,7 @@ export default function JobSeekerFAQ() {
               Still have questions? Our talent team is here to help.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Button href="mailto:info@priglobal.com" variant="secondary" size="md">
+              <Button to="/about#contact" variant="secondary" size="md">
                 <Mail size={16} /> Contact Us
               </Button>
               <Button to="/candidate-jobs" size="md" className="!bg-emerald-600 hover:!bg-emerald-700">

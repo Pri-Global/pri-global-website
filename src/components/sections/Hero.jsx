@@ -395,8 +395,7 @@ export default function Hero() {
               className="text-lg md:text-xl xl:text-2xl text-[var(--text-secondary)] leading-relaxed mb-8 xl:mb-10 max-w-lg md:max-w-xl xl:max-w-2xl"
             >
               PRI Global delivers IT staffing, SOW project teams, managed services, and PR1SM.AI —
-              backed by 28+ years of trusted partnerships, including a 26+ year relationship with
-              Mastercard.
+              backed by 28+ years of trusted partnerships with Fortune 500 and enterprise leaders.
             </motion.p>
 
             <motion.div {...fadeUp(0.65)} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
@@ -424,8 +423,6 @@ export default function Hero() {
             >
               <p className="text-xs text-[var(--text-muted)] leading-relaxed">
                 Trusted by{" "}
-                <span className="font-medium text-[var(--text-secondary)]">Mastercard</span>
-                {", "}
                 <span className="font-medium text-[var(--text-secondary)]">
                   Fortune 500 financial services, healthcare, and manufacturing leaders
                 </span>

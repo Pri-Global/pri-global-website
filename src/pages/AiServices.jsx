@@ -255,14 +255,13 @@ export default function AiServices() {
             {aiPodsCta.button} <ArrowRight size={18} />
           </Button>
           <p className="mt-6 text-sm text-[var(--text-muted)]">
-            Prefer email?{" "}
-            <a href="mailto:info@priglobal.com" className="text-royal dark:text-royaldark hover:underline">
-              info@priglobal.com
-            </a>
-            {" · "}
             <Link to="/get-pricing" className="text-royal dark:text-royaldark hover:underline">
               Request pricing
             </Link>
+            {" · "}
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="text-royal dark:text-royaldark hover:underline">
+              Book a call
+            </a>
           </p>
         </div>
       </section>

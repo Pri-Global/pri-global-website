@@ -31,9 +31,9 @@ function renderLinks(text, keyPrefix) {
       re.lastIndex = last;
     } else if (email) {
       nodes.push(
-        <a key={key} href={`mailto:${email}`} className={linkClass}>
-          {email}
-        </a>
+        <Link key={key} to="/about#contact" className={linkClass}>
+          contact form
+        </Link>
       );
       last = match.index + full.length;
     } else {

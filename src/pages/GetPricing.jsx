@@ -133,8 +133,7 @@ export default function GetPricing() {
           </p>
           {copiedFallback && (
             <p className="text-sm text-[var(--text-muted)] mb-6 max-w-md mx-auto">
-              Your request details were copied to your clipboard. If your email app didn&apos;t open,
-              paste them into an email to ajay@pr1sm.ai or{" "}
+              Your request details were copied to your clipboard. If your email app didn&apos;t open,{" "}
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="text-royal hover:underline">
                 book a call directly
               </a>.
@@ -186,28 +185,7 @@ export default function GetPricing() {
             <h1 className="font-heading text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">
               Let&apos;s Build the Right Solution for You
             </h1>
-            <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
-              Whether you need IT talent, managed services, or PR1SM.AI — we&apos;ll put together
-              a custom proposal within 24 hours.
-            </p>
-            <ul className="space-y-4 mb-10">
-              {TRUST_POINTS.map((point) => (
-                <li key={point} className="group flex items-start gap-3 text-sm text-[var(--text-secondary)]">
-                  <AnimatedIcon Icon={Check} size={18} className="text-royal shrink-0 mt-0.5" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-            <ClientLogos label="Trusted by leading organizations" />
-            <div className="space-y-3 text-sm mb-8 mt-8">
-              <a href="mailto:ajay@pr1sm.ai" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                <AnimatedIcon Icon={Mail} size={14} className="text-royal" /> Ajay Patel — ajay@pr1sm.ai
-              </a>
-              <a href="mailto:liezl.moss@PR1SM.AI" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                <AnimatedIcon Icon={Mail} size={14} className="text-royal" /> Liezl Moss — liezl.moss@PR1SM.AI
-              </a>
-            </div>
-            <div className="group p-5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)]">
+            <div className="group p-5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] mb-6">
               <p className="text-sm font-medium text-[var(--text-primary)] mb-1">
                 Prefer a conversation?
               </p>
@@ -225,6 +203,19 @@ export default function GetPricing() {
                 <AnimatedIcon Icon={Calendar} size={16} className="text-royal" /> View available times <ArrowRight size={16} />
               </Button>
             </div>
+            <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
+              Whether you need IT talent, managed services, or PR1SM.AI — we&apos;ll put together
+              a custom proposal within 24 hours.
+            </p>
+            <ul className="space-y-4 mb-10">
+              {TRUST_POINTS.map((point) => (
+                <li key={point} className="group flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+                  <AnimatedIcon Icon={Check} size={18} className="text-royal shrink-0 mt-0.5" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <ClientLogos label="Trusted by leading organizations" />
           </motion.div>
 
           <motion.div

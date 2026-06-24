@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/ui/Button";
 import BrandLogo from "../components/ui/BrandLogo";
@@ -7,10 +7,12 @@ import SEO from "../components/SEO";
 import { setEmployeeSession, getEmployeeSession } from "../components/ProtectedRoute";
 import {
   EMPLOYEE_DEMO,
+  getDemoPassword,
   matchEmployeeDemo,
 } from "../data/portalDemoCredentials";
 import { showDevDemoCredentials } from "../utils/portalEnv";
 import PortalPreviewBanner from "../components/portal/PortalPreviewBanner";
+import PortalDemoLoginHelp from "../components/portal/PortalDemoLoginHelp";
 import {
   isSupabaseConfigured,
   signInWithSupabase,
@@ -36,15 +38,45 @@ export default function EmployeeLogin() {
   const [shaking, setShaking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [resetNotice, setResetNotice] = useState("");
+  const authed = Boolean(getEmployeeSession()?.loggedIn);
 
-  if (getEmployeeSession()?.loggedIn) {
-    return <Navigate to="/employee-dashboard" replace />;
+  useEffect(() => {
+    if (authed) {
+      navigate("/employee-dashboard", { replace: true });
+    }
+  }, [authed, navigate]);
+
+  if (authed) {
+    return (
+      <>
+        <SEO title="Employee Portal" description="PRI Global employee portal login." url="/employee-login" noindex />
+        <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-24 px-4 bg-[var(--bg-secondary)]">
+          <p className="text-sm text-[var(--text-muted)]">Opening your employee dashboard…</p>
+        </section>
+      </>
+    );
   }
+
+  const completeDemoLogin = (normalized) => {
+    const demoSession = matchEmployeeDemo(normalized, password);
+    if (!demoSession) return false;
+
+    setEmployeeSession(employeeSessionFromUser(demoSession, remember));
+    navigate("/employee-dashboard");
+    return true;
+  };
 
   const fail = (message) => {
     setError(message);
     setShaking(true);
     setTimeout(() => setShaking(false), 600);
+  };
+
+  const fillDemo = () => {
+    setEmail(EMPLOYEE_DEMO.email);
+    setPassword(getDemoPassword());
+    setError("");
+    setResetNotice("");
   };
 
   const handleSubmit = async (e) => {
@@ -58,34 +90,30 @@ export default function EmployeeLogin() {
       const result = await signInWithSupabase(normalized, password);
       if (result.notConfigured) {
         finish();
-        fail("Employee login is not configured. Ask IT to set Supabase keys in Vercel.");
+        if (completeDemoLogin(normalized)) return;
+        fail("Employee login is not configured yet.");
         return;
       }
-      if (!result.ok) {
+      if (result.ok) {
+        if (!hasPortalAccess(result.user, "employee")) {
+          finish();
+          fail("This account is not registered for the Employee Portal.");
+          return;
+        }
+        setEmployeeSession(employeeSessionFromUser(result.user, remember));
         finish();
-        fail(formatAuthError(result.error));
+        navigate("/employee-dashboard");
         return;
       }
-      if (!hasPortalAccess(result.user, "employee")) {
-        finish();
-        fail("This account is not registered for the Employee Portal.");
-        return;
-      }
-      setEmployeeSession(employeeSessionFromUser(result.user, remember));
-      finish();
-      navigate("/employee-dashboard");
-      return;
-    }
 
-    const demoSession = matchEmployeeDemo(normalized, password);
-    if (demoSession) {
-      setEmployeeSession(employeeSessionFromUser(demoSession, remember));
       finish();
-      navigate("/employee-dashboard");
+      if (completeDemoLogin(normalized)) return;
+      fail(formatAuthError(result.error));
       return;
     }
 
     finish();
+    if (completeDemoLogin(normalized)) return;
     fail("Invalid credentials. Please contact IT if you need assistance.");
   };
 
@@ -115,7 +143,7 @@ export default function EmployeeLogin() {
     <SEO title="Employee Portal" description="PRI Global employee portal login." url="/employee-login" noindex />
     <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-24 px-4 bg-[var(--bg-secondary)]">
       <motion.div
-        animate={shaking ? "shake" : ""}
+        animate={shaking ? "shake" : undefined}
         variants={shake}
         className="w-full max-w-[420px] bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-lg"
       >
@@ -130,6 +158,7 @@ export default function EmployeeLogin() {
         </div>
 
         <PortalPreviewBanner compact className="mb-6" />
+        <PortalDemoLoginHelp demoEmail={EMPLOYEE_DEMO.email} onFillDemo={fillDemo} className="mb-6" />
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -140,7 +169,7 @@ export default function EmployeeLogin() {
               id="emp-email"
               type="email"
               autoComplete="email"
-              placeholder="your@priglobal.com"
+              placeholder="you@company.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -208,9 +237,9 @@ export default function EmployeeLogin() {
           </a>
         </p>
 
-        {!isSupabaseConfigured && showDevDemoCredentials() && (
-          <p className="text-[10px] text-center text-[var(--text-muted)] mt-4">
-            Local demo email: {EMPLOYEE_DEMO.email}
+        {showDevDemoCredentials() && (
+          <p className="text-[10px] text-center text-[var(--text-muted)] mt-4 leading-relaxed">
+            Local demo — password from <code className="text-[9px]">VITE_PORTAL_DEMO_PASSWORD</code>
           </p>
         )}
       </motion.div>

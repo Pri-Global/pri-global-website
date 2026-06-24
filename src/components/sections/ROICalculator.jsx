@@ -88,7 +88,8 @@ function LeadCapture({ employees, systems }) {
   if (sent) {
     return (
       <p className="mt-8 pt-8 border-t border-white/10 text-sm text-emerald-300 text-center" role="status">
-        Request prepared — check your email app or paste from clipboard to liezl.moss@PR1SM.AI.
+        Request prepared — check your email app, or{" "}
+        <a href="/get-pricing" className="underline hover:opacity-90">submit again</a> if needed.
       </p>
     );
   }

@@ -34,6 +34,7 @@ const staticRoutes = [
   { loc: "/why-pri-global", priority: "0.8", changefreq: "monthly" },
   { loc: "/resources", priority: "0.8", changefreq: "weekly" },
   { loc: "/careers", priority: "0.7", changefreq: "weekly" },
+  { loc: "/careers/mobile-app", priority: "0.7", changefreq: "monthly" },
   { loc: "/candidate-jobs", priority: "0.7", changefreq: "daily" },
   { loc: "/job-seeker-faq", priority: "0.7", changefreq: "monthly" },
   { loc: "/working-at-pri", priority: "0.7", changefreq: "monthly" },

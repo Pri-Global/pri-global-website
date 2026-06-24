@@ -8,7 +8,6 @@ export const priGlobalLeadership = [
     photo: "/team/ajay-patel.jpg",
     bio: "Ajay Patel is Chairman of PRI Global and Chairman & Founder of PR1SM.AI. A visionary thought leader, entrepreneur, and strategist with 30+ years of hands-on IT experience. Throughout his 24 years as CEO of PRI Global, he developed numerous long-lasting partnerships with Fortune 500 companies globally. Ajay holds a Bachelor of Science in Computer Science and attended Northwestern University's Kellogg School of Management.",
     photoUrl: "https://priglobal.com/wp-content/uploads/2023/07/Ajay-250px-Flipped-1-cropped.jpg",
-    email: "ajay@pr1sm.ai",
     linkedin: "https://www.linkedin.com/in/ajaypatel3/",
     crossRole: true,
     crossRoleLabel: "Also: Chairman & Founder, PR1SM.AI",
@@ -62,8 +61,6 @@ export const prismLeadership = [
     bio: "Visionary leader with 30+ years of IT industry experience and 24+ years as CEO, driving innovation, growth and delivering impactful solutions worldwide.",
     photoUrl: "https://priglobal.com/wp-content/uploads/2023/07/Ajay-250px-Flipped-1-cropped.jpg",
     photo: "/team/ajay-patel.jpg",
-    email: "ajay@pr1sm.ai",
-    address: "174 Clarkson Road, Ellisville, Missouri 63011",
     linkedin: "https://www.linkedin.com/in/ajaypatel3/",
     crossRole: true,
     crossRoleLabel: "Also: Chairman, PRI Global",
@@ -101,14 +98,12 @@ export const prismLeadership = [
   {
     id: "liezl-moss",
     name: "Liezl Moss",
-    title: "Managing Director & Growth Strategy",
+    title: "Managing Director Growth Strategy",
     company: "PR1SM.AI",
     initials: "LM",
     bio: "Leads strategic growth initiatives and market expansion to accelerate PR1SM.AI's global impact.",
     photoUrl: null,
     photo: "/team/liezl-moss.jpg",
-    email: "liezl.moss@PR1SM.AI",
-    address: "174 Clarkson Road, Ellisville, Missouri 63011",
     linkedin: "https://www.linkedin.com/in/liezl-m-02481720/",
     crossRole: false,
   },
@@ -163,6 +158,7 @@ export const prismLeadership = [
     bio: "AI engineer specialized in UI/UX and intelligent system design.",
     photoUrl: null,
     photo: "/team/neha-kaur.jpg",
+    photoStyle: { objectPosition: "center 28%", scale: 1.5 },
     phone: null,
     email: null,
     linkedin: "https://www.linkedin.com/in/sardarni-harjoth-kaur/",
@@ -191,6 +187,7 @@ export const prismLeadership = [
     bio: "Executive support and coordination ensuring team efficiency and seamless operations.",
     photoUrl: null,
     photo: "/team/elther-torculas.png",
+    photoStyle: { objectPosition: "center 30%", scale: 1.45 },
     phone: null,
     email: null,
     linkedin: "https://www.linkedin.com/in/elther-torculas-303b46288/",
@@ -210,6 +207,20 @@ export const prismLeadership = [
     linkedin: "https://www.linkedin.com/in/corneliu-s-b488a22b6/",
     crossRole: false,
   },
+  {
+    id: "samantha-yosel",
+    name: "Samantha Yosel",
+    title: "Office Operations Coordinator",
+    company: "PR1SM.AI",
+    initials: "SY",
+    bio: "Keeps day-to-day office operations running smoothly — coordinating schedules, logistics, and internal support so the PR1SM.AI team can stay focused on delivery.",
+    photoUrl: null,
+    photo: null,
+    phone: null,
+    email: null,
+    linkedin: null,
+    crossRole: false,
+  },
 ];
 
 export const INITIALS_COLORS = {
@@ -225,6 +236,7 @@ export const INITIALS_COLORS = {
   HC: "#10b981",
   ET: "#f97316",
   CS: "#6366f1",
+  SY: "#0ea5e9",
 };
 
 /** PR1SM.AI dark section — always use these for avatar fallbacks */
@@ -240,6 +252,28 @@ export const PRISM_INITIALS_COLORS = {
   HC: "#10b981",
   ET: "#f97316",
   CS: "#6366f1",
+  SY: "#0ea5e9",
 };
 
+export const PRISM_TEAM_ROW1_IDS = [
+  "ajay-patel-prism",
+  "keenan-patel-prism",
+  "marla-dicandia-prism",
+  "liezl-moss",
+  "jash-yenugu",
+  "karen-myers",
+];
+
+export const PRISM_TEAM_ROW2_IDS = [
+  "neha-kaur",
+  "hetvi-choksi",
+  "elther-torculas",
+  "robbie-wetzel",
+  "corneliu-s",
+  "samantha-yosel",
+];
+
+export const PRISM_TEAM_EXTENDED_IDS = [];
+
+/** @deprecated use PRISM_TEAM_ROW1_IDS */
 export const PRISM_TEAM_ROW1_COUNT = 6;

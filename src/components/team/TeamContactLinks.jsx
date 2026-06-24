@@ -1,4 +1,4 @@
-import { Phone, Mail } from "lucide-react";
+import { Phone } from "lucide-react";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import LinkedInIcon from "./LinkedInIcon";
 
@@ -8,7 +8,7 @@ export default function TeamContactLinks({
   theme = "pri",
   className = "",
 }) {
-  const hasAny = member.phone || member.email || member.linkedin;
+  const hasAny = member.phone || member.linkedin;
   if (!hasAny) return null;
 
   const isPrism = theme === "prism";
@@ -19,7 +19,7 @@ export default function TeamContactLinks({
     ? "p-2 rounded-lg bg-[#0D1B3E] text-[#4169E1] hover:text-white transition-colors"
     : "p-2 rounded-lg bg-royal/10 text-royal hover:bg-royal/20 transition-colors";
 
-  if (isPrism && !member.phone && !member.email && member.linkedin) {
+  if (isPrism && !member.phone && member.linkedin) {
     return (
       <div className={`flex gap-2 ${className}`}>
         <a
@@ -45,12 +45,6 @@ export default function TeamContactLinks({
         <a href={`tel:${member.phone.replace(/[^\d+]/g, "")}`} className={linkClass}>
           <AnimatedIcon Icon={Phone} size={isPrism ? 14 : 15} className={isPrism ? "" : "text-royal"} />
           {!isPrism && member.phone}
-        </a>
-      )}
-      {member.email && (
-        <a href={`mailto:${member.email}`} className={linkClass}>
-          <AnimatedIcon Icon={Mail} size={isPrism ? 14 : 15} className={isPrism ? "" : "text-royal"} />
-          {!isPrism && member.email}
         </a>
       )}
       {member.linkedin && (

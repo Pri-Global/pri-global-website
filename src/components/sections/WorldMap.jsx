@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
+import { MapPin, Phone, ExternalLink } from "lucide-react";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import { useTheme } from "../../context/ThemeContext";
 import { offices } from "../../data/offices";
@@ -61,15 +61,6 @@ function OfficeTooltip({ office, onClose }) {
           </span>
         ))}
       </div>
-      {office.email && (
-        <a
-          href={`mailto:${office.email}`}
-          className="group flex items-center gap-2 text-xs text-royal hover:underline mb-2"
-        >
-          <AnimatedIcon Icon={Mail} size={12} className="text-royal" />
-          {office.email}
-        </a>
-      )}
       <a
         href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
         target="_blank"

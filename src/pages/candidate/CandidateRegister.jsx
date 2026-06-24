@@ -7,7 +7,6 @@ import BrandLogo from "../../components/ui/BrandLogo";
 import Button from "../../components/ui/Button";
 import AnimatedIcon from "../../components/ui/AnimatedIcon";
 import { AUTH_KEYS, writeAuth, writeStorage } from "../../hooks/usePortalAuth";
-import { JOBDIVA_SIGNUP_URL } from "../../constants/links";
 import { EXPERIENCE_OPTIONS, SKILL_OPTIONS } from "../../data/portalDemoData";
 import { inputClass, labelClass } from "../../components/portal/portalStyles";
 
@@ -577,20 +576,6 @@ export default function CandidateRegister() {
                   )}
                 </div>
               </form>
-
-              {mode === "resume" && (
-                <p className="text-center text-xs text-[var(--text-muted)] mt-6">
-                  Prefer to register in PRI&apos;s application portal?{" "}
-                  <a
-                    href={JOBDIVA_SIGNUP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-emerald-600 hover:underline"
-                  >
-                    Use the JobDiva sign-up page
-                  </a>
-                </p>
-              )}
             </>
           )}
         </div>

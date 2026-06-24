@@ -13,7 +13,7 @@ export const EMPLOYEE_ANNOUNCEMENTS = [
     title: "Open Enrollment Reminder — US Benefits",
     summary: "Review your 2026 benefit elections in ADP by June 15. Contact HR with questions.",
     tag: "HR",
-    href: "mailto:info@priglobal.com?subject=Benefits%20Question",
+    href: "/about#contact",
   },
   {
     id: "referral-bonus",
@@ -57,9 +57,8 @@ export const EMPLOYEE_QUICK_LINKS = [
     id: "hr",
     title: "HR & People Ops",
     description: "Payroll questions, policies, onboarding, and employee records.",
-    href: "mailto:info@priglobal.com?subject=HR%20Request",
-    external: true,
-    cta: "Email HR",
+    href: "/about#contact",
+    cta: "Contact HR",
     priority: true,
   },
   {
@@ -82,21 +81,18 @@ export const EMPLOYEE_CONTACTS = [
   {
     name: "Marla Dicandia",
     role: "CFO / HR · People Operations",
-    email: "info@priglobal.com",
     phone: null,
     topics: "Benefits, payroll, HR policies",
   },
   {
     name: "IT Support",
     role: "Technology & Access",
-    email: "info@priglobal.com",
-    phone: null,
+    phone: "636.256.7172",
     topics: "Laptop, VPN, email, portal access",
   },
   {
     name: "Karen Myers",
     role: "Strategic Client Growth",
-    email: "info@priglobal.com",
     phone: null,
     topics: "Internal referrals, recruiting coordination",
   },
@@ -106,7 +102,7 @@ export const EMPLOYEE_POLICIES = [
   { label: "Code of Conduct & Ethics", href: "/legal" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Working at PRI — Culture & Benefits", href: "/working-at-pri" },
-  { label: "Employee Handbook (PDF)", href: "mailto:info@priglobal.com?subject=Employee%20Handbook%20Request", external: true },
+  { label: "Employee Handbook (PDF)", href: "/about#contact" },
 ];
 
 export const EMPLOYEE_ONBOARDING = [

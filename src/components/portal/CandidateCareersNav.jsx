@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { WORKING_AT_PRI_URL, JOB_SEEKER_FAQ_URL } from "../../constants/links";
+import { WORKING_AT_PRI_URL, JOB_SEEKER_FAQ_URL, PRI_JOBS_MOBILE_APP_URL } from "../../constants/links";
 
 const LINKS = [
   { label: "Job Search", to: "/candidate-jobs", internal: true },
+  { label: "PRI Jobs", to: PRI_JOBS_MOBILE_APP_URL, internal: true },
   { label: "Working at PRI", to: WORKING_AT_PRI_URL, internal: true },
   { label: "Job Seeker FAQ", to: JOB_SEEKER_FAQ_URL, internal: true },
 ];

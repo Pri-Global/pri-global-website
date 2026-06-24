@@ -107,7 +107,7 @@ export default function CandidateDashboard() {
             <div>
               <p className="font-medium text-[var(--text-primary)]">Search live IT roles on PRI Global&apos;s job board</p>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
-                Contract, contract-to-hire, and direct hire — updated daily via JobDiva.
+                Contract, contract-to-hire, and direct hire — updated daily from our live job board.
               </p>
             </div>
             <Button to="/candidate-jobs" size="sm" className="!bg-emerald-600 hover:!bg-emerald-700 shrink-0">
@@ -175,7 +175,7 @@ export default function CandidateDashboard() {
                   <button type="button" onClick={() => setMessageOpen(false)} aria-label="Close"><X size={20} /></button>
                 </div>
                 <pre className="text-sm text-[var(--text-secondary)] whitespace-pre-wrap font-sans leading-relaxed">{RECRUITER_MESSAGE}</pre>
-                <Button href="mailto:info@priglobal.com" className="mt-6 !bg-emerald-600 hover:!bg-emerald-700 w-full sm:w-auto">
+                <Button to="/get-pricing" className="mt-6 !bg-emerald-600 hover:!bg-emerald-700 w-full sm:w-auto">
                   <Mail size={16} /> Reply
                 </Button>
               </motion.div>

@@ -120,7 +120,7 @@ function HiringDashboard({ session }) {
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
             Hi, we&apos;ve shortlisted 4 strong React candidates. Candidate A has 8 years of financial services experience which matches your requirements exactly. Shall we schedule interviews for Thursday?
           </p>
-          <Button href="mailto:info@priglobal.com" size="sm" variant="secondary" className="mt-4"><Mail size={14} /> Reply →</Button>
+          <Button to="/get-pricing" size="sm" variant="secondary" className="mt-4"><Mail size={14} /> Reply →</Button>
         </div>
       </section>
 
@@ -188,7 +188,7 @@ function HiringDashboard({ session }) {
                   <button key={t} type="button" className="py-2 rounded-lg border border-[var(--border)] text-sm hover:border-royal">{t}</button>
                 ))}
               </div>
-              <Button href={`mailto:info@priglobal.com?subject=${encodeURIComponent(`Interview Request: ${interviewModal.name}`)}`} className="w-full">Book Interview</Button>
+              <Button to="/get-pricing" className="w-full">Book Interview</Button>
             </motion.div>
           </motion.div>
         )}
@@ -197,7 +197,7 @@ function HiringDashboard({ session }) {
             <motion.div onClick={(e) => e.stopPropagation()} className="bg-[var(--bg-card)] rounded-2xl p-6 max-w-md w-full border border-[var(--border)]">
               <div className="flex justify-between mb-4"><h3 className="font-heading font-bold">New Job Request</h3><button type="button" onClick={() => setJobModal(false)}><X size={18} /></button></div>
               <textarea rows={4} placeholder="Describe the role, skills, and timeline..." className="w-full px-3 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] text-sm mb-4" />
-              <Button href={`mailto:info@priglobal.com?subject=${encodeURIComponent("New Job Request from Client Portal")}`} className="w-full">Submit Request</Button>
+              <Button to="/get-pricing" className="w-full">Submit Request</Button>
             </motion.div>
           </motion.div>
         )}
@@ -269,7 +269,7 @@ function ServicesDashboard() {
             </tbody>
           </table>
         </div>
-        <Button href="mailto:info@priglobal.com?subject=New%20Support%20Ticket" size="sm" className="mt-4">Submit New Ticket</Button>
+        <Button to="/get-pricing" size="sm" className="mt-4">Submit New Ticket</Button>
       </section>
 
       <section id="reports" className="mb-10 scroll-mt-24">
@@ -314,7 +314,7 @@ function ServicesDashboard() {
           <p className="text-sm text-[var(--text-secondary)] mt-2 leading-relaxed">
             Hi! Just checking in — the PR1SM.AI integration is looking great. Robbie needs your ERP credentials to complete the data pipeline. Can we schedule a quick call?
           </p>
-          <Button href="mailto:liezl.moss@PR1SM.AI" size="sm" variant="secondary" className="mt-4"><Mail size={14} /> Reply →</Button>
+          <Button to="/get-pricing" size="sm" variant="secondary" className="mt-4"><Mail size={14} /> Reply →</Button>
         </div>
       </section>
     </>

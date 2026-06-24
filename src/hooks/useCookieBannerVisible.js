@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
-const STORAGE_KEY = "pri-cookie-consent";
+import { COOKIE_CONSENT_KEY } from "../lib/cookieConsent";
+
 const EVENT = "pri-cookie-banner-change";
 
 export function notifyCookieBannerChange(visible) {
@@ -13,7 +14,7 @@ export function useCookieBannerVisible() {
   useEffect(() => {
     const read = () => {
       try {
-        return !localStorage.getItem(STORAGE_KEY);
+        return !localStorage.getItem(COOKIE_CONSENT_KEY);
       } catch {
         return false;
       }

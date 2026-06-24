@@ -66,6 +66,5 @@ export const companyDropdown = {
     { icon: Mail, label: "Contact", desc: "Get in touch with our team", to: "/contact" },
     { icon: Target, label: "Why PRI Global", desc: "Discover what sets us apart", to: "/why-pri-global" },
     { icon: Briefcase, label: "Industries", desc: "Sectors we serve worldwide", to: "/industries" },
-    { icon: Users, label: "Careers", desc: "Join our growing team", to: "/careers" },
   ],
 };

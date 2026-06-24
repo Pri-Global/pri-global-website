@@ -174,6 +174,9 @@ export default function Navbar({ minimal = false }) {
             {!minimal && (
               <>
                 <PortalMenu />
+                <NavLink to="/careers" onClick={onNavClick} className={linkClass}>
+                  Careers
+                </NavLink>
                 <Button to="/get-pricing" variant="glass-accent" size="sm" className="pulse-cta" onClick={onNavClick}>
                   Get Pricing
                 </Button>
@@ -248,6 +251,13 @@ export default function Navbar({ minimal = false }) {
                 ))}
               </MobileSection>
               <div className="flex flex-col gap-2 pt-2 border-t border-[var(--border)]">
+                <NavLink
+                  to="/careers"
+                  onClick={onNavClick}
+                  className="block py-2 text-sm font-medium text-[var(--text-secondary)] hover:text-royal text-center"
+                >
+                  Careers
+                </NavLink>
                 <Button to="/get-pricing" variant="glass-accent" size="sm" className="w-full" onClick={onNavClick}>
                   Get Pricing
                 </Button>

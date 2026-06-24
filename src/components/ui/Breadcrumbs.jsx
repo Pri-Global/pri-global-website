@@ -4,11 +4,11 @@ import { ChevronRight } from "lucide-react";
 /**
  * @param {{ items: Array<{ name: string, url?: string }> }} props
  */
-export default function Breadcrumbs({ items = [] }) {
+export default function Breadcrumbs({ items = [], className = "" }) {
   if (!items.length) return null;
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
+    <nav aria-label="Breadcrumb" className={`mb-6 ${className}`.trim()}>
       <ol className="flex flex-wrap items-center gap-1.5 text-sm text-[var(--text-muted)]">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;

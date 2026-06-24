@@ -7,6 +7,10 @@ function demoPassword() {
   return import.meta.env.VITE_PORTAL_DEMO_PASSWORD?.trim() ?? "";
 }
 
+export function getDemoPassword() {
+  return demoPassword();
+}
+
 export function isDemoLoginConfigured() {
   return demoPassword().length > 0;
 }

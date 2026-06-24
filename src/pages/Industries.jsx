@@ -7,6 +7,7 @@ import {
   ShoppingBag,
   Store,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { industries } from "../data/industries";
 import SEO from "../components/SEO";
 import Breadcrumbs from "../components/ui/Breadcrumbs";
@@ -129,12 +130,12 @@ export default function Industries() {
             We work across all sectors. Get in touch to discuss how we can apply our technology
             expertise to your specific challenges.
           </p>
-          <a
-            href="mailto:info@priglobal.com"
+          <Link
+            to="/about#contact"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-royal text-white font-medium hover:bg-[var(--accent-hover)] transition-colors"
           >
             Contact us
-          </a>
+          </Link>
         </div>
       </section>
 

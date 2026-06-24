@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEO from "../../components/SEO";
 import BrandLogo from "../../components/ui/BrandLogo";
@@ -8,10 +8,12 @@ import { AUTH_KEYS, isLoggedIn, writeAuth } from "../../hooks/usePortalAuth";
 import { inputClass, shakeVariants } from "../../components/portal/portalStyles";
 import {
   CLIENT_DEMO_ACCOUNTS,
+  getDemoPassword,
   matchClientDemo,
 } from "../../data/portalDemoCredentials";
 import { showDevDemoCredentials } from "../../utils/portalEnv";
 import PortalPreviewBanner from "../../components/portal/PortalPreviewBanner";
+import PortalDemoLoginHelp from "../../components/portal/PortalDemoLoginHelp";
 import {
   isSupabaseConfigured,
   signInWithSupabase,
@@ -30,15 +32,37 @@ export default function CustomerLogin() {
   const [shaking, setShaking] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [resetNotice, setResetNotice] = useState("");
+  const authed = isLoggedIn(AUTH_KEYS.customer);
 
-  if (isLoggedIn(AUTH_KEYS.customer)) {
-    return <Navigate to="/customer-dashboard" replace />;
+  useEffect(() => {
+    if (authed) {
+      navigate("/customer-dashboard", { replace: true });
+    }
+  }, [authed, navigate]);
+
+  if (authed) {
+    return (
+      <>
+        <SEO title="Client Portal" description="PRI Global client portal — manage talent pipeline, projects, and PR1SM.AI access." url="/customer-login" noindex />
+        <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-24 px-4 bg-[var(--bg-secondary)]">
+          <p className="text-sm text-[var(--text-muted)]">Opening your client dashboard…</p>
+        </section>
+      </>
+    );
   }
 
   const fail = (message) => {
     setError(message);
     setShaking(true);
     setTimeout(() => setShaking(false), 600);
+  };
+
+  const fillDemo = () => {
+    const account = CLIENT_DEMO_ACCOUNTS[tab];
+    setEmail(account.email);
+    setPassword(getDemoPassword());
+    setError("");
+    setResetNotice("");
   };
 
   const completeDemoLogin = (normalized) => {
@@ -117,7 +141,7 @@ export default function CustomerLogin() {
     <>
       <SEO title="Client Portal" description="PRI Global client portal — manage talent pipeline, projects, and PR1SM.AI access." url="/customer-login" noindex />
       <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-24 px-4 bg-[var(--bg-secondary)]">
-        <motion.div animate={shaking ? "shake" : ""} variants={shakeVariants} className="w-full max-w-[440px] bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-lg">
+        <motion.div animate={shaking ? "shake" : undefined} variants={shakeVariants} className="w-full max-w-[440px] bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-lg">
           <div className="flex flex-col items-center mb-6">
             <BrandLogo size="xl" className="mb-5" />
             <h1 className="font-heading text-2xl font-bold text-[var(--text-primary)]">Client Portal</h1>
@@ -144,6 +168,11 @@ export default function CustomerLogin() {
           </div>
 
           <PortalPreviewBanner compact className="mb-6" />
+          <PortalDemoLoginHelp
+            demoEmail={CLIENT_DEMO_ACCOUNTS[tab].email}
+            onFillDemo={fillDemo}
+            className="mb-6"
+          />
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputClass} />
@@ -169,8 +198,8 @@ export default function CustomerLogin() {
 
           {showDevDemoCredentials() && (
             <div className="mt-6 space-y-2 text-[10px] text-center text-[var(--text-muted)] leading-relaxed">
-              <p>Local demo — Hiring: {CLIENT_DEMO_ACCOUNTS.hiring.email}</p>
-              <p>Local demo — Services: {CLIENT_DEMO_ACCOUNTS.services.email}</p>
+              <p>Local demo — use the &quot;Try demo account&quot; button above.</p>
+              <p>Password from <code className="text-[9px]">VITE_PORTAL_DEMO_PASSWORD</code> in your .env</p>
             </div>
           )}
 

@@ -1,6 +1,7 @@
 import SEO from "../../components/SEO";
 import CandidateCareersNav from "../../components/portal/CandidateCareersNav";
 import JobSearchList from "../../components/portal/JobSearchList";
+import { PriJobsAppCompact } from "../../components/sections/JobDivaAppSection";
 import { AUTH_KEYS, isLoggedIn, readAuth } from "../../hooks/usePortalAuth";
 
 export default function CandidateJobs() {
@@ -33,6 +34,8 @@ export default function CandidateJobs() {
 
       <CandidateCareersNav />
       <JobSearchList session={session} />
+
+      <PriJobsAppCompact className="mt-10" />
     </>
   );
 }

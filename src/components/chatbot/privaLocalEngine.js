@@ -79,11 +79,10 @@ Learn more at /ai-innovation or book a demo: ${BOOKING_URL}`;
 function contactAnswer() {
   return `Here's how to reach PRI Global:
 
-• General inquiries: info@priglobal.com
-• PR1SM.AI / demos: ajay@pr1sm.ai or liezl.moss@PR1SM.AI
-• HQ phone: 636.256.7172 (Ellisville, MO)
+• Request pricing or a proposal: /get-pricing
 • Book a discovery call: ${BOOKING_URL}
-• Custom pricing: /get-pricing
+• HQ phone: 636.256.7172 (Ellisville, MO)
+• Contact form: /about#contact
 
 Response time for proposals: within 24 business hours.`;
 }
@@ -91,7 +90,7 @@ Response time for proposals: within 24 business hours.`;
 function jobsAnswer() {
   return `Looking for IT roles? You can:
 
-• Browse live openings: /candidate-jobs (powered by JobDiva)
+• Browse live openings: /candidate-jobs
 • Sign in to the Candidate Portal: /candidate-login
 • Careers overview: /careers
 • Job seeker FAQ: /job-seeker-faq
@@ -111,7 +110,7 @@ Need access? Clients can request it at /customer-register. Candidates can regist
 
 function officesAnswer() {
   const list = offices
-    .map((o) => `• ${o.label} — ${o.address}${o.email ? ` · ${o.email}` : ""}`)
+    .map((o) => `• ${o.label} — ${o.address}`)
     .join("\n");
   return `PRI Global operates globally with offices in:\n\n${list}\n\nHQ: Ellisville, Missouri (founded 1997). See /about for our full story.`;
 }
@@ -138,13 +137,13 @@ We typically respond with a tailored proposal within 24 business hours. No oblig
 
 function leadershipAnswer(text) {
   if (includesAny(text, ["ajay"])) {
-    return "Ajay Patel is Chairman of PRI Global and Chairman & Founder of PR1SM.AI. Reach him at ajay@pr1sm.ai. More on /about.";
+    return "Ajay Patel is Chairman of PRI Global and Chairman & Founder of PR1SM.AI. More on /about or /get-pricing.";
   }
   if (includesAny(text, ["keenan"])) {
-    return "Keenan Patel is CEO of PRI Global (and CEO of PR1SM.AI). General inquiries: info@priglobal.com.";
+    return "Keenan Patel is CEO of PRI Global (and CEO of PR1SM.AI). Reach our team via /get-pricing or /about#contact.";
   }
   if (includesAny(text, ["liezl"])) {
-    return "Liezl Moss leads Growth Strategy at PR1SM.AI. Contact: liezl.moss@PR1SM.AI.";
+    return "Liezl Moss leads Growth Strategy at PR1SM.AI. Contact the team at /get-pricing.";
   }
   return "PRI leadership includes Ajay Patel (Chairman), Keenan Patel (CEO), Marla Dicandia (CFO), and Suresh Karampudi (Managing Director, India). PR1SM.AI team details are on /about.";
 }
@@ -162,7 +161,7 @@ Try asking about:
 • Offices and company background
 • Pricing or booking a call
 
-Or email info@priglobal.com and our team will help directly.`;
+Or use our contact form at /about#contact and our team will help directly.`;
 }
 
 /** Generate a reply from on-site data — no external API */

@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { scrollToPageTop } from "../../utils/scrollToPageTop";
 import { ExternalLink, MapPin, Phone, Calendar } from "lucide-react";
-import { HUBSPOT_MEETING_URL } from "../../constants/links";
+import { HUBSPOT_MEETING_URL, CONTACT_PAGE } from "../../constants/links";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import BrandLogo from "../ui/BrandLogo";
 import officeLobby from "../../assets/images/pri-office-lobby.png";
@@ -123,9 +123,9 @@ export default function Footer() {
           <a href="tel:6362567172" className="group flex items-center gap-2 hover:text-white transition-colors">
             <AnimatedIcon Icon={Phone} size={14} className="text-white/50 group-hover:text-white" /> 636.256.7172 (PRI Global HQ)
           </a>
-          <a href="mailto:info@priglobal.com" className="flex items-center gap-2 hover:text-white transition-colors">
-            info@priglobal.com
-          </a>
+          <Link to={CONTACT_PAGE} className="flex items-center gap-2 hover:text-white transition-colors">
+            Contact us
+          </Link>
           <span className="group flex items-start gap-2 flex-wrap">
             <AnimatedIcon Icon={MapPin} size={14} className="shrink-0 mt-0.5 text-white/50" /> Ellisville, MO · Hyderabad · Pune · Manila · Ottawa
           </span>

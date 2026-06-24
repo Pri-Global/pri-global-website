@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { generateReply } from './api/_priva-core.js'
 import { createRealtimeSession } from './api/_realtime-core.js'
+import { fetchLiveJobs } from './api/_jobdiva-core.js'
 
 // Local dev-only middleware that mirrors the Vercel function at /api/priva.
 // The OpenAI key is read server-side here and never exposed to the browser
@@ -47,6 +48,29 @@ function privaApiPlugin(env) {
           console.error('PriVa dev error:', code || err?.message, err?.detail || '')
           res.statusCode = 502
           res.end(JSON.stringify({ error: 'Assistant is temporarily unavailable.' }))
+        }
+      })
+
+      server.middlewares.use('/api/jobs', async (req, res) => {
+        if (req.method !== 'GET') {
+          res.statusCode = 405
+          res.setHeader('Allow', 'GET')
+          res.end(JSON.stringify({ error: 'Method not allowed' }))
+          return
+        }
+        try {
+          const url = new URL(req.url, 'http://localhost')
+          const keyword = url.searchParams.get('keyword') || ''
+          const count = Math.min(Number(url.searchParams.get('count')) || 100, 200)
+          const result = await fetchLiveJobs({ keyword, count })
+          res.statusCode = 200
+          res.setHeader('Content-Type', 'application/json')
+          res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600')
+          res.end(JSON.stringify(result))
+        } catch (err) {
+          console.error('Jobs API dev error:', err?.message)
+          res.statusCode = 502
+          res.end(JSON.stringify({ error: 'Unable to load job listings.' }))
         }
       })
 

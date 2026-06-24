@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { MapPin, Phone, ExternalLink, Mail, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import Breadcrumbs from "../components/ui/Breadcrumbs";
-import { GLASSDOOR_URL } from "../constants/links";
+import { GLASSDOOR_URL, CONTACT_PAGE } from "../constants/links";
 import { motion } from "framer-motion";
 import SectionHeading from "../components/ui/SectionHeading";
 import CallToAction from "../components/sections/CallToAction";
@@ -168,27 +169,12 @@ export default function About() {
 
       <PrismLeadershipDivider />
 
-      {/* PR1SM.AI Team — always dark brand section */}
-      <section className="py-24 bg-[#0d1628]">
-        <div className="site-container">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="text-center mb-14 max-w-3xl mx-auto"
-          >
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0D1B3E] border border-[#1A56DB] text-xs font-bold tracking-widest uppercase text-[#93c5fd] mb-4">
-              PR1SM.AI
-            </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
-              The PR1SM.AI Team
-            </h2>
-            <p className="text-[#6a8aaa] leading-relaxed">
-              Experienced leaders. Proven track record.
-            </p>
-          </motion.div>
-
+      {/* PR1SM.AI Team — PRI site theme, pr1sm.ai grid layout */}
+      <section className="py-16 md:py-24 bg-[var(--bg-primary)] relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div className="absolute -bottom-24 right-0 w-[420px] h-[420px] bg-royal/5 dark:bg-royaldark/8 rounded-full blur-[100px]" />
+        </div>
+        <div className="site-container relative">
           <PrismTeamSection members={prismLeadership} />
         </div>
       </section>
@@ -258,14 +244,12 @@ export default function About() {
                 initials: "AP",
                 name: "Ajay Patel",
                 title: "Chairman, PRI Global & Chairman & Founder, PR1SM.AI",
-                email: "ajay@pr1sm.ai",
                 address: "174 Clarkson Road, Ellisville, MO 63011",
               },
               {
                 initials: "KP",
                 name: "Keenan Patel",
                 title: "CEO, PRI Global",
-                email: "info@priglobal.com",
                 address: "174 Clarkson Road, Ellisville, MO 63011",
                 note: "PRI Global HQ",
               },
@@ -292,9 +276,9 @@ export default function About() {
                   </div>
                 </div>
                 <div className="space-y-2.5 text-sm">
-                  <a href={`mailto:${person.email}`} className="group/link flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
-                    <AnimatedIcon Icon={Mail} size={14} className="text-royal shrink-0" /> {person.email}
-                  </a>
+                  <Link to={CONTACT_PAGE} className="group/link flex items-center gap-3 text-[var(--text-secondary)] hover:text-royal transition-colors">
+                    <AnimatedIcon Icon={Mail} size={14} className="text-royal shrink-0" /> Send a message
+                  </Link>
                   <div className="group/link flex items-start gap-3 text-[var(--text-secondary)]">
                     <AnimatedIcon Icon={MapPin} size={14} className="text-royal shrink-0 mt-0.5" /> {person.address}
                   </div>

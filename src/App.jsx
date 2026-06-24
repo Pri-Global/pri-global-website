@@ -18,6 +18,7 @@ import Industries from "./pages/Industries";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
 import Careers from "./pages/Careers";
+import JobDivaMobileApp from "./pages/JobDivaMobileApp";
 import Legal from "./pages/Legal";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookieSettings from "./pages/CookieSettings";
@@ -117,13 +118,21 @@ const pageVariants = {
   exit:    { opacity: 0, y: -12, transition: { duration: 0.22, ease: "easeIn" } },
 };
 
-/* Portal routes skip page transitions so sidebar navigation stays responsive. */
+/* Portal + auth routes skip page transitions (avoids blank screen on portal login). */
 const PORTAL_ROUTE_PREFIXES = [
   "/employee-dashboard",
   "/candidate-dashboard",
   "/candidate-profile",
   "/candidate-jobs",
   "/customer-dashboard",
+];
+
+const AUTH_ROUTE_PREFIXES = [
+  "/candidate-login",
+  "/candidate-register",
+  "/customer-login",
+  "/customer-register",
+  "/employee-login",
 ];
 
 const PORTAL_SHELL_PREFIXES = [
@@ -133,20 +142,26 @@ const PORTAL_SHELL_PREFIXES = [
   "/customer-dashboard",
 ];
 
-function isPortalShell(pathname) {
-  return PORTAL_SHELL_PREFIXES.some(
+function matchesPrefix(pathname, prefixes) {
+  return prefixes.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
+}
+
+function isPortalShell(pathname) {
+  return matchesPrefix(pathname, PORTAL_SHELL_PREFIXES);
 }
 
 function isPortalRoute(pathname) {
-  return PORTAL_ROUTE_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
-  );
+  return matchesPrefix(pathname, PORTAL_ROUTE_PREFIXES);
 }
 
-function PW({ children, animate = true, reducedMotion = false }) {
-  if (!animate || reducedMotion) {
+function skipPageTransition(pathname) {
+  return isPortalRoute(pathname) || matchesPrefix(pathname, AUTH_ROUTE_PREFIXES);
+}
+
+function PW({ children, animate = true, reducedMotion = false, motionless = false }) {
+  if (!animate || reducedMotion || motionless) {
     return children;
   }
   return (
@@ -157,9 +172,9 @@ function PW({ children, animate = true, reducedMotion = false }) {
 }
 
 /* ── Routes ──────────────────────────────────────────────────── */
-function AppRoutes({ reducedMotion = false }) {
+function AppRoutes({ reducedMotion = false, motionless = false }) {
   const pw = (children, animate = true) => (
-    <PW animate={animate} reducedMotion={reducedMotion}>{children}</PW>
+    <PW animate={animate} reducedMotion={reducedMotion} motionless={motionless}>{children}</PW>
   );
 
   return (
@@ -175,20 +190,20 @@ function AppRoutes({ reducedMotion = false }) {
         <Route path="/resources"       element={pw(<Resources />)} />
         <Route path="/resources/:slug" element={pw(<Resources />)} />
         <Route path="/case-studies/:slug" element={pw(<CaseStudy />)} />
-        <Route path="/employee-login" element={pw(<EmployeeLogin />)} />
+        <Route path="/employee-login" element={pw(<EmployeeLogin />, false)} />
         <Route
           path="/employee-dashboard"
           element={pw(<ProtectedRoute><EmployeeDashboard /></ProtectedRoute>, false)}
         />
-        <Route path="/candidate-login" element={pw(<CandidateLogin />)} />
-        <Route path="/candidate-register" element={pw(<CandidateRegister />)} />
+        <Route path="/candidate-login" element={pw(<CandidateLogin />, false)} />
+        <Route path="/candidate-register" element={pw(<CandidateRegister />, false)} />
         <Route element={<CandidatePortalLayout />}>
           <Route path="candidate-dashboard" element={<CandidateDashboard />} />
           <Route path="candidate-profile" element={<CandidateProfile />} />
           <Route path="candidate-jobs" element={<CandidateJobs />} />
         </Route>
-        <Route path="/customer-login" element={pw(<CustomerLogin />)} />
-        <Route path="/customer-register" element={pw(<CustomerRegister />)} />
+        <Route path="/customer-login" element={pw(<CustomerLogin />, false)} />
+        <Route path="/customer-register" element={pw(<CustomerRegister />, false)} />
         <Route
           path="/customer-dashboard"
           element={pw(
@@ -199,6 +214,7 @@ function AppRoutes({ reducedMotion = false }) {
           )}
         />
         <Route path="/careers"         element={pw(<Careers />)} />
+        <Route path="/careers/mobile-app" element={pw(<JobDivaMobileApp />)} />
         <Route path="/job-seeker-faq"  element={pw(<JobSeekerFAQ />)} />
         <Route path="/working-at-pri"  element={pw(<WorkingAtPRI />)} />
         <Route path="/legal"           element={pw(<Legal />)} />
@@ -216,8 +232,8 @@ function AppRoutes({ reducedMotion = false }) {
 /* ── App ─────────────────────────────────────────────────────── */
 export default function App() {
   const location = useLocation();
-  const portalRoute = isPortalRoute(location.pathname);
   const portalShell = isPortalShell(location.pathname);
+  const noPageTransition = skipPageTransition(location.pathname);
   const reducedMotion = useReducedMotion();
 
   return (
@@ -228,13 +244,13 @@ export default function App() {
       <ScrollToTop />
       <Navbar minimal={portalShell} />
       <main id="main-content" className="flex-1" tabIndex={-1}>
-        {portalRoute || reducedMotion ? (
-          <AppRoutes reducedMotion={reducedMotion} />
-        ) : (
-          <AnimatePresence mode="wait">
-            <AppRoutes key={location.pathname} reducedMotion={reducedMotion} />
-          </AnimatePresence>
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          <AppRoutes
+            key={location.pathname}
+            reducedMotion={reducedMotion}
+            motionless={noPageTransition}
+          />
+        </AnimatePresence>
       </main>
       {!portalShell && <Footer />}
       <CookieBanner />

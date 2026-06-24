@@ -10,7 +10,6 @@ export const offices = [
     phoneDisplay: "636.256.7172",
     specialty: "Global HQ · All Services · IT Staffing · Strategy",
     contact: "Keenan Patel, CEO",
-    email: "info@priglobal.com",
     isHQ: true,
   },
   {

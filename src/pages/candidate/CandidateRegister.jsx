@@ -6,9 +6,10 @@ import SEO from "../../components/SEO";
 import BrandLogo from "../../components/ui/BrandLogo";
 import Button from "../../components/ui/Button";
 import AnimatedIcon from "../../components/ui/AnimatedIcon";
-import { AUTH_KEYS, writeAuth, writeStorage } from "../../hooks/usePortalAuth";
+import PhoneInput from "../../components/ui/PhoneInput";
 import { EXPERIENCE_OPTIONS, SKILL_OPTIONS } from "../../data/portalDemoData";
 import { inputClass, labelClass } from "../../components/portal/portalStyles";
+import { registerCandidateAccount } from "../../services/candidatePortal";
 
 const initial = {
   firstName: "",
@@ -26,11 +27,53 @@ const initial = {
   resumeName: "",
   coverNote: "",
   signupMode: "",
+  password: "",
+  confirmPassword: "",
 };
 
 function parseMode(value) {
   if (value === "resume" || value === "manual") return value;
   return null;
+}
+
+function RegisterPasswordFields({ password, confirmPassword, onPasswordChange, onConfirmChange }) {
+  return (
+    <div className="grid sm:grid-cols-2 gap-4 pt-2">
+      <div>
+        <label className={labelClass} htmlFor="candidate-register-password">
+          Password *
+        </label>
+        <input
+          id="candidate-register-password"
+          name="new-password"
+          type="password"
+          required
+          minLength={8}
+          value={password}
+          onChange={(e) => onPasswordChange(e.target.value)}
+          className={inputClass}
+          autoComplete="new-password"
+        />
+      </div>
+      <div>
+        <label className={labelClass} htmlFor="candidate-register-confirm-password">
+          Confirm Password *
+        </label>
+        <input
+          id="candidate-register-confirm-password"
+          name="confirm-password"
+          type="password"
+          required
+          minLength={8}
+          value={confirmPassword}
+          onChange={(e) => onConfirmChange(e.target.value)}
+          className={inputClass}
+          autoComplete="off"
+          data-1p-ignore
+        />
+      </div>
+    </div>
+  );
 }
 
 export default function CandidateRegister() {
@@ -41,7 +84,10 @@ export default function CandidateRegister() {
   const [mode, setMode] = useState(urlMode);
   const [step, setStep] = useState(1);
   const [form, setForm] = useState(initial);
+  const [resumeFile, setResumeFile] = useState(null);
   const [done, setDone] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (urlMode) {
@@ -64,8 +110,13 @@ export default function CandidateRegister() {
 
   const handleFile = (e) => {
     const file = e.target.files?.[0];
-    if (file) update("resumeName", file.name);
+    if (file) {
+      update("resumeName", file.name);
+      setResumeFile(file);
+    }
   };
+
+  const passwordValid = form.password.length >= 8 && form.password === form.confirmPassword;
 
   const selectMode = (nextMode) => {
     setMode(nextMode);
@@ -73,24 +124,25 @@ export default function CandidateRegister() {
     update("signupMode", nextMode);
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const name = `${form.firstName} ${form.lastName}`;
-    writeStorage(AUTH_KEYS.candidateProfile, {
-      ...form,
-      name,
-      registeredAt: Date.now(),
-      signupMode: mode,
-    });
-    writeAuth(AUTH_KEYS.candidate, {
-      loggedIn: true,
-      email: form.email.trim().toLowerCase(),
-      name,
-      role: "candidate",
-      loginTime: Date.now(),
-    });
-    setDone(true);
-    setTimeout(() => navigate("/candidate-dashboard"), 2500);
+    setError("");
+
+    if (!passwordValid) {
+      setError("Use a password of at least 8 characters and confirm it matches.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await registerCandidateAccount(form, resumeFile);
+      setDone(true);
+      setTimeout(() => navigate("/candidate-dashboard"), 2500);
+    } catch (err) {
+      setError(err.message || "Registration failed. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const goBack = () => {
@@ -106,12 +158,12 @@ export default function CandidateRegister() {
     mode === "resume"
       ? step === 1
         ? resumeStep1Valid
-        : step1Valid
+        : step1Valid && passwordValid
       : step === 1
         ? step1Valid
         : step === 2
           ? step2Valid
-          : true;
+          : passwordValid;
 
   if (done) {
     return (
@@ -322,16 +374,16 @@ export default function CandidateRegister() {
                             value={form.email}
                             onChange={(e) => update("email", e.target.value)}
                             className={inputClass}
+                            autoComplete="username"
+                            name="email"
                           />
                         </div>
                         <div>
                           <label className={labelClass}>Phone *</label>
-                          <input
-                            type="tel"
+                          <PhoneInput
                             required
                             value={form.phone}
-                            onChange={(e) => update("phone", e.target.value)}
-                            className={inputClass}
+                            onChange={(phone) => update("phone", phone)}
                           />
                         </div>
                       </div>
@@ -354,6 +406,12 @@ export default function CandidateRegister() {
                           placeholder="https://linkedin.com/in/..."
                         />
                       </div>
+                      <RegisterPasswordFields
+                        password={form.password}
+                        confirmPassword={form.confirmPassword}
+                        onPasswordChange={(v) => update("password", v)}
+                        onConfirmChange={(v) => update("confirmPassword", v)}
+                      />
                     </motion.div>
                   )}
 
@@ -394,16 +452,16 @@ export default function CandidateRegister() {
                             value={form.email}
                             onChange={(e) => update("email", e.target.value)}
                             className={inputClass}
+                            autoComplete="username"
+                            name="email"
                           />
                         </div>
                         <div>
                           <label className={labelClass}>Phone *</label>
-                          <input
-                            type="tel"
+                          <PhoneInput
                             required
                             value={form.phone}
-                            onChange={(e) => update("phone", e.target.value)}
-                            className={inputClass}
+                            onChange={(phone) => update("phone", phone)}
                           />
                         </div>
                       </div>
@@ -548,9 +606,21 @@ export default function CandidateRegister() {
                           placeholder="Availability, target roles, or anything else we should know..."
                         />
                       </div>
+                      <RegisterPasswordFields
+                        password={form.password}
+                        confirmPassword={form.confirmPassword}
+                        onPasswordChange={(v) => update("password", v)}
+                        onConfirmChange={(v) => update("confirmPassword", v)}
+                      />
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                {error && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-6" role="alert">
+                    {error}
+                  </p>
+                )}
 
                 <div className="flex justify-between mt-8 pt-4 border-t border-[var(--border)]">
                   <button
@@ -570,8 +640,8 @@ export default function CandidateRegister() {
                       Next <ArrowRight size={16} />
                     </Button>
                   ) : (
-                    <Button type="submit" className="!bg-emerald-600 hover:!bg-emerald-700">
-                      Complete Registration →
+                    <Button type="submit" disabled={submitting || !passwordValid} className="!bg-emerald-600 hover:!bg-emerald-700">
+                      {submitting ? "Creating account…" : "Complete Registration →"}
                     </Button>
                   )}
                 </div>

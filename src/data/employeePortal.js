@@ -111,3 +111,25 @@ export const EMPLOYEE_ONBOARDING = [
   { step: 3, title: "Review handbook & policies", detail: "Code of conduct, PTO, and benefits overview." },
   { step: 4, title: "Meet your team lead", detail: "Schedule intro with your manager in week one." },
 ];
+
+/** Planned HRIS / collaboration integrations for the employee portal. */
+export const EMPLOYEE_INTEGRATIONS = [
+  {
+    id: "teams",
+    title: "Microsoft Teams",
+    status: "SSO Ready",
+    description:
+      "Sign in with your PRI Global Microsoft 365 account. Team channels and notifications via Microsoft Graph (Phase 2).",
+    docsUrl: "https://learn.microsoft.com/en-us/graph/teams-concept-overview",
+    features: ["Single sign-on with Microsoft 365", "Profile from Azure AD", "Team channels (coming next)"],
+  },
+  {
+    id: "rippling",
+    title: "Rippling",
+    status: "OAuth Ready",
+    description:
+      "Sync employee records, PTO, org chart, and payroll data from Rippling so the portal reflects live HR information.",
+    docsUrl: "https://developer.rippling.com",
+    features: ["Employee profile sync", "PTO balances", "Org directory from HRIS"],
+  },
+];

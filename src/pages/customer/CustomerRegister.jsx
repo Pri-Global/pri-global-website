@@ -5,6 +5,7 @@ import SEO from "../../components/SEO";
 import BrandLogo from "../../components/ui/BrandLogo";
 import Button from "../../components/ui/Button";
 import AnimatedIcon from "../../components/ui/AnimatedIcon";
+import PhoneInput from "../../components/ui/PhoneInput";
 import { INDUSTRY_OPTIONS } from "../../data/portalDemoData";
 import { inputClass, labelClass } from "../../components/portal/portalStyles";
 import { submitLeadEmail } from "../../utils/submitLeadEmail";
@@ -108,7 +109,7 @@ export default function CustomerRegister() {
                   <div><label className={labelClass}>Job Title *</label><input required value={form.jobTitle} onChange={(e) => update("jobTitle", e.target.value)} className={inputClass} /></div>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div><label className={labelClass}>Email *</label><input type="email" required value={form.email} onChange={(e) => update("email", e.target.value)} className={inputClass} /></div>
-                    <div><label className={labelClass}>Phone *</label><input required value={form.phone} onChange={(e) => update("phone", e.target.value)} className={inputClass} /></div>
+                    <div><label className={labelClass}>Phone *</label><PhoneInput required value={form.phone} onChange={(phone) => update("phone", phone)} /></div>
                   </div>
                   <div><label className={labelClass}>How did you hear about PRI?</label>
                     <select value={form.heard} onChange={(e) => update("heard", e.target.value)} className={inputClass}>

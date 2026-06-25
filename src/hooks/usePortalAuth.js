@@ -1,10 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOutSupabase } from "../lib/portalSupabaseAuth";
 
 /**
- * DEMO ONLY — localStorage portal auth helpers.
- * Replace with real API auth in production.
+ * Browser session helpers for candidate and customer portals (localStorage + optional Supabase sign-out).
  */
 
 export const AUTH_KEYS = {
@@ -13,6 +12,7 @@ export const AUTH_KEYS = {
   candidateProfile: "pri-candidate-profile",
   candidateApplications: "pri-candidate-applications",
   candidateSavedJobs: "pri-candidate-saved-jobs",
+  candidateDashboardCache: "pri-candidate-dashboard-cache",
 };
 
 export function readAuth(key) {
@@ -77,7 +77,16 @@ export function usePortalAuth(authKey, redirectTo) {
     navigate(redirectTo, { replace: true });
   }, [authKey, redirectTo, navigate]);
 
-  const session = readAuth(authKey);
+  // Memoize on raw localStorage string so consumers can safely use `session` in effect deps.
+  const authRaw = typeof window !== "undefined" ? localStorage.getItem(authKey) : null;
+  const session = useMemo(() => {
+    if (!authRaw) return null;
+    try {
+      return JSON.parse(authRaw);
+    } catch {
+      return null;
+    }
+  }, [authRaw]);
 
   return { session, logout, isAuthenticated: Boolean(session?.loggedIn) };
 }

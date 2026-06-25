@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 import {
   ExternalLink,
   Phone,
@@ -8,6 +9,7 @@ import {
   BookOpen,
   ArrowRight,
   Sparkles,
+  Plug,
 } from "lucide-react";
 import SEO from "../components/SEO";
 import PortalLayout from "../components/portal/PortalLayout";
@@ -19,14 +21,15 @@ import {
   getEmployeeSession,
   employeeDisplayName,
 } from "../components/ProtectedRoute";
-import { signOutSupabase } from "../lib/portalSupabaseAuth";
-import { EMPLOYEE_NAV } from "../data/portalNav";
+import { isLiveEmployeeSession } from "../services/employeePortal";
+import { getEmployeeNav } from "../data/portalNav";
 import {
   EMPLOYEE_ANNOUNCEMENTS,
   EMPLOYEE_QUICK_LINKS,
   EMPLOYEE_CONTACTS,
   EMPLOYEE_POLICIES,
   EMPLOYEE_ONBOARDING,
+  EMPLOYEE_INTEGRATIONS,
 } from "../data/employeePortal";
 import { employeeVideoLibrary } from "../data/videos";
 import { offices } from "../data/offices";
@@ -36,10 +39,14 @@ const ACCENT = "#8b5cf6";
 export default function EmployeeDashboard() {
   const navigate = useNavigate();
   const session = getEmployeeSession();
-  const name = employeeDisplayName(session?.email);
+  const name = session?.name || employeeDisplayName(session?.email);
+  const liveSession = isLiveEmployeeSession(session);
+  const navItems = useMemo(
+    () => getEmployeeNav({ announcementCount: EMPLOYEE_ANNOUNCEMENTS.length }),
+    []
+  );
 
   const logout = async () => {
-    await signOutSupabase();
     clearEmployeeSession();
     navigate("/", { replace: true });
   };
@@ -56,8 +63,12 @@ export default function EmployeeDashboard() {
         portalLabel="Employee Portal"
         accentColor={ACCENT}
         userName={`Welcome back, ${name}`}
-        userSubtitle={session?.email}
-        navItems={EMPLOYEE_NAV}
+        userSubtitle={
+          liveSession
+            ? [session?.jobTitle, session?.email].filter(Boolean).join(" · ")
+            : session?.email
+        }
+        navItems={navItems}
         onLogout={logout}
       >
         {/* Hero strip */}
@@ -71,7 +82,11 @@ export default function EmployeeDashboard() {
                 Everything you need for your day at PRI Global
               </h2>
               <p className="text-sm text-[var(--text-secondary)] mt-2 max-w-xl">
-                Payroll, HR, IT support, training, referrals, and company updates — in one place.
+                {liveSession
+                  ? session?.authProvider === "rippling"
+                    ? "Signed in via Rippling. HR data will expand as we connect more Rippling APIs."
+                    : "Signed in with Microsoft 365."
+                  : "Payroll, HR, IT support, training, referrals, and company updates — in one place."}
               </p>
             </div>
             <Button
@@ -158,6 +173,62 @@ export default function EmployeeDashboard() {
                     {link.cta} {link.external && <ExternalLink size={14} />}
                   </Button>
                 )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Planned integrations */}
+        <section id="integrations" className="mb-10 scroll-mt-24">
+          <h2 className="font-heading text-lg font-bold text-[var(--text-primary)] mb-1">
+            Connected Systems
+          </h2>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">
+            The employee portal currently runs on a test account. Live sign-in, HR data, and team collaboration will connect through these platforms.
+          </p>
+          <div className="grid lg:grid-cols-2 gap-4">
+            {EMPLOYEE_INTEGRATIONS.map((integration) => (
+              <div
+                key={integration.id}
+                className="bg-[var(--bg-card)] border border-violet-500/20 rounded-2xl p-5 flex flex-col"
+              >
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="flex items-center gap-2">
+                    <Plug size={18} className="text-violet-600 dark:text-violet-400" />
+                    <h3 className="font-heading font-bold text-[var(--text-primary)]">{integration.title}</h3>
+                  </div>
+                  <span
+                    className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                      integration.id === "teams" && session?.authProvider === "microsoft"
+                        ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                        : integration.id === "rippling" && session?.authProvider === "rippling"
+                          ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                          : "bg-amber-500/10 text-amber-700 dark:text-amber-300"
+                    }`}
+                  >
+                    {integration.id === "teams" && session?.authProvider === "microsoft"
+                      ? "Connected"
+                      : integration.id === "rippling" && session?.authProvider === "rippling"
+                        ? "Connected"
+                        : integration.status}
+                  </span>
+                </div>
+                <p className="text-sm text-[var(--text-secondary)] flex-1">{integration.description}</p>
+                <ul className="mt-3 space-y-1">
+                  {integration.features.map((feature) => (
+                    <li key={feature} className="text-xs text-[var(--text-muted)]">
+                      • {feature}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={integration.docsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-violet-600 dark:text-violet-400 hover:underline mt-4"
+                >
+                  API documentation <ExternalLink size={14} />
+                </a>
               </div>
             ))}
           </div>

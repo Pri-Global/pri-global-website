@@ -22,25 +22,45 @@ import {
   Building2,
 } from "lucide-react";
 
-export const EMPLOYEE_NAV = [
-  { label: "Home", to: "/employee-dashboard", icon: Home },
-  { label: "Announcements", to: "/employee-dashboard#announcements", icon: Megaphone, badge: "3" },
-  { label: "Quick Links", to: "/employee-dashboard#links", icon: LayoutDashboard },
-  { label: "HR & Policies", to: "/employee-dashboard#policies", icon: Shield },
-  { label: "Directory", to: "/employee-dashboard#directory", icon: Building2 },
-  { label: "Training", to: "/employee-dashboard#videos", icon: Video },
-];
+export function getEmployeeNav({ announcementCount = 0 } = {}) {
+  return [
+    { label: "Home", to: "/employee-dashboard", icon: Home },
+    {
+      label: "Announcements",
+      to: "/employee-dashboard#announcements",
+      icon: Megaphone,
+      badge: announcementCount > 0 ? String(announcementCount) : undefined,
+    },
+    { label: "Quick Links", to: "/employee-dashboard#links", icon: LayoutDashboard },
+    { label: "Integrations", to: "/employee-dashboard#integrations", icon: BrainCircuit },
+    { label: "HR & Policies", to: "/employee-dashboard#policies", icon: Shield },
+    { label: "Directory", to: "/employee-dashboard#directory", icon: Building2 },
+    { label: "Training", to: "/employee-dashboard#videos", icon: Video },
+  ];
+}
 
-export const CANDIDATE_NAV = [
-  { label: "Dashboard", to: "/candidate-dashboard", icon: Home },
-  { label: "My Profile", to: "/candidate-profile", icon: User },
-  { label: "Job Search", to: "/candidate-jobs", icon: Search },
-  { label: "My Applications", to: "/candidate-dashboard#applications", icon: FileText, badge: "3" },
-  { label: "Saved Jobs", to: "/candidate-dashboard#saved", icon: Bookmark },
-  { label: "Messages", to: "/candidate-dashboard#messages", icon: MessageSquare, badge: "1" },
-  { label: "Interview Prep", to: "/candidate-dashboard#prep", icon: Star },
-  { label: "Settings", to: "/candidate-profile#settings", icon: Settings },
-];
+/** @deprecated Use getEmployeeNav() for dynamic badges */
+export const EMPLOYEE_NAV = getEmployeeNav({ announcementCount: 3 });
+
+export function getCandidateNav({ applicationCount = 0 } = {}) {
+  return [
+    { label: "Dashboard", to: "/candidate-dashboard", icon: Home },
+    { label: "My Profile", to: "/candidate-profile", icon: User },
+    { label: "Job Search", to: "/candidate-jobs", icon: Search },
+    {
+      label: "My Applications",
+      to: "/candidate-dashboard#applications",
+      icon: FileText,
+      badge: applicationCount > 0 ? String(applicationCount) : undefined,
+    },
+    { label: "Saved Jobs", to: "/candidate-dashboard#saved", icon: Bookmark },
+    { label: "Interview Prep", to: "/candidate-dashboard#prep", icon: Star },
+    { label: "Settings", to: "/candidate-profile#settings", icon: Settings },
+  ];
+}
+
+/** @deprecated Use getCandidateNav() for dynamic badges */
+export const CANDIDATE_NAV = getCandidateNav();
 
 export const HIRING_NAV = [
   { label: "Dashboard", to: "/customer-dashboard", icon: LayoutDashboard },

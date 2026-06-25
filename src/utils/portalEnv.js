@@ -11,7 +11,12 @@ export function showPortalDemoLogin() {
   return isPortalPreviewMode() && isDemoLoginConfigured();
 }
 
-/** Portals use sample data until Supabase (or another backend) is connected. */
+/** Client/customer portals use sample data until Supabase (or another backend) is connected. */
 export function isPortalPreviewMode() {
   return !isSupabaseConfigured;
+}
+
+/** Employee portal runs on a single test account until Microsoft Teams + Rippling are connected. */
+export function isEmployeePortalTestMode() {
+  return true;
 }

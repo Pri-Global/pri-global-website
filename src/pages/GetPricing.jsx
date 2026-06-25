@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Phone, Mail, ArrowRight, ArrowLeft, Calendar } from "lucide-react";
 import Button from "../components/ui/Button";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
+import PhoneInput from "../components/ui/PhoneInput";
 import ClientLogos from "../components/ui/ClientLogos";
 import SEO from "../components/SEO";
 import { BOOKING_URL } from "../constants/links";
@@ -309,12 +310,10 @@ export default function GetPricing() {
                           />
                         </Field>
                         <Field label="Phone" required>
-                          <input
-                            type="tel"
+                          <PhoneInput
                             required
                             value={form.phone}
-                            onChange={(e) => update("phone", e.target.value)}
-                            className={inputClass}
+                            onChange={(phone) => update("phone", phone)}
                           />
                         </Field>
                       </div>
@@ -423,26 +422,6 @@ export default function GetPricing() {
               </form>
             </div>
           </motion.div>
-        </div>
-
-        <div className="mt-16 max-w-3xl mx-auto">
-          <h2 className="font-heading text-2xl font-bold text-[var(--text-primary)] mb-2 text-center">
-            Rather book a call directly?
-          </h2>
-          <p className="text-sm text-[var(--text-secondary)] text-center mb-6">
-            Pick a time that works for you — no form required.
-          </p>
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center">
-            <Button
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              size="lg"
-              className="mx-auto"
-            >
-              <AnimatedIcon Icon={Calendar} size={18} className="text-royal" /> Schedule a discovery call <ArrowRight size={18} />
-            </Button>
-          </div>
         </div>
       </div>
     </section>

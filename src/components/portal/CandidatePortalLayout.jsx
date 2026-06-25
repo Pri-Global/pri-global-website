@@ -1,7 +1,9 @@
 import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
+import { useMemo } from "react";
 import PortalLayout from "./PortalLayout";
 import { AUTH_KEYS, isLoggedIn, usePortalAuth } from "../../hooks/usePortalAuth";
-import { CANDIDATE_NAV } from "../../data/portalNav";
+import { getCandidateNav } from "../../data/portalNav";
+import { useCandidateNavStats } from "../../hooks/useCandidateNavStats";
 
 const ACCENT = "#22c55e";
 
@@ -19,6 +21,11 @@ export default function CandidatePortalLayout() {
   const { pathname } = useLocation();
   const authed = isLoggedIn(AUTH_KEYS.candidate);
   const { session, logout } = usePortalAuth(AUTH_KEYS.candidate, "/candidate-login");
+  const navStats = useCandidateNavStats(session);
+  const navItems = useMemo(
+    () => getCandidateNav({ applicationCount: navStats.applications }),
+    [navStats.applications]
+  );
   const isJobs = pathname === "/candidate-jobs";
 
   if (!authed) {
@@ -46,7 +53,7 @@ export default function CandidatePortalLayout() {
       accentColor={ACCENT}
       userName={session?.name || "Candidate"}
       userSubtitle={SUBTITLES[pathname] || "Candidate Portal"}
-      navItems={CANDIDATE_NAV}
+      navItems={navItems}
       profileLink="/candidate-profile"
       onLogout={logout}
     >

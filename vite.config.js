@@ -2,7 +2,35 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { generateReply } from './api/_priva-core.js'
 import { createRealtimeSession } from './api/_realtime-core.js'
-import { fetchLiveJobs } from './api/_jobdiva-core.js'
+import { fetchLiveJobs, isJobdivaConfigured } from './api/_jobdiva-v2.js'
+import candidateRegister from './api/candidate/register.js'
+import candidateLogin from './api/candidate/login.js'
+import candidateProfile from './api/candidate/profile.js'
+import candidateApplications from './api/candidate/applications.js'
+import candidateApply from './api/candidate/apply.js'
+import candidateDashboard from './api/candidate/dashboard.js'
+import employeeMicrosoftCallback from './api/employee/auth/microsoft/callback.js'
+import employeeMicrosoftAuth from './api/employee/auth/microsoft.js'
+import employeeRipplingAuth from './api/employee/auth/rippling.js'
+import employeeRipplingConnect from './api/employee/rippling/connect.js'
+import employeeRipplingCallback from './api/employee/rippling/callback.js'
+import employeeAuthStatus from './api/employee/auth/status.js'
+import employeeMe from './api/employee/me.js'
+import employeeTeams from './api/employee/teams.js'
+import { setServerEnv } from './api/_runtime-env.js'
+
+function mountApiRoute(basePath, handler) {
+  return async (req, res) => {
+    try {
+      await handler(req, res)
+    } catch (err) {
+      console.error(`${basePath} dev error:`, err?.message)
+      res.statusCode = 502
+      res.setHeader('Content-Type', 'application/json')
+      res.end(JSON.stringify({ error: 'Request failed.' }))
+    }
+  }
+}
 
 // Local dev-only middleware that mirrors the Vercel function at /api/priva.
 // The OpenAI key is read server-side here and never exposed to the browser
@@ -59,6 +87,12 @@ function privaApiPlugin(env) {
           return
         }
         try {
+          if (!isJobdivaConfigured()) {
+            res.statusCode = 503
+            res.setHeader('Content-Type', 'application/json')
+            res.end(JSON.stringify({ error: 'Job listings are not configured.' }))
+            return
+          }
           const url = new URL(req.url, 'http://localhost')
           const keyword = url.searchParams.get('keyword') || ''
           const count = Math.min(Number(url.searchParams.get('count')) || 100, 200)
@@ -73,6 +107,22 @@ function privaApiPlugin(env) {
           res.end(JSON.stringify({ error: 'Unable to load job listings.' }))
         }
       })
+
+      server.middlewares.use('/api/candidate/register', mountApiRoute('/register', candidateRegister))
+      server.middlewares.use('/api/candidate/login', mountApiRoute('/login', candidateLogin))
+      server.middlewares.use('/api/candidate/profile', mountApiRoute('/profile', candidateProfile))
+      server.middlewares.use('/api/candidate/applications', mountApiRoute('/applications', candidateApplications))
+      server.middlewares.use('/api/candidate/apply', mountApiRoute('/apply', candidateApply))
+      server.middlewares.use('/api/candidate/dashboard', mountApiRoute('/dashboard', candidateDashboard))
+
+      server.middlewares.use('/api/employee/auth/microsoft/callback', mountApiRoute('/employee/auth/microsoft/callback', employeeMicrosoftCallback))
+      server.middlewares.use('/api/employee/auth/microsoft', mountApiRoute('/employee/auth/microsoft', employeeMicrosoftAuth))
+      server.middlewares.use('/api/employee/rippling/callback', mountApiRoute('/employee/rippling/callback', employeeRipplingCallback))
+      server.middlewares.use('/api/employee/rippling/connect', mountApiRoute('/employee/rippling/connect', employeeRipplingConnect))
+      server.middlewares.use('/api/employee/auth/rippling', mountApiRoute('/employee/auth/rippling', employeeRipplingAuth))
+      server.middlewares.use('/api/employee/auth/status', mountApiRoute('/employee/auth/status', employeeAuthStatus))
+      server.middlewares.use('/api/employee/me', mountApiRoute('/employee/me', employeeMe))
+      server.middlewares.use('/api/employee/teams', mountApiRoute('/employee/teams', employeeTeams))
 
       // Voice: mint an ephemeral Realtime client secret (same as the Vercel fn).
       server.middlewares.use('/api/priva-realtime', async (req, res) => {
@@ -112,6 +162,7 @@ export default defineConfig(({ mode }) => {
   // Empty prefix loads ALL .env vars (incl. non-VITE OPENAI_API_KEY) into this
   // Node config context only — they are not injected into client code.
   const env = loadEnv(mode, process.cwd(), '')
+  setServerEnv(env)
   return {
     plugins: [react(), privaApiPlugin(env)],
     server: {

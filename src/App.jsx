@@ -29,6 +29,7 @@ import WhyPRI from "./pages/WhyPRI";
 import CaseStudy from "./pages/CaseStudy";
 import NotFound from "./pages/NotFound";
 import EmployeeLogin from "./pages/EmployeeLogin";
+import EmployeeAuthCallback from "./pages/EmployeeAuthCallback";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import CandidateLogin from "./pages/candidate/CandidateLogin";
 import CandidateRegister from "./pages/candidate/CandidateRegister";
@@ -191,6 +192,7 @@ function AppRoutes({ reducedMotion = false, motionless = false }) {
         <Route path="/resources/:slug" element={pw(<Resources />)} />
         <Route path="/case-studies/:slug" element={pw(<CaseStudy />)} />
         <Route path="/employee-login" element={pw(<EmployeeLogin />, false)} />
+        <Route path="/employee-auth-callback" element={pw(<EmployeeAuthCallback />, false)} />
         <Route
           path="/employee-dashboard"
           element={pw(<ProtectedRoute><EmployeeDashboard /></ProtectedRoute>, false)}

@@ -60,6 +60,7 @@ export function candidateSessionFromUser(user, remember = false) {
     email: user.email,
     name: user.user_metadata?.name || displayNameFromEmail(user.email),
     role: "candidate",
+    candidateId: user.user_metadata?.jobdivaCandidateId || null,
     loginTime: Date.now(),
     remember,
   };

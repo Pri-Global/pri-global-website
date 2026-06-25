@@ -4,7 +4,11 @@
  */
 
 function demoPassword() {
-  return import.meta.env.VITE_PORTAL_DEMO_PASSWORD?.trim() ?? "";
+  const fromEnv = import.meta.env.VITE_PORTAL_DEMO_PASSWORD?.trim() ?? "";
+  if (fromEnv) return fromEnv;
+  // Local dev fallback when env is not set yet (restart dev server after adding .env).
+  if (import.meta.env.DEV) return "pri-portal-test";
+  return "";
 }
 
 export function getDemoPassword() {
@@ -31,7 +35,10 @@ export const CANDIDATE_DEMO = {
 
 export const EMPLOYEE_DEMO = {
   email: "employee@example.com",
+  name: "PRI Global Team Member",
 };
+
+export const EMPLOYEE_TEST_ACCOUNT = EMPLOYEE_DEMO;
 
 export const CLIENT_DEMO_ACCOUNTS = {
   hiring: {
@@ -66,7 +73,11 @@ export function matchEmployeeDemo(email, password) {
   const normalized = email.trim().toLowerCase();
   if (normalized !== EMPLOYEE_DEMO.email) return null;
 
-  return { email: normalized };
+  return {
+    loggedIn: true,
+    email: normalized,
+    name: EMPLOYEE_DEMO.name,
+  };
 }
 
 export function matchClientDemo(email, password, tab = "hiring") {

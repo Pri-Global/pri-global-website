@@ -6,27 +6,6 @@ export const RECRUITER = {
   photo: "/team/karen-myers.jpg",
 };
 
-export const RECRUITER_MESSAGE = `Hi Alex,
-
-I came across your profile and I'm excited to reach out! We have an urgent contract opportunity with a leading financial services client in St. Louis (remote-friendly).
-
-Role: Senior React Developer
-Duration: 6 months (strong potential to extend)
-Rate: $105-115/hr
-
-Would you be available for a quick 15-minute call this week? I have openings Thursday and Friday afternoon.
-
-Best,
-Karen Myers
-PRI Global Talent Team
-636.256.7172`;
-
-export const DEMO_APPLICATIONS = [
-  { id: 1, role: "Senior React Developer", company: "Financial Services Client", status: "Interview Scheduled", statusColor: "green", applied: "3 days ago" },
-  { id: 2, role: "Cloud Architect", company: "Healthcare Client", status: "Under Review", statusColor: "amber", applied: "1 week ago" },
-  { id: 3, role: "Data Engineer", company: "Manufacturing Client", status: "Application Received", statusColor: "blue", applied: "2 weeks ago" },
-];
-
 export const INTERVIEW_PREP_LINKS = [
   { label: "Top IT Interview Questions 2025", href: "/job-seeker-faq", external: false },
   { label: "Resume Tips from PRI Recruiters", href: "/working-at-pri", external: false },
@@ -36,11 +15,6 @@ export const INTERVIEW_PREP_LINKS = [
 export const HIRING_SHORTLIST = [
   { id: "a", name: "Candidate A", experience: "8 yrs experience", location: "Remote", skills: [{ name: "React", level: 5 }, { name: "TypeScript", level: 4 }, { name: "AWS", level: 4 }], status: "Available immediately" },
   { id: "b", name: "Candidate B", experience: "6 yrs experience", location: "St. Louis, MO", skills: [{ name: "React", level: 5 }, { name: "Node.js", level: 5 }, { name: "GCP", level: 3 }], status: "2 weeks notice" },
-];
-
-export const DEMO_SAVED_JOBS = [
-  { id: 1, role: "Senior React Developer", company: "Financial Services Client", location: "Remote", saved: "2 days ago" },
-  { id: 2, role: "DevOps Engineer", company: "Healthcare Client", location: "St. Louis, MO", saved: "5 days ago" },
 ];
 
 export const HIRING_PIPELINE = [

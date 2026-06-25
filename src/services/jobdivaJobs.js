@@ -1,4 +1,4 @@
-/** Live job listings via PRI server API (/api/jobs → JobDiva candidate portal backend). */
+/** Live job listings via PRI server API (/api/jobs → Jobdiva REST API v2). */
 
 export function jobApplyPath(jobId) {
   return jobId ? `/candidate-jobs?job=${encodeURIComponent(jobId)}` : "/candidate-jobs";

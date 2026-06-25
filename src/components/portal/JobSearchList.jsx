@@ -9,6 +9,7 @@ import {
   readStorage,
   writeStorage,
 } from "../../hooks/usePortalAuth";
+import { applyToCandidateJob, isLiveCandidateSession } from "../../services/candidatePortal";
 
 function formatDate(date) {
   if (!date) return "";
@@ -21,6 +22,9 @@ export default function JobSearchList({ session }) {
   const { jobs, total, loading, error, keyword, setKeyword, search, refresh } = useJobListings();
   const [saved, setSaved] = useState(() => readStorage(AUTH_KEYS.candidateSavedJobs, []));
   const [applied, setApplied] = useState(() => readStorage(AUTH_KEYS.candidateApplications, []));
+  const [applyError, setApplyError] = useState("");
+  const [applyingId, setApplyingId] = useState(null);
+  const liveSession = isLiveCandidateSession(session);
 
   const selectedJob = useMemo(
     () => jobs.find((job) => String(job.id) === String(selectedJobId)),
@@ -39,9 +43,30 @@ export default function JobSearchList({ session }) {
     writeStorage(AUTH_KEYS.candidateSavedJobs, next);
   };
 
-  const handleApply = (job) => {
+  const handleApply = async (job) => {
     if (!session) return;
+    if (!liveSession) {
+      setApplyError("Create a PRI Global account and sign in to apply to live roles.");
+      return;
+    }
     if (applied.includes(job.id)) return;
+
+    if (liveSession) {
+      setApplyError("");
+      setApplyingId(job.id);
+      try {
+        await applyToCandidateJob(job.id);
+        const next = [...applied, job.id];
+        setApplied(next);
+        writeStorage(AUTH_KEYS.candidateApplications, next);
+      } catch (err) {
+        setApplyError(err.message || "Unable to submit application.");
+      } finally {
+        setApplyingId(null);
+      }
+      return;
+    }
+
     const next = [...applied, job.id];
     setApplied(next);
     writeStorage(AUTH_KEYS.candidateApplications, next);
@@ -95,6 +120,18 @@ export default function JobSearchList({ session }) {
         </div>
       )}
 
+      {session && !liveSession && (
+        <div className="mb-4 p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-sm text-amber-800 dark:text-amber-300">
+          Sign in with your registered PRI Global account to submit applications. Preview logins cannot apply to live roles.
+        </div>
+      )}
+
+      {applyError && (
+        <div className="mb-4 p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-sm text-red-700 dark:text-red-300">
+          {applyError}
+        </div>
+      )}
+
       {selectedJob && (
         <div className="mb-6 p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/5">
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600 mb-2">Selected role</p>
@@ -107,7 +144,11 @@ export default function JobSearchList({ session }) {
           )}
           <div className="flex flex-wrap gap-2 mt-5">
             {session ? (
-              applied.includes(selectedJob.id) ? (
+              !liveSession ? (
+                <Button to="/candidate-register?mode=manual" size="sm" className="!bg-emerald-600 hover:!bg-emerald-700">
+                  Register to apply
+                </Button>
+              ) : applied.includes(selectedJob.id) ? (
                 <span className="inline-flex items-center gap-2 text-sm font-medium text-emerald-600">
                   <Check size={16} /> Application submitted
                 </span>
@@ -116,9 +157,10 @@ export default function JobSearchList({ session }) {
                   type="button"
                   size="sm"
                   className="!bg-emerald-600 hover:!bg-emerald-700"
+                  disabled={applyingId === selectedJob.id}
                   onClick={() => handleApply(selectedJob)}
                 >
-                  Apply on PRI Global
+                  {applyingId === selectedJob.id ? "Submitting…" : "Apply on PRI Global"}
                 </Button>
               )
             ) : (

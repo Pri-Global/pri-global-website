@@ -78,7 +78,7 @@ export default function PrismAI() {
   const [ref, inView] = useInView({ threshold: 0.15 });
 
   return (
-    <section className="relative py-20 md:py-28 bg-navy overflow-hidden">
+    <section className="relative py-20 md:py-28 bg-navy text-white overflow-hidden">
       {/* Dot grid overlay */}
       <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" />
 
@@ -91,11 +91,11 @@ export default function PrismAI() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-royaldark/20 border border-royaldark/40 text-xs font-bold tracking-widest uppercase text-royaldark mb-5">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-royaldark/20 border border-royaldark/40 text-xs font-bold tracking-widest uppercase text-ronchi mb-5">
               Your AI Intelligence Layer
             </span>
 
-            <div className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-royaldark mb-4 tracking-tight">
+            <div className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-ronchi mb-4 tracking-tight">
               PR1SM.AI
             </div>
 
@@ -103,7 +103,7 @@ export default function PrismAI() {
               Talk to Your Data. Get Answers. Instantly.
             </h2>
 
-            <p className="text-royaldark font-semibold text-base mb-1">
+            <p className="text-ronchi font-semibold text-base mb-1">
               Let&apos;s Build Your Technology Advantage.
             </p>
             <p className="text-white/60 text-sm mb-6">
@@ -127,8 +127,8 @@ export default function PrismAI() {
                     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.15 + i * 0.08 }}
                     className="group flex gap-4"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-royaldark/20 border border-royaldark/30 flex items-center justify-center shrink-0 mt-0.5">
-                      <AnimatedIcon Icon={Icon} size={18} className="text-royaldark" />
+                    <div className="w-10 h-10 rounded-lg bg-royaldark/25 border border-royaldark/40 flex items-center justify-center shrink-0 mt-0.5">
+                      <AnimatedIcon Icon={Icon} size={18} className="text-ronchi" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-white mb-0.5">{f.title}</h4>
@@ -167,7 +167,7 @@ export default function PrismAI() {
             <div className="relative rounded-xl3 border border-white/10 bg-[#0D1B3E] shadow-2xl overflow-hidden">
               {/* Card header */}
               <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <span className="font-heading font-extrabold text-royaldark text-lg tracking-tight">
+                <span className="font-heading font-extrabold text-ronchi text-lg tracking-tight">
                   PR1SM.AI
                 </span>
                 <span className="flex items-center gap-1.5 text-xs text-white/50 font-mono">

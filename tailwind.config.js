@@ -9,6 +9,7 @@ export default {
         offwhite: "#F2F0EB",
         navy: "#0D1B3E",
         royal: "#1A56DB",
+        royaldark: "#4169E1",
         warmgray: "#6a6050",
         // Dark Mode (Option C)
         charcoal: "#111318",

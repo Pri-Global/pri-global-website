@@ -1,4 +1,4 @@
-import { memo, useRef, useEffect, useState } from "react";
+import { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Send, Bot, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,63 +8,34 @@ import usePriVa from "../chatbot/usePriVa";
 import PriVaMessage from "../chatbot/PriVaMessage";
 import PriVaVoiceButton from "../chatbot/PriVaVoiceButton";
 import PriVaPrivacyNotice from "../chatbot/PriVaPrivacyNotice";
-import { VIDEOS } from "../../data/videos";
-
-/** Hero background loops only this intro — avoids long branding footage */
-const HERO_CLIP_SECONDS = 20;
+import { useAutoplayVideo } from "../../hooks/useAutoplayVideo";
+import { HERO_BACKGROUND_SOURCES } from "../../utils/videoSources";
 
 function HeroBackgroundVideo() {
-  const videoRef = useRef(null);
+  const [failed, setFailed] = useState(false);
+  const videoRef = useAutoplayVideo({
+    enabled: !failed,
+    onError: () => setFailed(true),
+  });
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
-      video.pause();
-      return;
-    }
-
-    const loopIntro = () => {
-      if (video.currentTime >= HERO_CLIP_SECONDS) {
-        video.currentTime = 0;
-      }
-    };
-
-    const startAtBeginning = () => {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-    };
-
-    const onError = () => {
-      video.style.display = "none";
-    };
-
-    video.addEventListener("timeupdate", loopIntro);
-    video.addEventListener("loadeddata", startAtBeginning);
-    video.addEventListener("canplay", startAtBeginning);
-    video.addEventListener("error", onError);
-
-    return () => {
-      video.removeEventListener("timeupdate", loopIntro);
-      video.removeEventListener("loadeddata", startAtBeginning);
-      video.removeEventListener("canplay", startAtBeginning);
-      video.removeEventListener("error", onError);
-    };
-  }, []);
+  if (failed) return null;
 
   return (
     <video
       ref={videoRef}
-      src={VIDEOS.branding}
       autoPlay
       muted
+      loop
       playsInline
       preload="auto"
+      disablePictureInPicture
       className="hidden md:block absolute inset-0 w-full h-full object-cover scale-[1.03] opacity-[0.32] dark:opacity-[0.52] dark:brightness-110 dark:saturate-110"
       aria-hidden
-    />
+    >
+      {HERO_BACKGROUND_SOURCES.map(({ src, type }) => (
+        <source key={src} src={src} type={type} />
+      ))}
+    </video>
   );
 }
 

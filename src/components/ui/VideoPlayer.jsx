@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Play, Volume2 } from "lucide-react";
 import { useInView } from "../../hooks/useInView";
+import { getVideoSources } from "../../utils/videoSources";
 
 export default function VideoPlayer({
   src,
@@ -75,7 +76,9 @@ export default function VideoPlayer({
     }
   }, [loop, muted]);
 
-  if (!src || hasError) {
+  const sources = getVideoSources(src);
+
+  if (!src || hasError || sources.length === 0) {
     return (
       <div
         ref={containerRef}
@@ -90,7 +93,7 @@ export default function VideoPlayer({
         {description && <p className="text-[#6a8aaa] text-sm max-w-md">{description}</p>}
         <p className="text-[#6a8aaa] text-xs max-w-sm">
           {hasError
-            ? "Video could not be loaded. Try Chrome or Safari, or refresh the page."
+            ? "Video could not be loaded in this browser. Please refresh or try again on Wi‑Fi."
             : "Video unavailable"}
         </p>
       </div>
@@ -135,7 +138,6 @@ export default function VideoPlayer({
         <video
           ref={videoRef}
           key={src}
-          src={src}
           className="w-full h-full object-cover bg-black"
           controls={showControls}
           autoPlay={autoPlay}
@@ -151,6 +153,9 @@ export default function VideoPlayer({
             if (isActive) e.stopPropagation();
           }}
         >
+          {sources.map(({ src: sourceSrc, type }) => (
+            <source key={sourceSrc} src={sourceSrc} type={type} />
+          ))}
           Your browser does not support video playback.
         </video>
       ) : (

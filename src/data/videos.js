@@ -1,6 +1,7 @@
-/** Public video paths — files live in /public/videos/ */
+/** Public video paths — files live in /public/videos/ (MP4 for Chrome/Firefox; .mov kept as Safari fallback via VideoPlayer). */
 export const VIDEOS = {
   branding: "/videos/PRI-Branding-Video_4.13.20-480p.mov",
+  brandingHero: "/videos/PRI-Branding-hero.mp4",
   doingBusiness: "/videos/Doing-Business-With-PRI.mov",
   officeExpansion: "/videos/PRI_Office-Expansion.mp4",
   officeTour: "/videos/PRI_Office-Tour_100-mb.mov",

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { BrainCircuit, Database, Shield, Zap, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "../../hooks/useInView";

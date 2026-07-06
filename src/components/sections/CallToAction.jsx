@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import Button from "../ui/Button";
 import { HUBSPOT_MEETING_URL } from "../../constants/links";
 import { useInView } from "../../hooks/useInView";

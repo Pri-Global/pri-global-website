@@ -138,7 +138,6 @@ function buildLocalBusinessSchema() {
     image: `${BASE_URL}/pri-global-logo.png`,
     url: BASE_URL,
     telephone: "+1-636-256-7172",
-    url: BASE_URL,
     address: {
       "@type": "PostalAddress",
       streetAddress: "174 Clarkson Road",

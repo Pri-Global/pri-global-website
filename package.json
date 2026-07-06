@@ -8,6 +8,7 @@
     "build": "node scripts/generate-sitemap.mjs && vite build",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "convert-videos": "node scripts/convert-videos.mjs --all",
+    "check-hooks": "node scripts/check-react-hooks.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -48,6 +48,7 @@ import { AUTH_KEYS } from "./hooks/usePortalAuth";
 import DarkModeToast from "./components/ui/DarkModeToast";
 import { useReducedMotion } from "./hooks/useReducedMotion";
 import BrandLogo from "./components/ui/BrandLogo";
+import ErrorBoundary from "./components/ui/ErrorBoundary";
 
 /* ── Scroll progress bar ─────────────────────────────────────── */
 function ScrollProgress() {
@@ -246,13 +247,15 @@ export default function App() {
       <ScrollToTop />
       <Navbar minimal={portalShell} />
       <main id="main-content" className="flex-1" tabIndex={-1}>
-        <AnimatePresence mode="wait" initial={false}>
-          <AppRoutes
-            key={location.pathname}
-            reducedMotion={reducedMotion}
-            motionless={noPageTransition}
-          />
-        </AnimatePresence>
+        <ErrorBoundary>
+          <AnimatePresence mode="wait" initial={false}>
+            <AppRoutes
+              key={location.pathname}
+              reducedMotion={reducedMotion}
+              motionless={noPageTransition}
+            />
+          </AnimatePresence>
+        </ErrorBoundary>
       </main>
       {!portalShell && <Footer />}
       <CookieBanner />

@@ -80,7 +80,6 @@ export const ICON_DRAW_SEQUENCES = {
   Mail: { order: [0, 1], stagger: 0.13 },
   Phone: { order: [0, 1], stagger: 0.14 },
   MapPin: { order: [0, 1], stagger: 0.14 },
-  Newspaper: { order: [0, 1, 2, 3], stagger: 0.09 },
   Sparkles: { order: "length-asc", stagger: 0.08 },
   Calendar: { order: [0, 1, 2], stagger: 0.11 },
   MessageCircle: { order: [0, 1], stagger: 0.14 },

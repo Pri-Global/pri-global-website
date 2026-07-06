@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, ExternalLink } from "lucide-react";

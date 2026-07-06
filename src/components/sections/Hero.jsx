@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Send, Bot, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";

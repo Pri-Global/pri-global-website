@@ -1,0 +1,36 @@
+# PRI Global
+
+> PRI Global is a US-based IT staffing and technology services company founded in 1997, headquartered in Ellisville, Missouri, with delivery centers in the USA, India, the Philippines, and Canada. It provides IT staffing and talent solutions, managed IT services, and AI innovation through its PR1SM.AI platform and PRI AI Pods™. 28+ years in business, 12,700+ placements.
+
+Key facts:
+- Founded: 1997 (28+ years of operation)
+- Headquarters: 174 Clarkson Road, Ellisville, MO 63011, USA
+- Locations: USA, India, Philippines, Canada
+- Contact: info@priglobal.com, +1 636.256.7172
+- Core services: IT staffing & talent solutions, managed IT services, cybersecurity, cloud, data engineering, AI services (PR1SM.AI, PRI AI Pods™)
+- Industries served: financial services, healthcare, pharmaceutical, retail, government, technology
+
+## Main pages
+
+- [Services](https://priglobal.com/services): Nine integrated IT services — staffing, managed IT, cybersecurity, cloud, AI Pods™, data, and consulting
+- [Talent Solutions](https://priglobal.com/talent-solutions): IT staffing — contract, contract-to-hire, and direct placement
+- [AI Innovation](https://priglobal.com/ai-innovation): PR1SM.AI platform for enterprise AI adoption
+- [AI Services](https://priglobal.com/ai-services): PRI AI Pods™ — dedicated AI delivery teams
+- [Industries](https://priglobal.com/industries): Industry expertise across finance, healthcare, pharma, retail, and the public sector
+- [About](https://priglobal.com/about): Company history since 1997 and leadership team
+- [Why PRI Global](https://priglobal.com/why-pri-global): How PRI Global compares to typical IT vendors
+- [Contact](https://priglobal.com/contact): Request a consultation
+- [Get Pricing](https://priglobal.com/get-pricing): Request a custom proposal
+
+## For job seekers
+
+- [Careers](https://priglobal.com/careers): Open roles at PRI Global
+- [Job Search](https://priglobal.com/candidate-jobs): Open IT positions with PRI Global clients
+- [Job Seeker FAQ](https://priglobal.com/job-seeker-faq): Frequently asked questions about working with PRI Global recruiters
+- [Working at PRI](https://priglobal.com/working-at-pri): Benefits and culture for consultants
+
+## Resources
+
+- [Resources](https://priglobal.com/resources): Articles and insights on IT staffing, software development, and AI
+- [Case Studies](https://priglobal.com/resources): Client success stories across financial services, healthcare, and pharma
+- [Sitemap](https://priglobal.com/sitemap.xml): All indexable pages

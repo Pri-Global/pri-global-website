@@ -12,4 +12,4 @@ Disallow: /customer-dashboard
 Disallow: /cookie-settings
 Disallow: /legal
 
-Sitemap: https://pri-global.vercel.app/sitemap.xml
+Sitemap: https://priglobal.com/sitemap.xml

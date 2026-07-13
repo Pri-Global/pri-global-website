@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
-const BASE_URL = "https://pri-global.vercel.app";
+const BASE_URL = "https://priglobal.com";
 const TODAY = new Date().toISOString().slice(0, 10);
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 

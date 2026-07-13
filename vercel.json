@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "pri-global.vercel.app" }],
+      "destination": "https://priglobal.com/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/api/priva-realtime", "destination": "/api/priva?route=realtime" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }

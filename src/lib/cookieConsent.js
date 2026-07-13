@@ -11,7 +11,7 @@ export const COMPANY = {
   address: "174 Clarkson Road, Ellisville, MO 63011, USA",
   phone: "636.256.7172",
   email: "info@priglobal.com",
-  websites: ["https://priglobal.com", "https://pri-global.vercel.app"],
+  websites: ["https://priglobal.com"],
 };
 
 /** localStorage / sessionStorage used on this site (no third-party ad cookies today). */

@@ -14,8 +14,8 @@ const sections = [
             priglobal.com
           </a>{" "}
           and related web properties, including{" "}
-          <a href="https://pri-global.vercel.app" className="text-royal hover:underline" target="_blank" rel="noopener noreferrer">
-            pri-global.vercel.app
+          <a href="https://priglobal.com" className="text-royal hover:underline" target="_blank" rel="noopener noreferrer">
+            priglobal.com
           </a>
           . This Privacy Policy explains how we collect, use, and protect information when you visit
           or interact with these sites.

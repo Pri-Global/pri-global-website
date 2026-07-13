@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-export const BASE_URL = "https://pri-global.vercel.app";
+export const BASE_URL = "https://priglobal.com";
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 const BRAND_SUFFIX = " | PRI Global";
 

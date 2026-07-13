@@ -78,8 +78,8 @@ export default function Legal() {
                 priglobal.com
               </a>
               {" · "}
-              <a href="https://pri-global.vercel.app" target="_blank" rel="noopener noreferrer" className="text-royal hover:underline">
-                pri-global.vercel.app
+              <a href="https://priglobal.com" target="_blank" rel="noopener noreferrer" className="text-royal hover:underline">
+                priglobal.com
               </a>
             </div>
           </div>

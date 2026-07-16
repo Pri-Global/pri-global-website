@@ -316,10 +316,10 @@ export default function Hero() {
           <div>
             <motion.div
               {...fadeUp(0.1)}
-              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle mb-6"
+              className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full glass-subtle mb-6 max-w-full"
             >
-              <AnimatedIcon Icon={Sparkles} size={14} className="text-royal dark:text-royaldark" />
-              <span className="text-xs font-semibold text-royal dark:text-royaldark tracking-wide uppercase">
+              <AnimatedIcon Icon={Sparkles} size={14} className="text-royal dark:text-royaldark shrink-0" />
+              <span className="text-[10px] sm:text-xs font-semibold text-royal dark:text-royaldark tracking-wide uppercase leading-snug">
                 Staffing · SOW · Managed Services · PR1SM.AI
               </span>
             </motion.div>
@@ -328,7 +328,7 @@ export default function Hero() {
               variants={wordContainer}
               initial="initial"
               animate="animate"
-              className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[4.5rem] 2xl:text-8xl font-bold leading-[1.08] mb-6 xl:mb-8 overflow-hidden drop-shadow-sm"
+              className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[4.25rem] 2xl:text-[5.5rem] font-bold leading-[1.08] mb-6 xl:mb-8 overflow-hidden break-words drop-shadow-sm"
             >
               {h1Lines.map((line, li) => (
                 <span key={li} className={`block ${line.className}`}>

@@ -55,7 +55,7 @@ export default function NewsPoster({ item }) {
       <button
         type="button"
         onClick={() => setLightbox(true)}
-        className="group relative block w-full mb-8 rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--bg-secondary)] cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal"
+        className="group relative block w-full rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--bg-secondary)] shadow-md cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal"
         aria-label={`View full poster: ${thumb.alt}`}
       >
         <img

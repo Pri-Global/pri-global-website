@@ -13,13 +13,20 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 function extractSlugs(filePath) {
   const content = readFileSync(join(root, filePath), "utf8");
-  return [...content.matchAll(/"slug":\s*"([^"]+)"/g)].map((match) => match[1]);
+  const patterns = [
+    ...content.matchAll(/"slug":\s*"([^"]+)"/g),
+    ...content.matchAll(/\bslug:\s*"([^"]+)"/g),
+  ];
+  return patterns.map((match) => match[1]);
 }
 
 function extractDates(filePath) {
   const content = readFileSync(join(root, filePath), "utf8");
-  const entries = [...content.matchAll(/"slug":\s*"([^"]+)"[\s\S]*?"date":\s*"([^"]+)"/g)];
-  return Object.fromEntries(entries.map(([, slug, date]) => [slug, date.slice(0, 10)]));
+  const patterns = [
+    ...content.matchAll(/"slug":\s*"([^"]+)"[\s\S]*?"date":\s*"([^"]+)"/g),
+    ...content.matchAll(/\bslug:\s*"([^"]+)"[\s\S]*?\bdate:\s*"([^"]+)"/g),
+  ];
+  return Object.fromEntries(patterns.map(([, slug, date]) => [slug, date.slice(0, 10)]));
 }
 
 const staticRoutes = [

@@ -156,7 +156,7 @@ export default function MegaDropdown({
             exit={{ opacity: 0, scale: 0.95, y: 4 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             style={{ transformOrigin: "top center" }}
-            className={`absolute top-full left-0 mt-2 z-50 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] dark:bg-[#16181e] shadow-xl p-6 ${
+            className={`absolute top-full left-0 mt-2 z-50 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] dark:bg-[#16181e] shadow-xl p-4 sm:p-6 max-w-[calc(100vw-2rem)] ${
               wide ? "w-[480px]" : "w-80"
             }`}
             id={menuId}

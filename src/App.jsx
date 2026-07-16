@@ -240,7 +240,7 @@ export default function App() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen min-h-[100dvh] w-full overflow-x-clip flex flex-col">
       <SkipLink />
       <PageLoader />
       <ScrollProgress />

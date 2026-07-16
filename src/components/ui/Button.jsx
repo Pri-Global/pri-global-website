@@ -14,6 +14,7 @@ const variants = {
   secondary: "bg-transparent border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--border-subtle)]",
   ghost:     "bg-transparent text-[var(--text-primary)] hover:bg-[var(--border-subtle)]",
   dark:      "bg-navy text-white hover:bg-navy/90 dark:bg-white dark:text-navy dark:hover:bg-white/90",
+  onDark:    "bg-white text-navy hover:bg-offwhite shadow-md shadow-black/10",
   glass:     "glass-btn text-[var(--text-primary)]",
   "glass-accent": "glass-btn-accent text-white",
 };

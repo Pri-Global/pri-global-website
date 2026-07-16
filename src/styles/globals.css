@@ -346,6 +346,37 @@ img.logo-wipe-lr:hover {
 
   body {
     @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-body transition-colors duration-300;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  html {
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  img,
+  video,
+  svg,
+  canvas {
+    max-width: 100%;
+  }
+
+  /* Prevent iOS zoom on form focus while keeping readable inputs */
+  @media (max-width: 640px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
   }
 
   /* ── Custom scrollbar ───────────────────────────────────────── */

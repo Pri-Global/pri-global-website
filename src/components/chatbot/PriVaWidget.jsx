@@ -58,7 +58,7 @@ export default function PriVaWidget() {
 
   return (
     <div
-      className={`lg:hidden fixed right-6 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-300 ${
+      className={`lg:hidden fixed right-4 sm:right-6 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-300 max-w-[calc(100vw-2rem)] ${
         cookieBannerVisible ? "bottom-36" : "bottom-6"
       }`}
     >

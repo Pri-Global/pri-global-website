@@ -52,7 +52,9 @@ At PRI Global, we see AI not simply as a tool for automation, but as a catalyst 
 Because in the years ahead, competitive advantage won't belong to the organizations with the most automation.
 
 It will belong to the organizations that can adapt the fastest.`,
-    image: null,
+    image: "/news/enterprise-ai-adaptive-advantage.png",
+    imageFit: "cover",
+    imageAlt: "Efficiency Won Yesterday. Adaptability Wins Tomorrow. — Enterprise AI insights from PRI Global",
     posterImage: null,
     featured: true,
     link: null,

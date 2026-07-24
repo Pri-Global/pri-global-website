@@ -4,8 +4,8 @@ import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import CallToAction from "../components/sections/CallToAction";
-import IllustrationPlaceholder from "../components/ui/IllustrationPlaceholder";
 import { useInView } from "../hooks/useInView";
+import { OFFICE_PHOTOS } from "../constants/links";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import { motion } from "framer-motion";
 import TrustBar from "../components/sections/TrustBar";
@@ -100,8 +100,14 @@ export default function TalentSolutions() {
                 </Button>
               </div>
             </div>
-            <div className="hidden lg:block">
-              <IllustrationPlaceholder type="talent" className="h-[380px]" alt="IT talent acquisition" />
+            <div className="hidden lg:block relative overflow-hidden rounded-2xl shadow-xl h-[380px]">
+              <img
+                src={OFFICE_PHOTOS[0]}
+                alt="PRI Global office"
+                className="w-full h-full object-cover"
+                loading="eager"
+                decoding="async"
+              />
             </div>
           </div>
         </div>

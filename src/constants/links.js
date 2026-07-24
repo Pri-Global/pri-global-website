@@ -24,5 +24,4 @@ export const OFFICE_PHOTOS = [
   "/images/offices/new-office-6.jpg",
   "/images/offices/new-office-8.jpg",
   "/images/offices/new-office-7.jpg",
-  "/images/offices/8M1A3994.jpg",
 ];

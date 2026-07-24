@@ -1,6 +1,6 @@
 const illustrations = {
   tech: "/images/offices/new-office-1.jpg",
-  talent: "/images/offices/8M1A3994.jpg",
+  talent: "/images/offices/new-office-9.jpg",
   ai: "/images/offices/new-office-6.jpg",
   consulting: "/images/offices/new-office-7.jpg",
   cloud: "/images/offices/new-office-8.jpg",

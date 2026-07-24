@@ -38,6 +38,11 @@ export default function NewsCard({ item, featured = false, index = 0 }) {
           <span className="text-[10px] font-bold tracking-widest text-[var(--text-muted)] uppercase">
             {item.tag}
           </span>
+          {item.featured && (
+            <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full bg-royal/10 text-royal dark:text-royaldark border border-royal/20">
+              Featured
+            </span>
+          )}
         </div>
 
         <p className="text-xs text-[var(--text-muted)] mb-2">{formatNewsDate(item.date)}</p>

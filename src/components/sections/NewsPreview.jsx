@@ -1,17 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { newsItems } from "../../data/news";
+import { newsItems, sortNewsItems } from "../../data/news";
 import NewsCard from "../news/NewsCard";
 
-const previewItems = [...newsItems].sort((a, b) => {
-  if (a.featured && !b.featured) return -1;
-  if (!a.featured && b.featured) return 1;
-  return 0;
-});
+const previewItems = sortNewsItems(newsItems).slice(0, 3);
 
 export default function NewsPreview() {
-  const featured = previewItems.find((n) => n.featured) || previewItems[0];
-  const others = previewItems.filter((n) => n.id !== featured?.id).slice(0, 2);
+  const [featured, ...others] = previewItems;
 
   return (
     <section id="latest-news" className="py-20 md:py-28 bg-[var(--bg-primary)] scroll-mt-24">

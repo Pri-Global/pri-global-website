@@ -310,10 +310,33 @@ const featuredCaseStudies = [
 
 export { featuredCaseStudies };
 
-export const caseStudies = [
-  ...featuredCaseStudies,
-  ...caseStudiesMore.sort((a, b) => new Date(b.date) - new Date(a.date)),
+export const caseStudies = [...featuredCaseStudies, ...caseStudiesMore].sort(
+  (a, b) => new Date(b.date) - new Date(a.date)
+);
+
+export const CASE_STUDY_INDUSTRIES = [
+  "All",
+  ...[...new Set(caseStudies.map((s) => s.industry).filter(Boolean))].sort(),
 ];
+
+export function filterCaseStudies(items, { industry = "All" } = {}) {
+  if (industry === "All") return items;
+  return items.filter((s) => s.industry === industry);
+}
+
+export function sortCaseStudies(items) {
+  return [...items].sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+export function getCaseStudyIndustryCounts(items = caseStudies) {
+  return CASE_STUDY_INDUSTRIES.reduce((acc, industry) => {
+    acc[industry] =
+      industry === "All"
+        ? items.length
+        : items.filter((study) => study.industry === industry).length;
+    return acc;
+  }, {});
+}
 
 export function getCaseStudyBySlug(slug) {
   return caseStudies.find((s) => s.slug === slug);

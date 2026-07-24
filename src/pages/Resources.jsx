@@ -3,68 +3,134 @@ import { useParams, Navigate, useLocation } from "react-router-dom";
 import {
   newsItems,
   NEWS_CATEGORIES,
+  NEWS_TAGS,
   getNewsBySlug,
+  filterNewsItems,
   sortNewsItems,
+  getNewsCategoryCounts,
+  getNewsTagCounts,
 } from "../data/news";
+import {
+  caseStudies,
+  CASE_STUDY_INDUSTRIES,
+  filterCaseStudies,
+  sortCaseStudies,
+  getCaseStudyIndustryCounts,
+} from "../data/caseStudies";
 import NewsCard from "../components/news/NewsCard";
 import NewsArticlePage from "../components/news/NewsArticlePage";
 import SEO from "../components/SEO";
 import Breadcrumbs from "../components/ui/Breadcrumbs";
+import FilterPills from "../components/ui/FilterPills";
 import CallToAction from "../components/sections/CallToAction";
 import PriCaresVideos from "../components/sections/PriCaresVideos";
-import { CaseStudiesContent } from "../components/sections/CaseStudies";
+import { CaseStudiesGrid, CaseStudiesCta } from "../components/sections/CaseStudies";
 
 const RESOURCE_TABS = ["News", "Case Studies"];
 
+function ResultSummary({ count, noun, sortLabel = "newest first" }) {
+  return (
+    <p className="text-sm text-[var(--text-muted)] mb-6">
+      Showing <span className="font-semibold text-[var(--text-primary)]">{count}</span>{" "}
+      {count === 1 ? noun : `${noun}s`} · sorted by date ({sortLabel})
+    </p>
+  );
+}
+
 function NewsContent() {
-  const [filter, setFilter] = useState("All");
+  const [category, setCategory] = useState("All");
+  const [tag, setTag] = useState("All");
+
+  const categoryCounts = useMemo(() => getNewsCategoryCounts(), []);
+  const tagCounts = useMemo(() => getNewsTagCounts(newsItems, category), [category]);
 
   const filtered = useMemo(() => {
-    const items =
-      filter === "All" ? newsItems : newsItems.filter((n) => n.category === filter);
+    const items = filterNewsItems(newsItems, { category, tag });
     return sortNewsItems(items);
-  }, [filter]);
+  }, [category, tag]);
 
-  const featured = filtered.find((n) => n.featured);
-  const rest = filtered.filter((n) => n.id !== featured?.id);
+  const handleCategoryChange = (nextCategory) => {
+    setCategory(nextCategory);
+    if (tag !== "All") {
+      const stillValid = filterNewsItems(newsItems, { category: nextCategory, tag }).length > 0;
+      if (!stillValid) setTag("All");
+    }
+  };
 
   return (
     <>
-      <div className="flex flex-wrap gap-2 mb-10">
-        {NEWS_CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => setFilter(cat)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              filter === cat
-                ? "bg-royal text-white"
-                : "bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-4 sm:p-5 mb-8 space-y-5">
+        <FilterPills
+          label="Category"
+          options={NEWS_CATEGORIES}
+          value={category}
+          onChange={handleCategoryChange}
+          counts={categoryCounts}
+          iconGroup="newsCategory"
+        />
+        <FilterPills
+          label="Topic"
+          options={NEWS_TAGS}
+          value={tag}
+          onChange={setTag}
+          counts={tagCounts}
+          iconGroup="newsTag"
+        />
       </div>
 
+      <ResultSummary count={filtered.length} noun="article" />
+
       {filtered.length === 0 ? (
-        <p className="text-[var(--text-secondary)]">No articles in this category yet.</p>
+        <p className="text-[var(--text-secondary)]">
+          No articles match these filters yet. Try another category or topic.
+        </p>
       ) : (
-        <div className="space-y-8">
-          {featured && (
-            <div className="w-full">
-              <NewsCard item={featured} featured index={0} />
-            </div>
-          )}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {rest.map((item, i) => (
-              <NewsCard key={item.id} item={item} index={i + 1} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map((item, i) => (
+            <NewsCard key={item.id} item={item} index={i} />
+          ))}
         </div>
       )}
 
       <PriCaresVideos />
+    </>
+  );
+}
+
+function CaseStudiesContent() {
+  const [industry, setIndustry] = useState("All");
+
+  const industryCounts = useMemo(() => getCaseStudyIndustryCounts(), []);
+
+  const filtered = useMemo(() => {
+    const items = filterCaseStudies(caseStudies, { industry });
+    return sortCaseStudies(items);
+  }, [industry]);
+
+  return (
+    <>
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-4 sm:p-5 mb-8">
+        <FilterPills
+          label="Industry"
+          options={CASE_STUDY_INDUSTRIES}
+          value={industry}
+          onChange={setIndustry}
+          counts={industryCounts}
+          iconGroup="caseStudyIndustry"
+        />
+      </div>
+
+      <ResultSummary count={filtered.length} noun="case study" />
+
+      {filtered.length === 0 ? (
+        <p className="text-[var(--text-secondary)]">
+          No case studies match this industry yet. Try another filter.
+        </p>
+      ) : (
+        <CaseStudiesGrid studies={filtered} />
+      )}
+
+      <CaseStudiesCta />
     </>
   );
 }
@@ -97,7 +163,7 @@ function ResourcesList() {
               Resources
             </h1>
             <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-              News, case studies, and updates from PRI Global.
+              News, case studies, and updates from PRI Global — browse by category, topic, or industry.
             </p>
           </div>
         </div>
@@ -122,7 +188,7 @@ function ResourcesList() {
             ))}
           </div>
 
-          {activeTab === "News" ? <NewsContent /> : <CaseStudiesContent showCta />}
+          {activeTab === "News" ? <NewsContent /> : <CaseStudiesContent />}
         </div>
       </section>
     </>

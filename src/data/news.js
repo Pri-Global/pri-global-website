@@ -2,6 +2,105 @@ import { newsBlogItems } from "./newsBlog";
 
 const priNewsItems = [
   {
+    id: "enterprise-ai-reshaping-software",
+    title: "AI Is Reshaping Enterprise Software—Not Replacing It",
+    slug: "ai-reshaping-enterprise-software-not-replacing-it",
+    date: "2026-07-24",
+    category: "Insights",
+    tag: "ENTERPRISE AI",
+    excerpt:
+      "The organizations creating the most value with AI aren't replacing their software—they're making it smarter. That's the opportunity enterprise leaders should focus on.",
+    body: `For years, every major technology shift has come with the same prediction:
+
+"This will replace everything that came before it."
+
+We're hearing it again with AI.
+
+AI will replace ERP.
+AI will replace CRM.
+AI will replace enterprise applications.
+
+But that's not what's actually happening.
+
+The organizations creating the most value with AI aren't replacing their software—they're making it smarter.
+
+And that's an important distinction.
+
+Enterprise software has never just been about storing data. It's the backbone of how businesses operate.
+
+ERP platforms manage finance and operations. CRM systems capture customer relationships. HR platforms support the workforce. Supply chain systems coordinate complex logistics.
+
+These systems hold years of business knowledge, established processes, and operational discipline.
+
+Replacing them isn't just expensive—it's often unnecessary.
+
+The bigger opportunity is helping them do more.
+
+This is where AI is quietly changing the game.
+
+Traditional enterprise software was designed to record what happened.
+
+Modern AI-enabled software can help interpret what is happening and suggest what should happen next.
+
+Instead of simply displaying dashboards, it can surface the insights that matter.
+
+Instead of waiting for someone to identify a bottleneck, it can recognize patterns before they become problems.
+
+Instead of requiring users to search across multiple systems, it can bring the right information together when it's needed most.
+
+The software hasn't disappeared.
+
+It's become more intelligent.
+
+This shift is transforming enterprise applications from systems of record into systems of intelligence.
+
+That difference matters.
+
+A system of record tells you where your business has been.
+
+A system of intelligence helps guide where your business should go next.
+
+It augments decision-making, accelerates workflows, and gives teams the context they need to act with greater confidence.
+
+Of course, AI alone isn't the answer.
+
+Its value depends on the quality of the data it can access and the systems it can work with.
+
+If AI is disconnected from your ERP, CRM, data platforms, and business applications, it becomes just another standalone tool.
+
+But when it's integrated across the enterprise, something powerful happens.
+
+Information flows more freely.
+Decisions become faster.
+Work becomes more connected.
+
+And existing technology investments deliver even greater value.
+
+This is why the conversation around enterprise AI is evolving.
+
+It's becoming less about replacing technology and more about unlocking the full potential of the technology organizations already have.
+
+Rather than starting over, leading organizations are building on the foundations they've spent years creating—adding intelligence where it creates the greatest impact.
+
+It's a smarter, more sustainable path to innovation.
+
+At PRI Global, we've seen firsthand that successful AI initiatives rarely begin with replacing core business systems.
+
+They begin by connecting data, modernizing workflows, and embedding intelligence into the platforms people already rely on every day.
+
+Because the future of enterprise software isn't about choosing between traditional systems and AI.
+
+**It's about bringing them together.**
+
+The companies that gain the greatest competitive advantage won't necessarily be the ones with the newest software.
+
+They'll be the ones that make their existing software smarter.`,
+    image: null,
+    posterImage: null,
+    featured: true,
+    link: null,
+  },
+  {
     id: "enterprise-ai-adaptive-advantage",
     title: "From Efficiency to Adaptability: Why Enterprise AI Is the Next Competitive Advantage",
     slug: "enterprise-ai-adaptive-advantage",
@@ -56,7 +155,7 @@ It will belong to the organizations that can adapt the fastest.`,
     imageFit: "cover",
     imageAlt: "Efficiency Won Yesterday. Adaptability Wins Tomorrow. — Enterprise AI insights from PRI Global",
     posterImage: null,
-    featured: true,
+    featured: false,
     link: null,
   },
   {
@@ -203,14 +302,46 @@ export const newsItems = [...priNewsItems, ...newsBlogItems].sort(
 
 export const NEWS_CATEGORIES = ["All", "Community", "Product", "Company", "Insights"];
 
+export const NEWS_TAGS = [
+  "All",
+  ...[...new Set(newsItems.map((n) => n.tag).filter(Boolean))].sort(),
+];
+
+export function filterNewsItems(items, { category = "All", tag = "All" } = {}) {
+  return items.filter((item) => {
+    if (category !== "All" && item.category !== category) return false;
+    if (tag !== "All" && item.tag !== tag) return false;
+    return true;
+  });
+}
+
+export function getNewsCategoryCounts(items = newsItems) {
+  return NEWS_CATEGORIES.reduce((acc, category) => {
+    acc[category] =
+      category === "All"
+        ? items.length
+        : items.filter((item) => item.category === category).length;
+    return acc;
+  }, {});
+}
+
+export function getNewsTagCounts(items = newsItems, category = "All") {
+  const scoped =
+    category === "All" ? items : items.filter((item) => item.category === category);
+
+  return NEWS_TAGS.reduce((acc, tag) => {
+    acc[tag] =
+      tag === "All"
+        ? scoped.length
+        : scoped.filter((item) => item.tag === tag).length;
+    return acc;
+  }, {});
+}
+
 export function getNewsBySlug(slug) {
   return newsItems.find((item) => item.slug === slug);
 }
 
 export function sortNewsItems(items) {
-  return [...items].sort((a, b) => {
-    if (a.featured && !b.featured) return -1;
-    if (!a.featured && b.featured) return 1;
-    return new Date(b.date) - new Date(a.date);
-  });
+  return [...items].sort((a, b) => new Date(b.date) - new Date(a.date));
 }

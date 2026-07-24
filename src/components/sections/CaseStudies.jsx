@@ -5,6 +5,7 @@ import { caseStudies, featuredCaseStudies } from "../../data/caseStudies";
 import SectionHeading from "../ui/SectionHeading";
 import CaseStudyMetric from "../caseStudies/CaseStudyMetric";
 import CaseStudyImage from "../caseStudies/CaseStudyImage";
+import { formatNewsDate } from "../../utils/formatNewsDate";
 import { useInView } from "../../hooks/useInView";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -54,6 +55,16 @@ export function CaseStudyCard({ study, index = 0 }) {
         className="px-6 pb-6 pt-5 flex flex-col flex-1"
       >
         <motion.div variants={contentItem}>
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-royal dark:text-royaldark">
+              {study.industry}
+            </span>
+            {study.date && (
+              <span className="text-[10px] text-[var(--text-muted)]">
+                {formatNewsDate(study.date)}
+              </span>
+            )}
+          </div>
           <Link to={`/case-studies/${study.slug}`}>
             <h3 className="font-heading font-bold text-lg text-[var(--text-primary)] line-clamp-2 mb-4 group-hover:text-royal dark:group-hover:text-royaldark transition-colors">
               {study.title}
@@ -171,7 +182,7 @@ function CaseStudiesViewAll({ total = caseStudies.length, shown }) {
   );
 }
 
-function CaseStudiesCta() {
+export function CaseStudiesCta() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}

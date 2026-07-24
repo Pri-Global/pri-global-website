@@ -1,8 +1,14 @@
 import { fetchLiveJobs, isJobdivaConfigured } from "./_jobdiva-v2.js";
 import { methodNotAllowed, sendJson } from "./_http.js";
+import { handleLeadSubmission } from "./_leads.js";
 
-/** GET /api/jobs?keyword=&count=100 — live PRI Global openings (Jobdiva REST API v2). */
+/** GET /api/jobs — live openings. POST /api/leads (rewritten here as ?route=leads) — lead capture. */
 export default async function handler(req, res) {
+  if (req.query?.route === "leads") {
+    if (req.method !== "POST") return methodNotAllowed(res, ["POST"]);
+    return handleLeadSubmission(req, res);
+  }
+
   if (req.method !== "GET") {
     return methodNotAllowed(res, ["GET"]);
   }

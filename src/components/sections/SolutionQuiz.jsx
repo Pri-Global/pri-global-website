@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import AnimatedIcon from "../ui/AnimatedIcon";
 import Breadcrumbs from "../ui/Breadcrumbs";
 import { BOOKING_URL } from "../../constants/links";
+import { submitLead } from "../../utils/submitLead";
 
 const STORAGE_KEY = "pri-quiz-result";
 
@@ -243,6 +244,12 @@ export default function SolutionQuiz({ standalone = false, showBreadcrumbs = fal
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
   const [direction, setDirection] = useState(1);
+  const [leadEmail, setLeadEmail] = useState("");
+  const [leadName, setLeadName] = useState("");
+  const [leadWebsite, setLeadWebsite] = useState("");
+  const [awaitingEmail, setAwaitingEmail] = useState(false);
+  const [leadSent, setLeadSent] = useState(false);
+  const [leadError, setLeadError] = useState("");
 
   useEffect(() => {
     if (!standalone) return;
@@ -254,12 +261,12 @@ export default function SolutionQuiz({ standalone = false, showBreadcrumbs = fal
   }, [standalone]);
 
   const validResult = result && RESULT_KEYS.has(result) ? result : null;
-  const progress = validResult
+  const progress = validResult || awaitingEmail
     ? 100
     : ((Math.min(step, questions.length - 1) + 1) / questions.length) * 100;
   const activeStep = Math.min(step, questions.length - 1);
   const q = questions[activeStep];
-  const showQuestions = !validResult && step < questions.length;
+  const showQuestions = !validResult && !awaitingEmail && step < questions.length;
 
   const selectAnswer = (optionId) => {
     setDirection(1);
@@ -271,13 +278,54 @@ export default function SolutionQuiz({ standalone = false, showBreadcrumbs = fal
     if (nextStep >= questions.length) {
       const rec = getRecommendation(nextAnswers);
       if (RESULT_KEYS.has(rec)) {
-        setResult(rec);
-        persistResult(rec);
+        setAnswers(nextAnswers);
         setStep(questions.length);
+        setAwaitingEmail(true);
       }
     } else {
       setStep(nextStep);
     }
+  };
+
+  const finalizeWithEmail = async (e) => {
+    e.preventDefault();
+    setLeadError("");
+    const rec = getRecommendation(answers);
+    if (!RESULT_KEYS.has(rec)) return;
+
+    const match = results[rec];
+    const subject = `Solution Finder result — ${match.headline}`;
+    const body = [
+      `Email: ${leadEmail}`,
+      leadName ? `Name: ${leadName}` : null,
+      `Recommendation: ${match.headline}`,
+      "",
+      "Quiz answers:",
+      ...questions.map((q, i) => `- ${q.text}: ${answers[i]}`),
+      "",
+      match.description,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const response = await submitLead({
+      to: "info@priglobal.com",
+      subject,
+      body,
+      source: "solution-quiz",
+      fields: { email: leadEmail, name: leadName, recommendation: rec, answers },
+      honeypot: leadWebsite,
+    });
+
+    if (response.error) {
+      setLeadError(response.error);
+      return;
+    }
+
+    setLeadSent(true);
+    setResult(rec);
+    persistResult(rec);
+    setAwaitingEmail(false);
   };
 
   const goBack = () => {
@@ -297,6 +345,12 @@ export default function SolutionQuiz({ standalone = false, showBreadcrumbs = fal
     setResult(null);
     setStep(0);
     setDirection(-1);
+    setLeadEmail("");
+    setLeadName("");
+    setLeadWebsite("");
+    setAwaitingEmail(false);
+    setLeadSent(false);
+    setLeadError("");
   };
 
   const rec = validResult ? results[validResult] : null;
@@ -399,6 +453,56 @@ export default function SolutionQuiz({ standalone = false, showBreadcrumbs = fal
                 })}
               </div>
             </motion.div>
+          ) : awaitingEmail ? (
+            <motion.div
+              key="email"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8"
+            >
+              <span className="inline-block text-xs font-bold uppercase tracking-widest text-royal dark:text-royaldark mb-3">
+                Almost done
+              </span>
+              <h3 className="font-heading text-2xl font-bold text-[var(--text-primary)] mb-3">
+                Where should we send your recommendation?
+              </h3>
+              <p className="text-[var(--text-secondary)] text-sm mb-6">
+                Enter your work email to see your matched PRI Global solution and receive a copy for your team.
+              </p>
+              <form className="space-y-4 max-w-md mx-auto" onSubmit={finalizeWithEmail}>
+                <div className="hidden" aria-hidden>
+                  <input
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={leadWebsite}
+                    onChange={(e) => setLeadWebsite(e.target.value)}
+                  />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Your name (optional)"
+                  value={leadName}
+                  onChange={(e) => setLeadName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)] text-sm"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="Work email"
+                  value={leadEmail}
+                  onChange={(e) => setLeadEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)] text-sm"
+                />
+                {leadError && <p className="text-sm text-rose-600 dark:text-rose-400">{leadError}</p>}
+                <button
+                  type="submit"
+                  className="w-full px-6 py-3 rounded-xl bg-royal text-white font-semibold text-sm hover:bg-[var(--accent-hover)] transition-colors"
+                >
+                  Show my recommendation
+                </button>
+              </form>
+            </motion.div>
           ) : rec ? (
             <motion.div
               key="result"
@@ -421,6 +525,11 @@ export default function SolutionQuiz({ standalone = false, showBreadcrumbs = fal
               <p className="text-[var(--text-secondary)] leading-relaxed mb-8 max-w-lg mx-auto">
                 {rec.description}
               </p>
+              {leadSent && (
+                <p className="text-sm text-emerald-600 dark:text-emerald-400 mb-4">
+                  Your recommendation was saved — check your email app if it opened automatically.
+                </p>
+              )}
               <div className="flex flex-wrap gap-3 justify-center mb-6">
                 <ResultCta cta={rec.primary} variant="primary" />
                 <ResultCta cta={rec.secondary} variant="secondary" />

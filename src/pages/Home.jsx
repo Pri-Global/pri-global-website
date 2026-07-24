@@ -9,6 +9,7 @@ import { scrollToPageTop } from "../utils/scrollToPageTop";
 
 const Stats              = lazy(() => import("../components/sections/Stats"));
 import SolutionQuiz from "../components/sections/SolutionQuiz";
+const NewsPreview        = lazy(() => import("../components/sections/NewsPreview"));
 const ServicesSection    = lazy(() => import("../components/sections/Services"));
 const DoingBusinessVideo = lazy(() => import("../components/sections/DoingBusinessVideo"));
 const PrismAI            = lazy(() => import("../components/sections/PrismAI"));
@@ -48,6 +49,7 @@ export default function Home() {
       <IndustriesPreview />
       <Suspense fallback={SectionFallback}><DoingBusinessVideo /></Suspense>
       <Suspense fallback={SectionFallback}><PrismAI /></Suspense>
+      <Suspense fallback={SectionFallback}><NewsPreview /></Suspense>
       <ExploreMore />
       <LeadershipSpotlight />
       <Suspense fallback={SectionFallback}><Testimonials /></Suspense>

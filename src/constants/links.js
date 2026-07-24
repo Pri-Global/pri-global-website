@@ -4,7 +4,7 @@ export const PRI_JOBS_APP_STORE_URL =
 export const PRI_JOBS_GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=com.jobdiva.jdmobile";
 export const PRI_JOBS_MOBILE_APP_URL = "/careers/mobile-app";
-export const CONTACT_PAGE = "/about#contact";
+export const CONTACT_PAGE = "/contact";
 
 export const BOOKING_URL =
   "https://outlook.office.com/book/PRIGlobalBookingpage@priglobal.com/?ismsaljsauthenabled";

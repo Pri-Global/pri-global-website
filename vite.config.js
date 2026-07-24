@@ -17,6 +17,7 @@ import employeeRipplingCallback from './api/_employee/rippling/callback.js'
 import employeeAuthStatus from './api/_employee/auth/status.js'
 import employeeMe from './api/_employee/me.js'
 import employeeTeams from './api/_employee/teams.js'
+import { handleLeadSubmission } from './api/_leads.js'
 import { setServerEnv } from './api/_runtime-env.js'
 
 function mountApiRoute(basePath, handler) {
@@ -123,6 +124,7 @@ function privaApiPlugin(env) {
       server.middlewares.use('/api/employee/auth/status', mountApiRoute('/employee/auth/status', employeeAuthStatus))
       server.middlewares.use('/api/employee/me', mountApiRoute('/employee/me', employeeMe))
       server.middlewares.use('/api/employee/teams', mountApiRoute('/employee/teams', employeeTeams))
+      server.middlewares.use('/api/leads', mountApiRoute('/leads', async (req, res) => handleLeadSubmission(req, res)))
 
       // Voice: mint an ephemeral Realtime client secret (same as the Vercel fn).
       server.middlewares.use('/api/priva-realtime', async (req, res) => {

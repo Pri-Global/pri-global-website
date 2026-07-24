@@ -28,6 +28,7 @@ import ROICalculatorPage from "./pages/ROICalculatorPage";
 import WhyPRI from "./pages/WhyPRI";
 import CaseStudy from "./pages/CaseStudy";
 import NotFound from "./pages/NotFound";
+import Contact from "./pages/Contact";
 import EmployeeLogin from "./pages/EmployeeLogin";
 import EmployeeAuthCallback from "./pages/EmployeeAuthCallback";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
@@ -188,7 +189,7 @@ function AppRoutes({ reducedMotion = false, motionless = false }) {
         <Route path="/ai-services"     element={pw(<AiServices />)} />
         <Route path="/industries"      element={pw(<Industries />)} />
         <Route path="/about"           element={pw(<About />)} />
-        <Route path="/contact"         element={<Navigate to="/about#contact" replace />} />
+        <Route path="/contact"         element={<Contact />} />
         <Route path="/resources"       element={pw(<Resources />)} />
         <Route path="/resources/:slug" element={pw(<Resources />)} />
         <Route path="/case-studies/:slug" element={pw(<CaseStudy />)} />

@@ -22,6 +22,7 @@ import awsLogo          from "../assets/Amazon_Web_Services_Logo.svg.png";
 import azureLogo        from "../assets/Microsoft_Azure.svg.png";
 import databricksLogo   from "../assets/azure-databricks.svg";
 import VideoSection from "../components/sections/VideoSection";
+import PrismDemo from "../components/sections/PrismDemo";
 import { VIDEOS } from "../data/videos";
 import AnimatedIcon from "../components/ui/AnimatedIcon";
 import AnimatedLogo from "../components/ui/AnimatedLogo";
@@ -288,7 +289,7 @@ export default function AiInnovation() {
           </div>
 
           {/* CTA banner */}
-          <div className="bg-navy rounded-2xl p-6 md:p-8 text-center">
+          <div className="bg-navy rounded-2xl p-6 md:p-8 text-center mb-8 md:mb-10">
             <p className="font-heading text-2xl md:text-3xl font-extrabold text-white mb-2 tracking-tight">
               STOP DIGGING. START ASKING.
             </p>
@@ -315,6 +316,8 @@ export default function AiInnovation() {
 
         </div>
       </section>
+
+      <PrismDemo />
 
       <VideoSection
         label="Capabilities"

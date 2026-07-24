@@ -121,10 +121,12 @@ function DashboardPanel({
   onVoice,
   compact,
 }) {
-  const bottomRef = useRef(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = scrollRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
   }, [messages, typing, scenario, expanded]);
 
   return (
@@ -151,7 +153,10 @@ function DashboardPanel({
         </span>
       </div>
 
-      <div className={`relative px-4 sm:px-5 overflow-y-auto ${compact ? "max-h-[320px]" : "max-h-[360px]"}`}>
+      <div
+        ref={scrollRef}
+        className={`relative px-4 sm:px-5 overflow-y-auto ${compact ? "max-h-[320px]" : "max-h-[360px]"}`}
+      >
         <AnimatePresence initial={false}>
           {messages.map((msg, i) => (
             <motion.div
@@ -239,7 +244,6 @@ function DashboardPanel({
             </button>
           </motion.div>
         )}
-        <div ref={bottomRef} />
       </div>
 
       <div className="relative p-4 sm:p-5 border-t border-white/10 space-y-3">

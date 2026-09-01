@@ -33,7 +33,10 @@ export default function JobSearchList({ session }) {
 
   useEffect(() => {
     if (selectedJobId && selectedJob) {
-      document.getElementById(`job-${selectedJobId}`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      document.getElementById("selected-job-details")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   }, [selectedJobId, selectedJob, loading]);
 
@@ -133,7 +136,10 @@ export default function JobSearchList({ session }) {
       )}
 
       {selectedJob && (
-        <div className="mb-6 p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/5">
+        <div
+          id="selected-job-details"
+          className="mb-6 scroll-mt-24 p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/5"
+        >
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600 mb-2">Selected role</p>
           <h2 className="font-heading text-xl font-bold text-[var(--text-primary)]">{selectedJob.title}</h2>
           <p className="text-sm text-[var(--text-muted)] mt-1">{selectedJob.location}</p>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Bookmark, Check, RefreshCw, Search } from "lucide-react";
 import Button from "../ui/Button";
@@ -25,20 +25,6 @@ export default function JobSearchList({ session }) {
   const [applyError, setApplyError] = useState("");
   const [applyingId, setApplyingId] = useState(null);
   const liveSession = isLiveCandidateSession(session);
-
-  const selectedJob = useMemo(
-    () => jobs.find((job) => String(job.id) === String(selectedJobId)),
-    [jobs, selectedJobId]
-  );
-
-  useEffect(() => {
-    if (selectedJobId && selectedJob) {
-      document.getElementById("selected-job-details")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, [selectedJobId, selectedJob, loading]);
 
   const toggleSave = (id) => {
     const next = saved.includes(id) ? saved.filter((x) => x !== id) : [...saved, id];
@@ -77,7 +63,11 @@ export default function JobSearchList({ session }) {
 
   const openJob = (jobId) => {
     const next = new URLSearchParams(searchParams);
-    next.set("job", String(jobId));
+    if (String(jobId) === String(selectedJobId)) {
+      next.delete("job");
+    } else {
+      next.set("job", String(jobId));
+    }
     setSearchParams(next, { replace: true });
   };
 
@@ -135,52 +125,6 @@ export default function JobSearchList({ session }) {
         </div>
       )}
 
-      {selectedJob && (
-        <div
-          id="selected-job-details"
-          className="mb-6 scroll-mt-24 p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/5"
-        >
-          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600 mb-2">Selected role</p>
-          <h2 className="font-heading text-xl font-bold text-[var(--text-primary)]">{selectedJob.title}</h2>
-          <p className="text-sm text-[var(--text-muted)] mt-1">{selectedJob.location}</p>
-          {selectedJob.description && (
-            <p className="text-sm text-[var(--text-secondary)] mt-4 leading-relaxed whitespace-pre-line">
-              {selectedJob.description}
-            </p>
-          )}
-          <div className="flex flex-wrap gap-2 mt-5">
-            {session ? (
-              !liveSession ? (
-                <Button to="/candidate-register?mode=manual" size="sm" className="!bg-emerald-600 hover:!bg-emerald-700">
-                  Register to apply
-                </Button>
-              ) : applied.includes(selectedJob.id) ? (
-                <span className="inline-flex items-center gap-2 text-sm font-medium text-emerald-600">
-                  <Check size={16} /> Application submitted
-                </span>
-              ) : (
-                <Button
-                  type="button"
-                  size="sm"
-                  className="!bg-emerald-600 hover:!bg-emerald-700"
-                  disabled={applyingId === selectedJob.id}
-                  onClick={() => handleApply(selectedJob)}
-                >
-                  {applyingId === selectedJob.id ? "Submitting…" : "Apply on PRI Global"}
-                </Button>
-              )
-            ) : (
-              <Button to="/candidate-login" size="sm" className="!bg-emerald-600 hover:!bg-emerald-700">
-                Sign in to apply
-              </Button>
-            )}
-            <Button to="/candidate-register" variant="secondary" size="sm">
-              Create account
-            </Button>
-          </div>
-        </div>
-      )}
-
       <div className="space-y-4">
         {!loading && jobs.length === 0 && !error && (
           <p className="text-sm text-[var(--text-secondary)] py-8 text-center">
@@ -213,7 +157,11 @@ export default function JobSearchList({ session }) {
                     {job.postDate ? ` · Posted ${formatDate(job.postDate)}` : ""}
                   </p>
                   {job.description && (
-                    <p className="text-sm text-[var(--text-secondary)] mt-3 line-clamp-3 leading-relaxed">
+                    <p
+                      className={`text-sm text-[var(--text-secondary)] mt-3 leading-relaxed ${
+                        isSelected ? "whitespace-pre-line" : "line-clamp-3"
+                      }`}
+                    >
                       {job.description}
                     </p>
                   )}
@@ -225,7 +173,7 @@ export default function JobSearchList({ session }) {
                     className="!bg-emerald-600 hover:!bg-emerald-700"
                     onClick={() => openJob(job.id)}
                   >
-                    View & Apply
+                    {isSelected ? "Hide details" : "View & Apply"}
                   </Button>
                   {session && (
                     <button
@@ -241,6 +189,42 @@ export default function JobSearchList({ session }) {
                   )}
                 </div>
               </div>
+              {isSelected && (
+                <div className="mt-5 pt-5 border-t border-[var(--border)] flex flex-wrap gap-2">
+                  {session ? (
+                    !liveSession ? (
+                      <Button
+                        to="/candidate-register?mode=manual"
+                        size="sm"
+                        className="!bg-emerald-600 hover:!bg-emerald-700"
+                      >
+                        Register to apply
+                      </Button>
+                    ) : applied.includes(job.id) ? (
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-emerald-600">
+                        <Check size={16} /> Application submitted
+                      </span>
+                    ) : (
+                      <Button
+                        type="button"
+                        size="sm"
+                        className="!bg-emerald-600 hover:!bg-emerald-700"
+                        disabled={applyingId === job.id}
+                        onClick={() => handleApply(job)}
+                      >
+                        {applyingId === job.id ? "Submitting…" : "Apply on PRI Global"}
+                      </Button>
+                    )
+                  ) : (
+                    <Button to="/candidate-login" size="sm" className="!bg-emerald-600 hover:!bg-emerald-700">
+                      Sign in to apply
+                    </Button>
+                  )}
+                  <Button to="/candidate-register" variant="secondary" size="sm">
+                    Create account
+                  </Button>
+                </div>
+              )}
             </article>
           );
         })}

@@ -159,13 +159,17 @@ export async function searchJobsV2(
 }
 
 /** Live job board — same Jobdiva v2 API as candidate portal (replaces legacy candPortal REST). */
+const EXCLUDED_PUBLIC_JOB_IDS = new Set([29197859]);
+
 export async function fetchLiveJobs({ keyword = "", count = 100 } = {}, env = getServerEnv()) {
   const portalId = await getDefaultPortalId(env);
   const { jobs } = await searchJobsV2(
     { portalId, keyword, maxReturned: Math.min(count, 200), showAllOpenJobs: true },
     env
   );
-  const normalized = jobs.map(normalizeJobV2);
+  const normalized = jobs
+    .map(normalizeJobV2)
+    .filter((job) => !EXCLUDED_PUBLIC_JOB_IDS.has(Number(job.id)));
   return { total: normalized.length, jobs: normalized };
 }
 
